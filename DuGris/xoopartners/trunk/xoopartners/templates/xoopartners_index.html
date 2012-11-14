@@ -1,0 +1,43 @@
+<{if $moduletitle != ''}>
+    <fieldset>
+        <legend><{$moduletitle}></legend>
+    </fieldset>
+<{/if}>
+
+<{if $welcome}>
+    <div class="xoopartnersMsg">
+        <{$welcome}>
+    </div>
+<{/if}>
+
+<{if $categories}>
+    <div class="xoopartnersSection">
+        <div class="xoopartnersTitle"><{$smarty.const._XOO_PARTNERS_CATEGORIES}></div>
+        <{if $category_header}>
+            <{$category_header}>
+        <{/if}>
+
+        <{includeq file='module:xoopartners|xoopartners_categories.html' template=$xoopartners_category.display_mode}>
+
+        <{if $category_footer}>
+            <{$category_footer}>
+        <{/if}>
+    </div>
+    <div class="clear"></div>
+<{/if}>
+
+<div class="xoopartnersSection">
+    <{if $categories}>
+        <div class="xoopartnersTitle"><{$smarty.const._XOO_PARTNERS_PARTNERS}><{if $selected.xoopartners_category_title}> : <{$selected.xoopartners_category_title}><{/if}></div>
+    <{/if}>
+    <{if $partner_header}>
+        <{$partner_header}>
+    <{/if}>
+
+    <{includeq file='module:xoopartners|xoopartners_partners.html' template=$xoopartners_partner.display_mode}>
+
+    <{if $partner_footer}>
+        <{$partner_footer}>
+    <{/if}>
+    <div class="clear"></div>
+</div>

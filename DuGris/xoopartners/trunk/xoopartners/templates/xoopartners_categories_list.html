@@ -1,0 +1,8 @@
+<ul class="ul-xoocategories">
+    <{foreachq from=$categories item=category name=foo}>
+        <li><a href="<{$category.xoopartners_category_link}>" title="<{$category.xoopartners_category_title}>"><i class="xoopartners-ico-category<{$category.xoopartners_category_id}>"></i><{$category.xoopartners_category_title}></a></li>
+        <{if $category.categories}>
+            <{includeq file='module:xoopartners|xoopartners_categories.html' categories=$category.categories}>
+        <{/if}>
+    <{/foreach}>
+</ul>
