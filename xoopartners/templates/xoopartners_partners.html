@@ -1,0 +1,10 @@
+<{includeq file='module:xoopartners|xoopartners_partners_css.html'}>
+<{if $template == 'news'}>
+    <{includeq file='module:xoopartners|xoopartners_partners_news.html'}>
+<{elseif $template == 'list'}>
+    <{includeq file='module:xoopartners|xoopartners_partners_list.html'}>
+<{elseif $template == 'table'}>
+    <{includeq file='module:xoopartners|xoopartners_partners_table.html'}>
+<{elseif $template == 'images'}>
+    <{includeq file='module:xoopartners|xoopartners_partners_images.html'}>
+<{/if}>

@@ -1,0 +1,32 @@
+<{includeq file='module:xoopartners|xoopartners_partners_css.html'}>
+
+<div class="item">
+    <div class="itemHead">
+        <div class="txtcenter itemTitle">
+            <{if $partners}>
+                <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
+            <{else}>
+                <a rel="external" href="<{$partner.xoopartners_url}>" title="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
+            <{/if}>
+        </div>
+    </div>
+
+    <div class="itemBody">
+        <{if $partner.xoopartners_image != "blank.gif"}>
+            <{if $partner.xoopartners_image_link}>
+                <i class="xoopartners-image-partner<{$partner.xoopartners_id}>">
+            <{/if}>
+        <{/if}>
+        <div class="itemText partner<{$partner.xoopartners_id}>">
+            <{$partner.xoopartners_description}>
+        </div>
+        <{if $partner.xoopartners_image_link}>
+            </i>
+        <{/if}>
+        <{if !$partners}>
+            <div class="itemFoot">
+                <a rel="external" href="visitpartner.php?partner_id=<{$partner.xoopartners_id}>" title="<{$partner.xoopartners_title}>"><{$smarty.const._XOO_PARTNERS_VISIT}><{$partner.xoopartners_title}></a>
+            </div>
+        <{/if}>
+    </div>
+</div>
