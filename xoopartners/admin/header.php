@@ -34,13 +34,14 @@ if ( isset( $_GET ) ){
 $script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
 
 XoopsLoad::load('xoopreferences', 'xoopartners');
-$Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
+$Partners_config = XooPartnersPreferences::getInstance()->getConfig();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
-$xoops->header('xoopartners_' . $script_name . '.html');
+if ($script_name != 'about') {    $xoops->header('xoopartners_' . $script_name . '.html');} else {    $xoops->header();}
+
 $xoops->theme->addStylesheet('modules/xoopartners/css/moduladmin.css');
 $xoops->loadLanguage('common', 'xoopartners');
 

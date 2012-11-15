@@ -19,6 +19,9 @@
 
 include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
+XoopsLoad::load('xoopreferences', 'xoopartners');
+$Partners_config = XooPartnersPreferences::getInstance()->getConfig();
+
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
@@ -30,13 +33,9 @@ $xoops->header('xoopartners_' . $script_name . '.html');
 
 $xoops->theme->addStylesheet('modules/xoopartners/css/module.css');
 
-XoopsLoad::load('xoopreferences', 'xoopartners');
-$Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
 $xoops->tpl->assign('template', $Partners_config['xoopartners_main_mode'] );
 $xoops->tpl->assign('welcome', $Partners_config['xoopartners_welcome'] );
-
 $xoops->tpl->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
 $xoops->tpl->assign('xoopartners_partner', $Partners_config['xoopartners_partner'] );
-
 $xoops->tpl->assign('moduletitle', $xoops->module->name() );
 ?>

@@ -25,7 +25,7 @@ function xoopartners_show($options)
     $xoops->theme->addStylesheet('modules/xoopartners/css/blocks.css');
 
     XoopsLoad::load('xoopreferences', 'xoopartners');
-    $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
+    $Partners_config = XooPartnersPreferences::getInstance()->getConfig();
     $xooparnters_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
 
     $block['template'] = $options[0];

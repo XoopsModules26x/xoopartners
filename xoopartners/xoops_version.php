@@ -81,7 +81,7 @@ $modversion['hasMain'] = 1;
 global $xoops;
 if ( is_object($xoops->module) && $xoops->module->dirname() == 'xoopartners' ) {
     XoopsLoad::load('xoopreferences', 'xoopartners');
-    $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
+    $Partners_config = XooPartnersPreferences::getInstance()->getConfig();
     if ( $Partners_config['xoopartners_category']['use_categories'] && $Partners_config['xoopartners_category']['main_menu']) {        $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
         $categories = $categories_handler->GetCategories(0, false, false);
         $i = 0;

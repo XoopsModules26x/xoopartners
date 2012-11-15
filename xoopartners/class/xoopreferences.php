@@ -53,6 +53,11 @@ class XooPartnersPreferences
         return $instance;
     }
 
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
     /**
      * XooPartnersPreferences::loadConfig()
      *
