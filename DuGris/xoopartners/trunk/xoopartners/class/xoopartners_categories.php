@@ -146,6 +146,28 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return $categories;
     }
 
+    public function Addpartner( $category_id )
+    {
+        if ($category_id != 0){
+            $category = $this->get( $category_id );
+            $partner = $category->getVar('xoopartners_category_partners') + 1;
+            $category->setVar('xoopartners_category_partners', $partner);
+            $this->insert( $category );
+            return true;
+        }
+    }
+
+    public function Delpartner( $category_id )
+    {
+        if ($category_id != 0){
+            $category = $this->get( $category_id );
+            $partner = $category->getVar('xoopartners_category_partners') - 1;
+            $category->setVar('xoopartners_category_partners', $partner);
+            $this->insert( $category );
+            return true;
+        }
+    }
+
     public function upload_images()
     {
         $xoops = Xoops::getInstance();

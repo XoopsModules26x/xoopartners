@@ -9,6 +9,7 @@ CREATE TABLE `xoopartners` (
   `xoopartners_display` tinyint(1) NOT NULL DEFAULT '1',
   `xoopartners_visit` int(11) NOT NULL DEFAULT '0',
   `xoopartners_view` int(11) NOT NULL DEFAULT '0',
+  `xoopartners_accepted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`xoopartners_id`),
   KEY `xoopartners_category` (`xoopartners_category`),
   KEY `xoopartners_title` (`xoopartners_title`),

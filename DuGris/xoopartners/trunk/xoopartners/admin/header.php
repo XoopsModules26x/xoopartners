@@ -47,4 +47,7 @@ $xoops->loadLanguage('common', 'xoopartners');
 
 $admin_page = new XoopsModuleAdmin();
 $admin_page->renderNavigation( basename($_SERVER['SCRIPT_NAME']) );
+
+$categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
+$partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
 ?>

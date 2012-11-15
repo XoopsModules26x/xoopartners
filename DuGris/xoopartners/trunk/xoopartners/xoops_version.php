@@ -78,19 +78,21 @@ $modversion['tables'][2] = 'xoopartners_categories';
 // Menu
 $modversion['hasMain'] = 1;
 
-global $xoops;
+$i = 0;
+$xoops = Xoops::getInstance();
 if ( is_object($xoops->module) && $xoops->module->dirname() == 'xoopartners' ) {
     XoopsLoad::load('xoopreferences', 'xoopartners');
     $Partners_config = XooPartnersPreferences::getInstance()->getConfig();
     if ( $Partners_config['xoopartners_category']['use_categories'] && $Partners_config['xoopartners_category']['main_menu']) {        $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
         $categories = $categories_handler->GetCategories(0, false, false);
-        $i = 0;
         foreach ($categories as $k => $category ) {            $modversion["sub"][$i]["name"]  = $category['xoopartners_category_title'];
             $modversion["sub"][$i]["url"]   = 'index.php?category_id=' . $category['xoopartners_category_id'];
             $i++;
         }
     }
 }
+$modversion["sub"][$i]["name"]  = _XOO_PARTNERS_JOIN;
+$modversion["sub"][$i]["url"]   = 'joinpartners.php';
 
 // Templates
 $i = 1;

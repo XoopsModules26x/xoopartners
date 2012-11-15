@@ -19,8 +19,6 @@
 
 include dirname(__FILE__) . '/header.php';
 
-$categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
-
 switch ($op) {    case 'save':
     if ( !$GLOBALS['xoopsSecurity']->check() ) {
         $xoops->redirect('categories.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));

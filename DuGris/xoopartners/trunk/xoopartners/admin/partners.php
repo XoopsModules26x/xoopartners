@@ -19,7 +19,6 @@
 
 include dirname(__FILE__) . '/header.php';
 
-$partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
 $category_id = $system->CleanVars($_REQUEST, 'category_id', 0, 'int');
 
 switch ($op) {    case 'save':
@@ -55,24 +54,15 @@ switch ($op) {    case 'save':
     }
 
     if ($partner_id = $partners_handler->insert($partner)) {        $partner = $partners_handler->get( $partner_id );
-        if ($partner->getVar('xoopartners_category') != $category_id ) {            $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
-            if ( $category_id != 0 ) {                $category = $categories_handler->get( $category_id );
-                $xoopartners_category_partners = $category->getVar('xoopartners_category_partners') - 1;
-                $category->setVar('xoopartners_category_partners', $xoopartners_category_partners );
-                $categories_handler->insert( $category );
-            }            //
-            if ($partner->getVar('xoopartners_category') != 0 ) {
-                $category = $categories_handler->get( $partner->getVar('xoopartners_category') );
-                $xoopartners_category_partners = $category->getVar('xoopartners_category_partners') + 1;
-                $category->setVar('xoopartners_category_partners', $xoopartners_category_partners );
-                $categories_handler->insert( $category );
-            }
-        }
+        if ($partner->getVar('xoopartners_accepted')) {            if ($category_id != $partner->getVar('xoopartners_category')) {                $categories_handler->Delpartner( $category_id );
+                $categories_handler->Addpartner( $partner->getVar('xoopartners_category') );
+            }        }
+
         $msg = _AM_XOO_PARTNERS_SAVED;
         if ( isset($errors) && count($errors) != 0) {
             $msg .= '<br />' . implode('<br />', $errors);;
         }
-        $xoops->redirect('partners.php?category_id=' . $category_id, 5, $msg);
+        $xoops->redirect('partners.php?category_id=' . $partner->getVar('xoopartners_category'), 5, $msg);
     }
     break;
 
@@ -100,6 +90,7 @@ switch ($op) {    case 'save':
                 if ( !$GLOBALS['xoopsSecurity']->check() ) {
                     $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
+                $categories_handler->Delpartner( $partner->getVar('xoopartners_category') );
                 $partners_handler->delete($partner);
                 $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_DELETED);
             } else {
@@ -129,9 +120,25 @@ switch ($op) {    case 'save':
     $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
     break;
 
+    case 'accept':
+    $xoopartners_id = $system->CleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
+    $partner = $partners_handler->get($xoopartners_id);
+    $partner->setAccepted();
+    $partners_handler->insert($partner);
+    $category = $categories_handler->Addpartner( $partner->getVar('xoopartners_category') );    $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
+    break;
+
+    case 'naccept':
+    $xoopartners_id = $system->CleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
+    $partner = $partners_handler->get($xoopartners_id);
+    $partner->setNotAccepted();
+    $partners_handler->insert($partner);
+    $category = $categories_handler->Delpartner( $partner->getVar('xoopartners_category') );
+    $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
+    break;
+
     default:
-    if ($Partners_config['xoopartners_category']['use_categories']) {        $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
-        ob_start();
+    if ($Partners_config['xoopartners_category']['use_categories']) {        ob_start();
         $categories_handler->makeSelectBox('category_id', $category_id, true, 'window.location.href="partners.php?category_id="+this.options[this.selectedIndex].value');
         $xoops->tpl->assign('categories', ob_get_contents() );
         ob_end_clean();
@@ -145,6 +152,5 @@ switch ($op) {    case 'save':
 
     break;
 }
-
 include dirname(__FILE__) . '/footer.php';
 ?>

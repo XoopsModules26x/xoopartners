@@ -38,4 +38,7 @@ $xoops->tpl->assign('welcome', $Partners_config['xoopartners_welcome'] );
 $xoops->tpl->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
 $xoops->tpl->assign('xoopartners_partner', $Partners_config['xoopartners_partner'] );
 $xoops->tpl->assign('moduletitle', $xoops->module->name() );
+
+$categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
+$partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
 ?>
