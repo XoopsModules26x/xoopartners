@@ -22,8 +22,6 @@ include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 error_reporting(0);
 $xoopsLogger->activated = false;
 
-XoopsLoad::load('system', 'system');
-$system = System::getInstance();
 $partner_id = $system->CleanVars($_REQUEST, 'partner_id', 0, 'int');
 
 if ( $partner_id != 0) {    $partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');

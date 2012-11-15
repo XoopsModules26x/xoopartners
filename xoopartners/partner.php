@@ -19,11 +19,6 @@
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 
-$categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
-$partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
-
-XoopsLoad::load('system', 'system');
-$system = System::getInstance();
 $partner_id = $system->CleanVars($_REQUEST, 'partner_id', 0, 'int');
 
 $partner = $partners_handler->get($partner_id);

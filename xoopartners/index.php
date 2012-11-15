@@ -19,9 +19,6 @@
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 
-$categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
-$partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
-
 if ($Partners_config['xoopartners_category']['use_categories']) {    $category_id = $system->CleanVars($_REQUEST, 'category_id', 0, 'int');
     $xoops->tpl->assign('categories', $categories_handler->GetCategories() );
     $xoops->tpl->assign('category_id', $category_id);

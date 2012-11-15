@@ -21,4 +21,5 @@ define("_XOO_PARTNERS_CATEGORIES",                  "Categories");
 define("_XOO_PARTNERS_PARTNERS",                    "Partners");
 define("_XOO_PARTNERS_VISIT",                       "Visit: ");
 define("_XOO_PARTNERS_ERROR",                       "No such partner!");
+define("_XOO_PARTNERS_SAVED",                       "Your request has been registered");
 ?>

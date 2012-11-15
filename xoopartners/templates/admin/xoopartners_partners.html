@@ -18,6 +18,7 @@
             <th class="txtcenter width60"><{$smarty.const._XOO_PARTNERS_TITLE}></th>
             <th class="txtcenter"><{$smarty.const._XOO_PARTNERS_ORDER}></th>
             <th class="txtcenter"><{$smarty.const._XOO_PARTNERS_DISPLAY}></th>
+            <th class="txtcenter"><{$smarty.const._XOO_PARTNERS_ACCEPTED}></th>
             <th class="txtcenter"><{$smarty.const._AM_XOO_PARTNERS_ACTION}></th>
         </tr>
         </thead>
@@ -38,6 +39,14 @@
                         <a href="partners.php?op=hide&amp;xoopartners_id=<{$partner.xoopartners_id}>&category_id=<{$category_id}>" title="<{$smarty.const._XOO_PARTNERS_SHOW_HIDE}>"><img src="<{xoImgUrl media/xoops/images/icons/16/on.png}>" alt="<{$smarty.const._AM_XOO_PARTNERS_HIDE}>"></a>
                     <{else}>
                         <a href="partners.php?op=view&amp;xoopartners_id=<{$partner.xoopartners_id}>&category_id=<{$category_id}>" title="<{$smarty.const._XOO_PARTNERS_SHOW_HIDE}>"><img src="<{xoImgUrl media/xoops/images/icons/16/off.png}>" alt="<{$smarty.const._AM_XOO_PARTNERS_SHOW}>"></a>
+                    <{/if}>
+                </td>
+
+                <td class="txtcenter">
+                    <{if ( $partner.xoopartners_accepted )}>
+                        <a href="partners.php?op=naccept&amp;xoopartners_id=<{$partner.xoopartners_id}>&category_id=<{$category_id}>" title="<{$smarty.const._XOO_PARTNERS_ACCEPTED_NO}>"><img src="<{xoImgUrl media/xoops/images/icons/16/on.png}>" alt="<{$smarty.const._XOO_PARTNERS_ACCEPTED_NO}>"></a>
+                    <{else}>
+                        <a href="partners.php?op=accept&amp;xoopartners_id=<{$partner.xoopartners_id}>&category_id=<{$category_id}>" title="<{$smarty.const._XOO_PARTNERS_ACCEPTED_YES}>"><img src="<{xoImgUrl media/xoops/images/icons/16/off.png}>" alt="<{$smarty.const._XOO_PARTNERS_ACCEPTED_YES}>"></a>
                     <{/if}>
                 </td>
 

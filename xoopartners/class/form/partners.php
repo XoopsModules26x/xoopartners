@@ -32,13 +32,14 @@ class XoopartnersPartnersForm extends XoopsThemeForm
      * Maintenance Form
      * @return void
      */
-    public function PartnerForm( $category_id )
-    {        global $partners_handler;
+    public function PartnerForm( $category_id = 0 )
+    {        global $partners_handler, $categories_handler;
         $xoops = Xoops::getInstance();
         $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
 
-        if ($this->xoopsObject->isNew() ) {
-            parent::__construct(_AM_XOO_PARTNERS_ADD, 'form_partner', 'partners.php', 'post', true);
+        if ($this->xoopsObject->isNew() ) {            $script = ($xoops->isAdminSide) ? 'partners.php' : 'joinpartners.php';
+            $title  = ($xoops->isAdminSide) ? _AM_XOO_PARTNERS_ADD : _XOO_PARTNERS_JOIN;
+            parent::__construct($title, 'form_partner', $script, 'post', true);
         } else {            parent::__construct(_AM_XOO_PARTNERS_EDIT . ' : ' . $this->xoopsObject->getVar('xoopartners_title'), 'form_partner', 'partners.php', 'post', true);
         }
         $this->setExtra('enctype="multipart/form-data"');
@@ -51,7 +52,6 @@ class XoopartnersPartnersForm extends XoopsThemeForm
 
         // Category
         if ($Partners_config['xoopartners_category']['use_categories']) {
-            $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
             ob_start();
             $categories_handler->makeSelectBox('xoopartners_category', $this->xoopsObject->getVar('xoopartners_category') );
             $this->addElement(new XoopsFormLabel(_XOO_PARTNERS_CATEGORY_TITLE, ob_get_contents()));
@@ -60,7 +60,10 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         }
 
         // Partner Description
-        $this->addElement( new XoopsFormTextArea(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $this->xoopsObject->getVar('xoopartners_description'), 7, 50));
+        if ($xoops->isAdminSide) {
+            $this->addElement( new XoopsFormTextArea(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $this->xoopsObject->getVar('xoopartners_description'), 7, 50));
+        } else {            $this->addElement( new XoopsFormTextArea(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $this->xoopsObject->getVar('xoopartners_description'), 7, 50), true);
+        }
 
         // image
         $upload_msg[] = _XOO_PARTNERS_IMAGE_SIZE . ' : ' . $Partners_config['xoopartners_partner']['image_size'];
@@ -82,10 +85,24 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         $this->addElement( $image_tray );
 
         // order
-        $this->addElement( new XoopsFormText(_XOO_PARTNERS_ORDER, 'xoopartners_order', 1, 3, $this->xoopsObject->getVar('xoopartners_order')) );
+        if ($xoops->isAdminSide) {
+            $this->addElement( new XoopsFormText(_XOO_PARTNERS_ORDER, 'xoopartners_order', 1, 3, $this->xoopsObject->getVar('xoopartners_order')) );
+        } else {            $this->addElement( new XoopsFormHidden('xoopartners_order', $this->xoopsObject->getVar('xoopartners_order')) );
+        }
 
         // display
-        $this->addElement( new XoopsFormRadioYN(_XOO_PARTNERS_DISPLAY, 'xoopartners_display',  $this->xoopsObject->getVar('xoopartners_display')) );
+        if ($xoops->isAdminSide) {
+            $this->addElement( new XoopsFormRadioYN(_XOO_PARTNERS_DISPLAY, 'xoopartners_display',  $this->xoopsObject->getVar('xoopartners_display')) );
+        } else {
+            $this->addElement( new XoopsFormHidden('xoopartners_display', $this->xoopsObject->getVar('xoopartners_display')) );
+        }
+
+        // accepted
+        if ($xoops->isAdminSide) {
+            $this->addElement( new XoopsFormRadioYN(_XOO_PARTNERS_ACCEPTED_YES, 'xoopartners_accepted',  $this->xoopsObject->getVar('xoopartners_accepted')) );
+        } else {
+            $this->addElement( new XoopsFormHidden('xoopartners_accepted', $this->xoopsObject->getVar('xoopartners_accepted')) );
+        }
 
         // hidden
         $this->addElement( new XoopsFormHidden('xoopartners_id', $this->xoopsObject->getVar('xoopartners_id')) );

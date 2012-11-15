@@ -35,6 +35,13 @@ class Xoopartners extends XoopsObject
         $this->initVar('xoopartners_visit',         XOBJ_DTYPE_INT,               1, false,     10);
         $this->initVar('xoopartners_view',          XOBJ_DTYPE_INT,               1, false,     10);
 
+        $xoops = Xoops::getInstance();
+        if ($xoops->isAdminSide) {
+            $this->initVar('xoopartners_accepted',      XOBJ_DTYPE_INT,               1, false,     1);
+        } else {
+            $this->initVar('xoopartners_accepted',      XOBJ_DTYPE_INT,               0, false,     1);
+        }
+
         // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
     }
@@ -60,6 +67,18 @@ class Xoopartners extends XoopsObject
     {
         $visit = $this->getVar('xoopartners_visit') + 1;
         $this->setVar('xoopartners_visit', $visit);
+        return true;
+    }
+
+    public function setAccepted()
+    {
+        $this->setVar('xoopartners_accepted', 1);
+        return true;
+    }
+
+    public function setNotAccepted()
+    {
+        $this->setVar('xoopartners_accepted', 0);
         return true;
     }
 
@@ -138,6 +157,7 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
         if ($Partners_config['xoopartners_category']['use_categories'] && $category_id >= 0) {
             $criteria->add( new Criteria('xoopartners_category', $category_id) ) ;
         }
+        $criteria->add( new Criteria('xoopartners_accepted', 1) ) ;
         $criteria->add( new Criteria('xoopartners_display', 1) ) ;
         $criteria->setSort( 'xoopartners_order' );
         $criteria->setOrder( 'asc' );
