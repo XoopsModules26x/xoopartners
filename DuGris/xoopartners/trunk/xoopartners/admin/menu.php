@@ -18,7 +18,7 @@
  */
 
 XoopsLoad::load('xoopreferences', 'xoopartners');
-$Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
+$Partners_config = XooPartnersPreferences::getInstance()->getConfig();
 
 $i = 0;
 $adminmenu[$i]['title']   = _MI_XOO_PARTNERS_INDEX;
