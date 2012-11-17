@@ -107,10 +107,51 @@ class XooPartnersPreferences
      */
     public function writeConfig($config)
     {
-        $file_path = $this->configPath . $this->configFile;
-        XoopsLoad::load('XoopsFile');
-        $file = XoopsFile::getHandler('file', $file_path);
-        return $file->write( 'return ' . var_export($config, true) . ';');
+        if ($this->CreatePath($this->configPath) ) {
+            $file_path = $this->configPath . $this->configFile;
+            XoopsLoad::load('XoopsFile');
+            $file = XoopsFile::getHandler('file', $file_path);
+            return $file->write( 'return ' . var_export($config, true) . ';');
+        }
+    }
+
+    private function CreatePath( $pathname, $pathout = XOOPS_ROOT_PATH )
+    {
+        $xoops = Xoops::getInstance();
+        $pathname = substr( $pathname, strlen(XOOPS_ROOT_PATH) );
+        $pathname = str_replace( DIRECTORY_SEPARATOR, '/', $pathname );
+
+        $dest = $pathout;
+        $paths = explode( '/', $pathname );
+
+        foreach ( $paths as $path ) {
+            if ( !empty( $path ) ) {
+                $dest = $dest . '/' . $path;
+                if ( !is_dir( $dest ) ) {
+                    if ( !mkdir( $dest , 0755 ) ) {
+                        return false;
+                    } else {
+                        $this->WriteIndex($xoops->path('uploads'), 'index.html', $dest);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private function WriteIndex( $folder_in, $source_file, $folder_out )
+    {
+        if ( !is_dir($folder_out) ) {
+            if ( !$this->CreatePath($folder_out) ) {
+                return false;
+            }
+        }
+
+        // Simple copy for a file
+        if ( is_file($folder_in . '/' . $source_file) ) {
+            return copy($folder_in . '/' . $source_file, $folder_out . '/' . basename($source_file) );
+        }
+        return false;
     }
 
     public function Prepare2Save( $data = null, $module = true)
