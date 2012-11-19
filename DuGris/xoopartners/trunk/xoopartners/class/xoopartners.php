@@ -99,7 +99,7 @@ class Xoopartners extends XoopsObject
         if ($ret['xoopartners_image'] != 'blank.gif') {
             $ret['xoopartners_image_link'] = XOOPS_UPLOAD_URL . '/xoopartners/partners/images/' . $ret['xoopartners_image'];
         } else {
-            $ret['xoopartners_image_link'] = XOOPS_URL . '/modules/xoopartners/images/default.png';
+            $ret['xoopartners_image_link'] = XOOPS_URL . '/' . $xoops->theme->resourcePath('/modules/xoopartners/images/partners.png');
         }
         return $ret;
     }
