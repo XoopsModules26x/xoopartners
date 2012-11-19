@@ -32,11 +32,11 @@
 }
 .itemIcon {    width:                 32px;}
 .itemFoot {
-	background-color: 			transparent;
-	padding: 					3px;
-	font-size: 					.9em;
-	font-style: 				italic;
-	text-align: 				right;
+	background-color:      transparent;
+	padding:               3px;
+	font-size:             .9em;
+	font-style:            italic;
+	text-align:            right;
 }
 .categoryImage {
     float:                 left;
