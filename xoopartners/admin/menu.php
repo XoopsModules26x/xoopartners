@@ -25,6 +25,14 @@ $adminmenu[$i]['title']   = _MI_XOO_PARTNERS_INDEX;
 $adminmenu[$i]['link']    = 'admin/index.php';
 $adminmenu[$i]['icon']    = 'home.png';
 
+$xoops = Xoops::getInstance();
+if ($xoops->isadmin()) {
+    $i++;
+    $adminmenu[$i]['title'] = _MI_XOO_PARTNERS_PREFERENCES;
+    $adminmenu[$i]['link']  = 'admin/preferences.php';
+    $adminmenu[$i]['icon']  = 'administration.png';
+}
+
 if ($Partners_config['xoopartners_category']['use_categories']) {    $i++;
     $adminmenu[$i]['title'] = _MI_XOO_PARTNERS_CATEGORIES;
     $adminmenu[$i]['link']  = 'admin/categories.php';
@@ -35,11 +43,6 @@ $i++;
 $adminmenu[$i]['title'] = _MI_XOO_PARTNERS_PARTNERS;
 $adminmenu[$i]['link']  = 'admin/partners.php';
 $adminmenu[$i]['icon']  = 'partners.png';
-
-$i++;
-$adminmenu[$i]['title'] = _MI_XOO_PARTNERS_PREFERENCES;
-$adminmenu[$i]['link']  = 'admin/preferences.php';
-$adminmenu[$i]['icon']  = 'administration.png';
 
 $i++;
 $adminmenu[$i]['title']   = _MI_XOO_PARTNERS_ABOUT;
