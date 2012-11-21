@@ -65,13 +65,25 @@ class Xoopartners extends XoopsObject
     {
         $xoops = Xoops::getInstance();
         $myts = MyTextSanitizer::getInstance();
-        $ret = $this->getValues();
+        $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
 
+        $ret = $this->getValues();
         $ret['xoopartners_link'] =  XOOPS_URL . '/modules/xoopartners/partner.php?partner_id=' . $ret['xoopartners_id'];
         if ($ret['xoopartners_image'] != 'blank.gif') {
             $ret['xoopartners_image_link'] = XOOPS_UPLOAD_URL . '/xoopartners/partners/images/' . $ret['xoopartners_image'];
         } else {
             $ret['xoopartners_image_link'] = XOOPS_URL . '/' . $xoops->theme->resourcePath('/modules/xoopartners/images/partners.png');
+        }
+
+        if ($Partners_config['xoopartners_category']['use_categories']) {
+            $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
+            $ret['xoopartners_categories'] = $categories_handler->getParents($ret['xoopartners_category']);
+        }
+
+        if ( basename($xoops->getenv('PHP_SELF'), '.php') == 'index' && strpos($ret['xoopartners_description'], '[breakpage]') !== false ) {
+            $ret['xoopartners_description'] = substr( $ret['xoopartners_description'], 0, strpos($ret['xoopartners_description'], '[breakpage]') );
+        } else {
+            $ret['xoopartners_description'] = str_replace('[breakpage]', '', $ret['xoopartners_description']);
         }
         return $ret;
     }

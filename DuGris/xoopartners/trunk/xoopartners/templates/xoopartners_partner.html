@@ -17,20 +17,38 @@
                 </div>
             <{/if}>
 
-            <div class="itemTitle">
+            <div class="floatleft">
                 <{if $partner.xoopartners_image != "blank.gif"}>
-                    <i class="xoopartners-image-partner<{$partner.xoopartners_id}>">
+                    <div class="partnerImage">
+                        <img src="<{$partner.xoopartners_image_link}>">
+                    </div>
                 <{/if}>
                 <div class="partner<{$partner.xoopartners_id}>">
-                <{if $partners}>
-                    <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
-                <{else}>
-                    <a rel="external" href="<{$partner.xoopartners_url}>" title="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
-                <{/if}>
+                    <div class="itemTitle">
+                        <{if $partners}>
+                            <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
+                        <{else}>
+                            <a rel="external" href="<{$partner.xoopartners_url}>" title="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
+                        <{/if}>
+                    </div>
+
+                    <div class="itemInfo">
+                        <{if $partner.xoopartners_categories}>
+                            <div class="temCategories">
+                                <{$smarty.const._XOO_PARTNERS_CATEGORIES}> :
+                                <{foreachq from=$partner.xoopartners_categories item=category name=foo}>
+                                    <a href="<{$category.xoopartners_category_link}>" title="<{$category.xoopartners_category_title}>"><{$category.xoopartners_category_title}></a><{if !$smarty.foreach.foo.last}>,&nbsp;<{/if}>
+                                <{/foreach}>
+                            </div>
+                        <{/if}>
+
+                        <{if $message.xooblog_message_tags}>
+                            <div class="temTags">
+                                <{$smarty.const._XOO_PARTNERS_TAGS}> :
+                            </div>
+                        <{/if}>
+                    </div>
                 </div>
-                <{if $partner.xoopartners_image != "blank.gif"}>
-                    </i>
-                <{/if}>
             </div>
         </div>
 
@@ -52,15 +70,10 @@
                 </div>
                 <div class="clear"></div>
 
-                <{includeq file='module:xoosocialnetwork|xoosocialnetwork.html'}>
             </div>
+
+            <{includeq file='module:xoosocialnetwork|xoosocialnetwork.html'}>
         <{/if}>
-
-
-
-
-
-
     </div>
 <{else}>
     <div class="errorMsg">

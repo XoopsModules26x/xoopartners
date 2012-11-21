@@ -135,6 +135,18 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return $categories;
     }
 
+    public function getParents( $category_id )
+    {
+        $criteria = new CriteriaCompo();
+        $criteria->add( new Criteria('xoopartners_category_id', $category_id) ) ;
+        $ret = $this->getObjects($criteria, false, false);
+        if ($ret[0]['xoopartners_category_parent_id'] != 0) {
+            $tmp = $this->getParents( $ret[0]['xoopartners_category_parent_id'] );
+            $ret[] = $tmp[0];
+        }
+        return $ret;
+    }
+
     public function SetOnline( $category_id )
     {
         if ($category_id != 0){
