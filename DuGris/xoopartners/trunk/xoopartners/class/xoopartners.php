@@ -31,16 +31,19 @@ class Xoopartners extends XoopsObject
         $this->initVar('xoopartners_url',           XOBJ_DTYPE_TXTBOX,           '', true,     255);
         $this->initVar('xoopartners_image',         XOBJ_DTYPE_TXTBOX,  'blank.gif', false,    100);
         $this->initVar('xoopartners_order',         XOBJ_DTYPE_INT,               0, false,     3);
-        $this->initVar('xoopartners_display',       XOBJ_DTYPE_INT,               1, false,     1);
+        $this->initVar('xoopartners_online',        XOBJ_DTYPE_INT,               1, false,     1);
         $this->initVar('xoopartners_visit',         XOBJ_DTYPE_INT,               1, false,     10);
-        $this->initVar('xoopartners_view',          XOBJ_DTYPE_INT,               1, false,     10);
+        $this->initVar('xoopartners_hits',          XOBJ_DTYPE_INT,               1, false,     10);
 
         $xoops = Xoops::getInstance();
         if ($xoops->isAdminSide) {
-            $this->initVar('xoopartners_accepted',      XOBJ_DTYPE_INT,               1, false,     1);
+            $this->initVar('xoopartners_accepted',  XOBJ_DTYPE_INT,               1, false,     1);
         } else {
-            $this->initVar('xoopartners_accepted',      XOBJ_DTYPE_INT,               0, false,     1);
+            $this->initVar('xoopartners_accepted',  XOBJ_DTYPE_INT,               0, false,     1);
         }
+        $this->initVar('xoopartners_rates',         XOBJ_DTYPE_INT,               0, false,     1);
+        $this->initVar('xoopartners_like',          XOBJ_DTYPE_INT,               0, false,     1);
+        $this->initVar('xoopartners_dislike',       XOBJ_DTYPE_INT,               0, false,     1);
 
         // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
@@ -51,41 +54,10 @@ class Xoopartners extends XoopsObject
         $this->__construct();
     }
 
-    public function setView()
-    {
-        $this->setVar('xoopartners_display', 1);
-        return true;
-    }
-
-    public function setHide()
-    {
-        $this->setVar('xoopartners_display', 0);
-        return true;
-    }
-
     public function setVisit()
     {
         $visit = $this->getVar('xoopartners_visit') + 1;
         $this->setVar('xoopartners_visit', $visit);
-        return true;
-    }
-
-    public function setAccepted()
-    {
-        $this->setVar('xoopartners_accepted', 1);
-        return true;
-    }
-
-    public function setNotAccepted()
-    {
-        $this->setVar('xoopartners_accepted', 0);
-        return true;
-    }
-
-    public function setDisplay()
-    {
-        $view = $this->getVar('xoopartners_view') + 1;
-        $this->setVar('xoopartners_view', $view);
         return true;
     }
 
@@ -158,10 +130,56 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
             $criteria->add( new Criteria('xoopartners_category', $category_id) ) ;
         }
         $criteria->add( new Criteria('xoopartners_accepted', 1) ) ;
-        $criteria->add( new Criteria('xoopartners_display', 1) ) ;
+        $criteria->add( new Criteria('xoopartners_online', 1) ) ;
         $criteria->setSort( 'xoopartners_order' );
         $criteria->setOrder( 'asc' );
         return $this->getObjects($criteria, null, false);
+    }
+
+    public function SetOnline( $partner_id )
+    {
+        if ($partner_id != 0){
+            $partner = $this->get( $partner_id );
+            if ( $partner->getVar('xoopartners_online') == 1 ) {
+                $partner->setVar('xoopartners_online', 0);
+            } else {
+                $partner->setVar('xoopartners_online', 1);
+            }
+            $this->insert( $partner );
+            return true;
+        }
+        return false;
+    }
+
+    public function SetAccept( $partner_id )
+    {
+        if ($partner_id != 0){
+            $partner = $this->get( $partner_id );
+            if ( $partner->getVar('xoopartners_accepted') == 1 ) {
+                $partner->setVar('xoopartners_accepted', 0);
+            } else {
+                $partner->setVar('xoopartners_accepted', 1);
+            }
+            $this->insert( $partner );
+            return true;
+        }
+        return false;
+    }
+
+    public function SetRead( $partnerObj )
+    {
+        $read = $partnerObj->getVar('xoopartners_hits') + 1;
+        $partnerObj->setVar('xoopartners_hits', $read );
+        $this->insert( $partnerObj );
+        return true;
+    }
+
+    public function SetVisit( $partnerObj )
+    {
+        $read = $partnerObj->getVar('xoopartners_visit') + 1;
+        $partnerObj->setVar('xoopartners_visit', $read );
+        $this->insert( $partnerObj );
+        return true;
     }
 
     public function upload_images()

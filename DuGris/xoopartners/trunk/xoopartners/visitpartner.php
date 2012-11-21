@@ -23,19 +23,18 @@ error_reporting(0);
 $xoopsLogger->activated = false;
 
 $partner_id = $system->CleanVars($_REQUEST, 'partner_id', 0, 'int');
+$partner = $partners_handler->get($partner_id);
 
-if ( $partner_id != 0) {    $partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
-    $partner = $partners_handler->get($partner_id);
-
+if ( is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted') ) {
     $time = time();
     if ( !isset($_SESSION['xoopartner_visit' . $partner_id]) || $_SESSION['xoopartner_visit' . $partner_id] < $time ) {
-        $partner->setVisit();
-        $partners_handler->insert( $partner );
         $_SESSION['xoopartner_visit' . $partner_id] = $time + 3600;
+        $partners_handler->SetVisit( $partner );
     }
 
     echo "<html><head><meta http-equiv='Refresh' content='0; URL=" . $partner->getVar("xoopartners_url")."'></head><body></body></html>";
     exit();
+} else {    $xoops->tpl->assign('not_found', true);
 }
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
 ?>

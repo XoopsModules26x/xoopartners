@@ -20,5 +20,16 @@ return $config = array(
         'image_width'       => 100,
         'image_height'      => 100,
     ),
+
+    'xoopartners_qrcode'    => array(
+        'use_qrcode'        => 0,
+        'CorrectionLevel'   => 'L',
+        'matrixPointSize'   => 2,
+        'whiteMargin'       => 0,
+/*
+        'backgroundColor'   => 'FFFFFF',
+        'foregroundColor'   => '000000',
+*/
+    ),
 );
 ?>

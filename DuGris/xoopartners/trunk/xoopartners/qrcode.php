@@ -1,6 +1,6 @@
 <?php
 /**
- * Xoopartners module
+ * XooBlog module
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,19 +11,16 @@
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         Xoopartners
+ * @package         XooBlog
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
+ * @version         $Id: index.php 1152 2012-11-15 14:31:41Z DuGris $
  */
 
-define("_XOO_PARTNERS_CATEGORIES",                  "Categories");
-define("_XOO_PARTNERS_PARTNERS",                    "Partners");
-define("_XOO_PARTNERS_VISIT",                       "Visit: ");
-define("_XOO_PARTNERS_ERROR",                       "No such partner!");
-define("_XOO_PARTNERS_SAVED",                       "Your request has been registered");
-define("_XOO_PARTNERS_READS",                       "Read(s)");
-define("_XOO_PARTNERS_VISITS",                      "Visit(s)");
+include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+$url = $system->CleanVars($_REQUEST, 'url', '', 'string');
+extract($Blog_config['xooblog_qrcode']);
 
-define("_XOO_PARTNERS_NOTFOUND",                    "Partner not found");
+if ( $url != '' ) {    include XOOPS_PATH . '/phpqrcode/qrlib.php';
+    QRcode::png($url, false, $CorrectionLevel, $matrixPointSize, $whiteMargin );}
 ?>

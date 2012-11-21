@@ -78,7 +78,7 @@ class XoopartnersCategoriesForm extends XoopsThemeForm
         $this->addElement( new XoopsFormText(_XOO_PARTNERS_ORDER, 'xoopartners_category_order', 1, 3, $this->xoopsObject->getVar('xoopartners_category_order')) );
 
         // display
-        $this->addElement( new XoopsFormRadioYN(_XOO_PARTNERS_DISPLAY, 'xoopartners_category_display',  $this->xoopsObject->getVar('xoopartners_category_display')) );
+        $this->addElement( new XoopsFormRadioYN(_XOO_PARTNERS_DISPLAY, 'xoopartners_category_online',  $this->xoopsObject->getVar('xoopartners_category_online')) );
 
         // hidden
         $this->addElement( new XoopsFormHidden('xoopartners_category_id', $this->xoopsObject->getVar('xoopartners_category_id')) );
