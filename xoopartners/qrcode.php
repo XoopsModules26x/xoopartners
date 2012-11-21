@@ -19,7 +19,7 @@
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 $url = $system->CleanVars($_REQUEST, 'url', '', 'string');
-extract($Blog_config['xooblog_qrcode']);
+extract($Partners_config['xoopartners_qrcode']);
 
 if ( $url != '' ) {    include XOOPS_PATH . '/phpqrcode/qrlib.php';
     QRcode::png($url, false, $CorrectionLevel, $matrixPointSize, $whiteMargin );}

@@ -124,6 +124,7 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
             $this->addElement( $ecl_mode );
 
             // Matrix Point Size
+            $this->addElement( new XoopsFormHidden('xoopartners_qrcode[matrixPointSize]', 2) );
 /*
             $matrix_mode = new XoopsFormSelect(_MI_XOO_CONFIG_QRCODE_MATRIX, 'xoopartners_qrcode[matrixPointSize]', $xoopartners_qrcode['matrixPointSize']);
             for ($i = 1; $i <= 5; $i++) {
