@@ -1,20 +1,20 @@
 .item {
-    border:                1px solid #666;
+    border:                1px solid #ccc;
+    padding:               5px;
     margin-bottom:         1em;
 }
 .itemHead {
-    padding:               3px;
 }
 .itemTitle {
-    margin-top:            .5em;
     font-size:             1.2em;
     font-weight:           bold;
     font-variant:          small-caps;
 }
 .itemTitle a {
 }
-.itemBody {
-    margin:                5px;
+.itemBody {    clear:                 both;
+    padding:               5px;
+    border-top:            1px solid #ccc;
 }
 .itemText {
     clear:                 both;
@@ -27,9 +27,7 @@
 .itemQRcode {
     float:                 right;
 }
-.itemInfo {
-    background-color:      transparent;
-    padding:               3px;
+.itemInfo {    background-color:      transparent;
     color:                 #E98838;
     font-size:             .9em;
     font-style:            italic;
@@ -53,10 +51,11 @@
 }
 .itemFoot {
     background-color:      transparent;
-    margin:                10px;
+    padding:               5px;
     font-size:             .9em;
     font-style:            italic;
-    text-align:            right;
+    border-top:            1px solid #ccc;
+    border-bottom:         1px solid #ccc;
 }
 .categoryImage {
     float:                 left;
@@ -73,12 +72,10 @@
     filter:                alpha(opacity=30);
 }
 
-.partnerImage {
-    float:                 left;
-    margin:                .5em;
+.partnerImage {    float:                 left;
 }
 .partnerImage img {
-    margin:                5px 5px 0 5px;
+    margin:                5px 5px 0 0;
     opacity:               1;
     filter:                alpha(opacity=100);
 }

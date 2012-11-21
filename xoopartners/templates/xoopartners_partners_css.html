@@ -16,9 +16,8 @@
         .partner<{$csspartner.xoopartners_id}> {
             <{if $csspartner.xoopartners_image != "blank.gif"}>
             padding-left: <{$xoopartners_partner.image_width}>px;
-            <{/if}>
-            min-height: <{$xoopartners_partner.image_height}>px;
             margin-left: 10px;
+            <{/if}>
         }
     <{/foreach}>
 <{else}>
@@ -33,14 +32,13 @@
     .partner<{$partner.xoopartners_id}> {
         <{if $partner.xoopartners_image != "blank.gif"}>
         padding-left: <{$xoopartners_partner.image_width}>px;
+        margin-left: 10px;
         <{/if}>
         min-height: <{$xoopartners_partner.image_height}>px;
-        margin-left: 10px;
     }
 <{/if}>
 .partnerImage {
     min-height: <{$xoopartners_partner.image_height}>px;
-    vertical-align:middle;
 }
 
 .partnerImage img {
