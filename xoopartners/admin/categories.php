@@ -74,18 +74,9 @@ switch ($op) {    case 'save':
     break;
 
     case 'view':
+    case 'hide';
     $xoopartners_category_id = $system->CleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
-    $category = $categories_handler->get($xoopartners_category_id);
-    $category->setView();
-    $categories_handler->insert($category);
-    $xoops->redirect('categories.php', 5, _AM_XOO_PARTNERS_CATEGORY_SAVED);
-    break;
-
-    case 'hide':
-    $xoopartners_category_id = $system->CleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
-    $category = $categories_handler->get($xoopartners_category_id);
-    $category->setHide();
-    $categories_handler->insert($category);
+    $categories_handler->SetOnline($xoopartners_category_id);
     $xoops->redirect('categories.php', 5, _AM_XOO_PARTNERS_CATEGORY_SAVED);
     break;
 

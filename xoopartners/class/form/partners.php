@@ -92,9 +92,9 @@ class XoopartnersPartnersForm extends XoopsThemeForm
 
         // display
         if ($xoops->isAdminSide) {
-            $this->addElement( new XoopsFormRadioYN(_XOO_PARTNERS_DISPLAY, 'xoopartners_display',  $this->xoopsObject->getVar('xoopartners_display')) );
+            $this->addElement( new XoopsFormRadioYN(_XOO_PARTNERS_DISPLAY, 'xoopartners_online',  $this->xoopsObject->getVar('xoopartners_online')) );
         } else {
-            $this->addElement( new XoopsFormHidden('xoopartners_display', $this->xoopsObject->getVar('xoopartners_display')) );
+            $this->addElement( new XoopsFormHidden('xoopartners_online', $this->xoopsObject->getVar('xoopartners_online')) );
         }
 
         // accepted
@@ -107,6 +107,9 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         // hidden
         $this->addElement( new XoopsFormHidden('xoopartners_id', $this->xoopsObject->getVar('xoopartners_id')) );
         $this->addElement( new XoopsFormHidden('category_id', $category_id) );
+        $this->addElement( new XoopsFormHidden('xoopartners_rates', $this->xoopsObject->getVar('xoopartners_rates')) );
+        $this->addElement( new XoopsFormHidden('xoopartners_like', $this->xoopsObject->getVar('xoopartners_like')) );
+        $this->addElement( new XoopsFormHidden('xoopartners_dislike', $this->xoopsObject->getVar('xoopartners_dislike')) );
 
         // button
         $button_tray = new XoopsFormElementTray('', '');

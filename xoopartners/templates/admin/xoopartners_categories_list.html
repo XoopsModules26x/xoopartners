@@ -11,7 +11,7 @@
         </td>
 
         <td class="txtcenter">
-            <{if ( $category.xoopartners_category_display )}>
+            <{if ( $category.xoopartners_category_online )}>
                 <a href="categories.php?op=hide&amp;xoopartners_category_id=<{$category.xoopartners_category_id}>" title="<{$smarty.const._XOO_PARTNERS_SHOW_HIDE}>"><img src="<{xoImgUrl media/xoops/images/icons/16/on.png}>" alt="<{$smarty.const._AM_XOO_PARTNERS_HIDE}>"></a>
             <{else}>
                 <a href="categories.php?op=view&amp;xoopartners_category_id=<{$category.xoopartners_category_id}>" title="<{$smarty.const._XOO_PARTNERS_SHOW_HIDE}>"><img src="<{xoImgUrl media/xoops/images/icons/16/off.png}>" alt="<{$smarty.const._AM_XOO_PARTNERS_SHOW}>"></a>

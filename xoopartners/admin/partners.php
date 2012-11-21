@@ -105,35 +105,16 @@ switch ($op) {    case 'save':
     break;
 
     case 'view':
-    $xoopartners_id = $system->CleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
-    $partner = $partners_handler->get($xoopartners_id);
-    $partner->setView();
-    $partners_handler->insert($partner);
-    $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
-    break;
-
     case 'hide':
     $xoopartners_id = $system->CleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
-    $partner = $partners_handler->get($xoopartners_id);
-    $partner->setHide();
-    $partners_handler->insert($partner);
+    $partners_handler->SetOnline($xoopartners_id);
     $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
     break;
 
     case 'accept':
-    $xoopartners_id = $system->CleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
-    $partner = $partners_handler->get($xoopartners_id);
-    $partner->setAccepted();
-    $partners_handler->insert($partner);
-    $category = $categories_handler->Addpartner( $partner->getVar('xoopartners_category') );    $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
-    break;
-
     case 'naccept':
     $xoopartners_id = $system->CleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
-    $partner = $partners_handler->get($xoopartners_id);
-    $partner->setNotAccepted();
-    $partners_handler->insert($partner);
-    $category = $categories_handler->Delpartner( $partner->getVar('xoopartners_category') );
+    $partners_handler->SetAccept($xoopartners_id);
     $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
     break;
 

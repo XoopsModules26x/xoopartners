@@ -30,7 +30,7 @@ class Xoopartners_category extends XoopsObject
         $this->initVar('xoopartners_category_description',   XOBJ_DTYPE_TXTAREA,          '', false);
         $this->initVar('xoopartners_category_image',         XOBJ_DTYPE_TXTBOX,  'blank.gif', false,    100);
         $this->initVar('xoopartners_category_order',         XOBJ_DTYPE_INT,               0, false,     3);
-        $this->initVar('xoopartners_category_display',       XOBJ_DTYPE_INT,               1, false,     1);
+        $this->initVar('xoopartners_category_online',        XOBJ_DTYPE_INT,               1, false,     1);
         $this->initVar('xoopartners_category_partners',      XOBJ_DTYPE_INT,               0, false,     10);
 
         // Pour autoriser le html
@@ -40,18 +40,6 @@ class Xoopartners_category extends XoopsObject
     private function Xoopartners_category()
     {
         $this->__construct();
-    }
-
-    public function setView()
-    {
-        $this->setVar('xoopartners_category_display', 1);
-        return true;
-    }
-
-    public function setHide()
-    {
-        $this->setVar('xoopartners_category_display', 0);
-        return true;
     }
 
     public function toArray()
@@ -120,7 +108,7 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
     {
         $criteria = new CriteriaCompo();
         $criteria->add( new Criteria('xoopartners_category_parent_id', $category_parent_id) ) ;
-        $criteria->add( new Criteria('xoopartners_category_display', 1) ) ;
+        $criteria->add( new Criteria('xoopartners_category_online', 1) ) ;
         $criteria->add( new Criteria('xoopartners_category_partners', 0, '!=') ) ;
         $criteria->setSort( 'xoopartners_category_order' );
         $criteria->setOrder( 'asc' );
@@ -139,12 +127,27 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
             $categories[0]['xoopartners_category_description'] = _XOO_PARTNERS_CATEGORY_NONE;
             $categories[0]['xoopartners_category_image'] = 'blank.gif';
             $categories[0]['xoopartners_category_order'] = 0;
-            $categories[0]['xoopartners_category_display'] = 1;
+            $categories[0]['xoopartners_category_online'] = 1;
             $categories[0]['xoopartners_category_link'] = 'index.php';
             $categories[0]['xoopartners_category_image_link'] = XOOPS_URL . '/modules/xoopartners/images/default.png';;
             ksort($categories);
         }
         return $categories;
+    }
+
+    public function SetOnline( $category_id )
+    {
+        if ($category_id != 0){
+            $category = $this->get( $category_id );
+            if ( $category->getVar('xoopartners_category_online') == 1 ) {
+                $category->setVar('xoopartners_category_online', 0);
+            } else {
+                $category->setVar('xoopartners_category_online', 1);
+            }
+            $this->insert( $category );
+            return true;
+        }
+        return false;
     }
 
     public function Addpartner( $category_id )

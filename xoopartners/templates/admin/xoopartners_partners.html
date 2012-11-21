@@ -35,7 +35,7 @@
                 </td>
 
                 <td class="txtcenter">
-                    <{if ( $partner.xoopartners_display )}>
+                    <{if ( $partner.xoopartners_online )}>
                         <a href="partners.php?op=hide&amp;xoopartners_id=<{$partner.xoopartners_id}>&category_id=<{$category_id}>" title="<{$smarty.const._XOO_PARTNERS_SHOW_HIDE}>"><img src="<{xoImgUrl media/xoops/images/icons/16/on.png}>" alt="<{$smarty.const._AM_XOO_PARTNERS_HIDE}>"></a>
                     <{else}>
                         <a href="partners.php?op=view&amp;xoopartners_id=<{$partner.xoopartners_id}>&category_id=<{$category_id}>" title="<{$smarty.const._XOO_PARTNERS_SHOW_HIDE}>"><img src="<{xoImgUrl media/xoops/images/icons/16/off.png}>" alt="<{$smarty.const._AM_XOO_PARTNERS_SHOW}>"></a>
