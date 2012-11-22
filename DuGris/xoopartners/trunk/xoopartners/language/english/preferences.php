@@ -38,6 +38,14 @@ define("_MI_XOO_CONFIG_PAGE_LIMIT_DESC",      "Number of items to display on the
 define("_MI_XOO_CONFIG_USE_CATEGORIES",       "Use categories");
 define("_MI_XOO_CONFIG_MAIN_MENU",            "Display categories in main menu");
 
+// RLD
+define("_MI_XOO_CONFIG_RLD",                 "Rate / Like Dislike");
+define("_MI_XOO_CONFIG_RLD_MODE",            "Rate / Like Dislike");
+define("_MI_XOO_CONFIG_RLD_NONE",            "None");
+define("_MI_XOO_CONFIG_RLD_RATE",            "Rates");
+define("_MI_XOO_CONFIG_RLD_LIKEDISLIKE",     "Like / Dislike");
+define("_MI_XOO_CONFIG_RATE_SCALE",          "Number of stars for vote");
+
 // QRCode
 define("_MI_XOO_CONFIG_QRCODE",              "QR Code");
 define("_MI_XOO_CONFIG_QRCODE_USE",          "Use QR Code");

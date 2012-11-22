@@ -44,6 +44,7 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
 
         $this->CategoryForm();
         $this->PartnerForm();
+        $this->rldForm();
         $this->QRcodeForm();
 
         // button
@@ -105,6 +106,25 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
         // image_height
         $this->addElement( new XoopsFormText(_XOO_PARTNERS_IMAGE_HEIGHT, 'xoopartners_partner[image_height]', 1, 10, $xoopartners_partner['image_height']) );
     }
+
+    private function rldForm()
+    {
+        extract( $this->_config );
+        $this->insertBreak(_MI_XOO_CONFIG_RLD,'preferenceTitle');
+        // Rate / Like / Dislike Mode
+        $rld_mode = new XoopsFormSelect(_MI_XOO_CONFIG_RLD_MODE, 'xoopartners_rld[rld_mode]', $xoopartners_rld['rld_mode']);
+        $rld_mode->addOption('',            _MI_XOO_CONFIG_RLD_NONE);
+        $rld_mode->addOption('rate',        _MI_XOO_CONFIG_RLD_RATE);
+        $rld_mode->addOption('likedislike', _MI_XOO_CONFIG_RLD_LIKEDISLIKE);
+        $this->addElement( $rld_mode );
+
+        $rate_scale = new XoopsFormSelect(_MI_XOO_CONFIG_RATE_SCALE, 'xoopartners_rld[rate_scale]', $xoopartners_rld['rate_scale']);
+        for ($i=4; $i <= 10; $i++) {
+            $rate_scale->addOption($i, $i);
+        }
+        $this->addElement( $rate_scale );
+
+    }
 
     private function QRcodeForm()
     {

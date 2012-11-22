@@ -27,4 +27,14 @@ define("_XOO_PARTNERS_READS",                       "Read(s)");
 define("_XOO_PARTNERS_VISITS",                      "Visit(s)");
 
 define("_XOO_PARTNERS_NOTFOUND",                    "Partner not found");
+
+// Rates
+define("_XOO_PARTNERS_RATE_VOTE",              "Vote: ");
+define("_XOO_PARTNERS_RATE_COUNT",             "Number of votes: ");
+define("_XOO_PARTNERS_RATE_AVERAGE",           "Average: ");
+define("_XOO_PARTNERS_RATE_YOURVOTE",          "Your vote: ");
+
+// Like / Dislike
+define("_XOO_PARTNERS_LIKE",                   "Like");
+define("_XOO_PARTNERS_DISLIKE",                "Dislike");
 ?>

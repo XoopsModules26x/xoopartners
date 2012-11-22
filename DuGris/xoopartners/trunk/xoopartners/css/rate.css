@@ -1,0 +1,28 @@
+#rating {    float:                right;
+}
+#rating button {    background-image:     url('../icons/32/star_d.png');
+    background-repeat:    no-repeat;
+    background-size:      16px 16px;
+    width:                16px;    height:               16px;
+    margin:               0 -1px;
+    background-color:     #fff;
+    padding:              0;
+    color:                none;
+    border:               none;
+    cursor:               pointer;
+ 	border-radius:        0;;
+    -moz-border-radius:   0;
+    -webkit-border-radius:0;
+	box-shadow:0;
+    -moz-box-shadow:0;
+    -webkit-box-shadow:0;
+}
+#rating button:hover {    background-image:     url('../icons/32/star_o.png');
+}
+#stats {    float:                left;    margin-right:         10px;
+}
+.average {    font-weight:          bold;}
+.vote {
+    font-weight:          bold;
+    color:                #F00;
+}

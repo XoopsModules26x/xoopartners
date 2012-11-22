@@ -27,6 +27,8 @@ if ( is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartner
         $_SESSION['xoopartner_view' . $partner_id] = $time + 3600;
         $partners_handler->SetRead( $partner );
     }
+
+    $xoops->tpl->assign('security', $xoops->security->createToken() );
     $xoops->tpl->assign('partner', $partner->toArray() );
 } else {    $xoops->tpl->assign('not_found', true);
 }

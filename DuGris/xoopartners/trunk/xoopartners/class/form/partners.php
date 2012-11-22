@@ -60,9 +60,18 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         }
 
         // Partner Description
+        $editor_configs=array();
+        $editor_configs['name'] ='xoopartners_description';
+        $editor_configs['value'] = $this->xoopsObject->getVar('xoopartners_description');
+        $editor_configs['rows'] = 20;
+        $editor_configs['cols'] = 6;
+        $editor_configs['width'] = '100%';
+        $editor_configs['height'] = '400px';
         if ($xoops->isAdminSide) {
-            $this->addElement( new XoopsFormTextArea(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $this->xoopsObject->getVar('xoopartners_description'), 7, 50));
-        } else {            $this->addElement( new XoopsFormTextArea(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $this->xoopsObject->getVar('xoopartners_description'), 7, 50), true);
+            $editor_configs['editor'] = 'tinymce';
+            $this->addElement( new XoopsFormEditor(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $editor_configs), true );
+        } else {            $editor_configs['editor'] = 'dhtmltextarea';
+            $this->addElement( new XoopsFormEditor(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $editor_configs), true );
         }
 
         // image
