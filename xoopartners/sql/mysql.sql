@@ -27,3 +27,15 @@ CREATE TABLE `xoopartners_categories` (
   `xoopartners_category_partners` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`xoopartners_category_id`)
 ) ENGINE=MyISAM;
+
+CREATE TABLE `xoopartners_rld` (
+  `xoopartners_rld_id` int(11) NOT NULL AUTO_INCREMENT,
+  `xoopartners_rld_partner` int(11) NOT NULL DEFAULT '0',
+  `xoopartners_rld_uid` int(11) NOT NULL DEFAULT '0',
+  `xoopartners_rld_time` int(10) NOT NULL DEFAULT '0',
+  `xoopartners_rld_ip` mediumtext NOT NULL,
+  `xoopartners_rld_rates` tinyint(2) NOT NULL DEFAULT '0',
+  `xoopartners_rld_like` tinyint(1) NOT NULL DEFAULT '0',
+  `xoopartners_rld_dislike` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`xoopartners_rld_id`)
+) ENGINE=MyISAM COMMENT='RLD = Rates / Like / Dislike';

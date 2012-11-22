@@ -21,6 +21,11 @@ return $config = array(
         'image_height'      => 100,
     ),
 
+    'xoopartners_rld' => array(
+        'rld_mode'          => 'likedislike',
+        'rate_scale'        => 10,
+    ),
+
     'xoopartners_qrcode'    => array(
         'use_qrcode'        => 0,
         'CorrectionLevel'   => 'L',

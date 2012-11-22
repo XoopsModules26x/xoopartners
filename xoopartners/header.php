@@ -39,6 +39,7 @@ $xoops->tpl->assign('welcome', $Partners_config['xoopartners_welcome'] );
 $xoops->tpl->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
 $xoops->tpl->assign('xoopartners_partner', $Partners_config['xoopartners_partner'] );
 $xoops->tpl->assign('xoopartners_qrcode', $Partners_config['xoopartners_qrcode'] );
+$xoops->tpl->assign('xoopartners_rld', $Partners_config['xoopartners_rld'] );
 
 $xoops->tpl->assign('moduletitle', $xoops->module->name() );
 

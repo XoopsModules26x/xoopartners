@@ -60,14 +60,21 @@
 
         <{if !$partners}>
             <div class="itemFoot">
-                <div class="floatleft">
-                    <{$smarty.const._XOO_PARTNERS_READS}> : <{$partner.xoopartners_hits}>
-                    &nbsp;-&nbsp;
-                    <{$smarty.const._XOO_PARTNERS_VISITS}> : <{$partner.xoopartners_visit}>
+                <div class="itemStat floatleft">
+                    <button id="button-reads" title="<{$smarty.const._XOO_PARTNERS_READS}>"><i class="reads"></i><{$partner.xoopartners_hits}></button>
+                    <button id="button-visits" title="<{$smarty.const._XOO_PARTNERS_VISITS}>"><i class="visits"></i><{$partner.xoopartners_visit}></button>
                 </div>
-                <div class="floatright">
-                    <a rel="external" href="visitpartner.php?partner_id=<{$partner.xoopartners_id}>" title="<{$smarty.const._XOO_PARTNERS_VISIT}><{$partner.xoopartners_title}>"><img src="<{xoImgUrl modules/xoopartners/icons/32/weblink.png}>" alt="<{$smarty.const._XOO_PARTNERS_VISIT}><{$partner.xoopartners_title}>"></a>
-                </div>
+
+                <{if $xoopartners_rld.rld_mode != ''}>
+                    <div class="floatright">
+                        <{if $xoopartners_rld.rld_mode == 'rate'}>
+                            <{includeq file='module:xoopartners|xoopartners_partner_rate.html'}>
+                        <{else}>
+                            <{includeq file='module:xoopartners|xoopartners_partner_like_dislike.html'}>
+                        <{/if}>
+                    </div>
+                <{/if}>
+
                 <div class="clear"></div>
             </div>
 

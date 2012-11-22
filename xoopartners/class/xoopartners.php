@@ -85,12 +85,18 @@ class Xoopartners extends XoopsObject
         } else {
             $ret['xoopartners_description'] = str_replace('[breakpage]', '', $ret['xoopartners_description']);
         }
+//        $ret['xoopartners_description'] = stripSlashes($ret['xoopartners_description']);
+
+        $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
+        $ret['xoopartners_vote'] = $rld_handler->getCountByContent(1, $ret['xoopartners_id']);
+        $ret['xoopartners_yourvote'] = $rld_handler->getByVoting(1, $ret['xoopartners_id']);
         return $ret;
     }
 
 
     public function CleanVarsForDB()
     {
+        $myts = MyTextSanitizer::getInstance();
         $system = System::getInstance();
         foreach ( $this->getValues() as $k => $v ) {
             if ( $k != 'dohtml' ) {
@@ -103,6 +109,9 @@ class Xoopartners extends XoopsObject
                 } elseif ( $this->vars[$k]['data_type'] == XOBJ_DTYPE_ARRAY ) {
                     $value = $system->CleanVars($_POST, $k, $v, 'array');
                     $this->setVar( $k,  $value );
+                } elseif ( $this->vars[$k]['data_type'] == XOBJ_DTYPE_TXTAREA ) {
+                    $value = $system->CleanVars($_POST, $k, $v, 'string');
+                    $this->setVar( $k,  stripSlashes($value) );
                 } else {
                     $value = $system->CleanVars($_POST, $k, $v, 'string');
                     $this->setVar( $k,  $value );
@@ -192,6 +201,50 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
         $partnerObj->setVar('xoopartners_visit', $read );
         $this->insert( $partnerObj );
         return true;
+    }
+
+    public function SetLike_Dislike( $partner_id, $like_dislike )
+    {
+        if ($partner_id != 0){
+            $partner = $this->get( $partner_id );
+            if (is_object($partner) && count($partner) != 0) {
+                $xoops = Xoops::getInstance();
+                $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
+                if ( $ret = $rld_handler->SetLike_Dislike($partner_id, $like_dislike) ) {
+                    if ($like_dislike == 0) {
+                        $xoopartners_dislike = $partner->getVar('xoopartners_dislike') + 1;
+                        $partner->setVar('xoopartners_dislike', $xoopartners_dislike);
+                    } elseif ($like_dislike == 1) {
+                        $xoopartners_like = $partner->getVar('xoopartners_like') + 1;
+                        $partner->setVar('xoopartners_like', $xoopartners_like);
+                    }
+                    $this->insert( $partner );
+                    return $partner->toArray();
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public function SetRate( $partner_id, $rate )
+    {
+        if ($partner_id != 0){
+            $partner = $this->get( $partner_id );
+            if (is_object($partner) && count($partner) != 0) {
+                $xoops = Xoops::getInstance();
+                $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
+                if ( $ret = $rld_handler->SetRate($partner_id, $rate) ) {
+                    if ( is_array($ret) && count($ret) == 3 ) {
+                        $partner->setVar('xoopartners_rates', $rate['average']);
+                        $this->insert( $partner );
+                        return $ret;
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
     }
 
     public function upload_images()
