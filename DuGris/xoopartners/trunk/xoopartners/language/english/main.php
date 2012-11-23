@@ -17,19 +17,18 @@
  * @version         $Id$
  */
 
-define("_XOO_PARTNERS_CATEGORIES",                  "Categories");
-define("_XOO_PARTNERS_TAGS",                        "Tags");
-define("_XOO_PARTNERS_PARTNERS",                    "Partners");
-define("_XOO_PARTNERS_VISIT",                       "Visit: ");
-define("_XOO_PARTNERS_ERROR",                       "No such partner!");
-define("_XOO_PARTNERS_SAVED",                       "Your request has been registered");
-define("_XOO_PARTNERS_READS",                       "Read(s)");
-define("_XOO_PARTNERS_VISITS",                      "Visit(s)");
+define("_XOO_PARTNERS_CATEGORIES",             "Categories");
+define("_XOO_PARTNERS_TAGS",                   "Tags");
+define("_XOO_PARTNERS_PARTNERS",               "Partners");
+define("_XOO_PARTNERS_ERROR",                  "No such partner!");
+define("_XOO_PARTNERS_SAVED",                  "Your request has been registered");
+define("_XOO_PARTNERS_READS",                  "Read(s)");
+define("_XOO_PARTNERS_VISITS",                 "Visit(s)");
 
-define("_XOO_PARTNERS_NOTFOUND",                    "Partner not found");
+define("_XOO_PARTNERS_NOTFOUND",               "Partner not found");
 
 // Rates
-define("_XOO_PARTNERS_RATE_VOTE",              "Vote: ");
+define("_XOO_PARTNERS_RATE_VOTES",             "Vote(s)");
 define("_XOO_PARTNERS_RATE_COUNT",             "Number of votes: ");
 define("_XOO_PARTNERS_RATE_AVERAGE",           "Average: ");
 define("_XOO_PARTNERS_RATE_YOURVOTE",          "Your vote: ");

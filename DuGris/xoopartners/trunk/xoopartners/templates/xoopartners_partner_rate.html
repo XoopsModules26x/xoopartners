@@ -1,6 +1,8 @@
-<div id="stats">
-    <{$smarty.const._XOO_PARTNERS_RATE_VOTE}><span class="average"><{$partner.xoopartners_rates}></span> / <span class="voters"><{$partner.xoopartners_vote}></span>
+<div class="itemStat floatleft">
+    <button id="button-stats" title="<{$smarty.const._XOO_PARTNERS_RATE_VOTES}>"><i class="stats"></i>
+    <span class="average"><{$partner.xoopartners_rates}></span> / <span class="voters"><{$partner.xoopartners_vote}></span>
     <span class="yourvote <{if !$partner.xoopartners_yourvote}>hide<{/if}>">(<span class="vote"><{$partner.xoopartners_yourvote}></span>)</span>
+    </button>
 </div>
 
 <div id="rating" class="rating">
