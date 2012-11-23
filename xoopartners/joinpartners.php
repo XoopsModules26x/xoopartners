@@ -14,7 +14,7 @@
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id: visitpartner.php 1141 2012-11-14 23:56:05Z DuGris $
+ * @version         $Id$
  */
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';

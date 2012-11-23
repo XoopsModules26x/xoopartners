@@ -14,7 +14,7 @@
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id: index.php 1152 2012-11-15 14:31:41Z DuGris $
+ * @version         $Id$
  */
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
