@@ -26,9 +26,9 @@
                 <div class="partner<{$partner.xoopartners_id}>">
                     <div class="itemTitle">
                         <{if $partners}>
-                            <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><img src="<{xoImgUrl modules/xoopartners/icons/16/weblink.png}>" alt="<{$smarty.const._XOO_PARTNERS_VISIT}><{$partner.xoopartners_title}>">&nbsp;<{$partner.xoopartners_title}></a>
+                            <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><img src="<{xoImgUrl modules/xoopartners/icons/16/view.png}>" alt="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
                         <{else}>
-                            <a rel="external" href="visitpartner.php?partner_id=<{$partner.xoopartners_id}>" title="<{$partner.xoopartners_title}>"><img src="<{xoImgUrl modules/xoopartners/icons/16/weblink.png}>" alt="<{$smarty.const._XOO_PARTNERS_VISIT}><{$partner.xoopartners_title}>">&nbsp;<{$partner.xoopartners_title}></a>
+                            <a rel="external" href="visitpartner.php?partner_id=<{$partner.xoopartners_id}>" title="<{$partner.xoopartners_title}>"><img src="<{xoImgUrl modules/xoopartners/icons/16/weblink.png}>" alt="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
                         <{/if}>
                     </div>
 

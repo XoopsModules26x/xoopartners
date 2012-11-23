@@ -14,7 +14,7 @@
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id: xooblog_categories.php 1152 2012-11-15 14:31:41Z DuGris $
+ * @version         $Id$
  */
 
 defined('XOOPS_ROOT_PATH') or die('Restricted access');

@@ -105,7 +105,7 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
         $this->addElement( new XoopsFormText(_XOO_PARTNERS_IMAGE_WIDTH, 'xoopartners_partner[image_width]', 1, 10, $xoopartners_partner['image_width']) );
         // image_height
         $this->addElement( new XoopsFormText(_XOO_PARTNERS_IMAGE_HEIGHT, 'xoopartners_partner[image_height]', 1, 10, $xoopartners_partner['image_height']) );
-    }
+    }
 
     private function rldForm()
     {
@@ -123,7 +123,6 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
             $rate_scale->addOption($i, $i);
         }
         $this->addElement( $rate_scale );
-
     }
 
     private function QRcodeForm()
