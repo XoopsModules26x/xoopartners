@@ -90,14 +90,15 @@ class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
         return $instance;
     }
 
-    public function getCountByContent($partner_id)
+    public function getVotes($partner_id)
     {
         $criteria = new CriteriaCompo();
         $criteria->add( new Criteria('xoopartners_rld_partner', $partner_id) ) ;
+        $criteria->add( new Criteria('xoopartners_rld_rates', 0, '!=') ) ;
         return parent::getCount($criteria);
     }
 
-    public function getByVoting($partner_id)
+    public function getbyUser($partner_id)
     {
         $xoops = Xoops::getInstance();
         $uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
@@ -183,6 +184,7 @@ class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
     {
         $criteria = new CriteriaCompo();
         $criteria->add( new Criteria('xoopartners_rld_partner', $partner_id) ) ;
+        $criteria->add( new Criteria('xoopartners_rld_rates', 0, '!=') ) ;
 
         $res = $this->getObjects($criteria, false, false);
         $rates = 0;

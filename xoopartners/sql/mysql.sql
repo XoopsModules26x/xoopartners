@@ -10,7 +10,7 @@ CREATE TABLE `xoopartners` (
   `xoopartners_visit` int(11) NOT NULL DEFAULT '0',
   `xoopartners_hits` int(11) NOT NULL DEFAULT '0',
   `xoopartners_accepted` tinyint(1) NOT NULL DEFAULT '0',
-  `xoopartners_rates` float NOT NULL DEFAULT '0',
+  `xoopartners_rates` float(5,2) NOT NULL DEFAULT '0.00',
   `xoopartners_like` int(11) NOT NULL DEFAULT '0',
   `xoopartners_dislike` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`xoopartners_id`)

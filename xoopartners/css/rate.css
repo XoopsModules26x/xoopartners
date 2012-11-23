@@ -21,7 +21,8 @@
 }
 #stats {    float:                left;    margin-right:         10px;
 }
-.average {    font-weight:          bold;}
+.average {    font-weight:          bold;
+    margin-left:          10px;}
 .vote {
     font-weight:          bold;
     color:                #F00;

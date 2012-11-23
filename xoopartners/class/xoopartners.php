@@ -88,8 +88,8 @@ class Xoopartners extends XoopsObject
 //        $ret['xoopartners_description'] = stripSlashes($ret['xoopartners_description']);
 
         $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
-        $ret['xoopartners_vote'] = $rld_handler->getCountByContent(1, $ret['xoopartners_id']);
-        $ret['xoopartners_yourvote'] = $rld_handler->getByVoting(1, $ret['xoopartners_id']);
+        $ret['xoopartners_vote'] = $rld_handler->getVotes($ret['xoopartners_id']);
+        $ret['xoopartners_yourvote'] = $rld_handler->getbyUser($ret['xoopartners_id']);
         return $ret;
     }
 
@@ -236,7 +236,7 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
                 $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
                 if ( $ret = $rld_handler->SetRate($partner_id, $rate) ) {
                     if ( is_array($ret) && count($ret) == 3 ) {
-                        $partner->setVar('xoopartners_rates', $rate['average']);
+                        $partner->setVar('xoopartners_rates', $ret['average']);
                         $this->insert( $partner );
                         return $ret;
                     }
