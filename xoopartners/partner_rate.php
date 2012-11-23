@@ -28,8 +28,8 @@ if ( $xoops->security->check() ) {    $partner_id = $system->CleanVars($_REQUES
     $option = $system->CleanVars($_REQUEST, 'option', 2, 'int');
 
     $time = time();
-    if ( !isset($_SESSION['xoopartners_rate' . $partner_id]) || $_SESSION['xoopartner_rates' . $partner_id] < $time ) {
-        $_SESSION['xoopartners_rate' . $partner_id] = $time + 3600;
+    if ( !isset($_SESSION['xoopartners_rates' . $partner_id]) || $_SESSION['xoopartners_rates' . $partner_id] < $time ) {
+        $_SESSION['xoopartners_rates' . $partner_id] = $time + 3600;
         $partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
         $ret = $partners_handler->SetRate( $partner_id, $option );
         if ( is_array($ret) && count($ret) > 1) {            $ret['error'] = 0;
