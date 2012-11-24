@@ -74,7 +74,7 @@ class Xoopartners extends XoopsObject
     }
     public function getMetaKeywords( $limit=5 )
     {
-        $string = $this->getMetaDescription();
+        $string = $this->getMetaDescription() . ', ' . $this->getVar('xoopartners_title');
 
         $string = html_entity_decode( $string, ENT_QUOTES );
         $search_pattern=array("\t","\r\n","\r","\n",",",".","'",";",":",")","(",'"','?','!','{','}','[',']','<','>','/','+','_','\\','*','pagebreak','page');
