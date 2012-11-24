@@ -29,7 +29,12 @@ if ( is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartner
     }
 
     $xoops->tpl->assign('security', $xoops->security->createToken() );
+
     $xoops->tpl->assign('partner', $partner->toArray() );
+    $xoops->tpl->assign('xoops_pagetitle' , $partner->getVar('xoopartners_title') . ' - ' . $xoops->module->getVar('name') );
+    $xoops->theme->addMeta($type = 'meta', 'description', $partner->getMetaDescription() );
+    $xoops->theme->addMeta($type = 'meta', 'keywords', $partner->getMetaKeywords() );
+
 } else {    $xoops->tpl->assign('not_found', true);
 }
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';

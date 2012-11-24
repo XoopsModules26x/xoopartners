@@ -56,7 +56,6 @@ class Xoopartners_category extends XoopsObject
         return $ret;
     }
 
-
     public function CleanVarsForDB()
     {
         $system = System::getInstance();

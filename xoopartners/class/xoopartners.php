@@ -25,13 +25,14 @@ class Xoopartners extends XoopsObject
     public function __construct()
     {
         $this->initVar('xoopartners_id',            XOBJ_DTYPE_INT,               0, true,      11);
-        $this->initVar('xoopartners_category',      XOBJ_DTYPE_INT,               0, true,      11);
-        $this->initVar('xoopartners_title',         XOBJ_DTYPE_TXTBOX,           '', true,     255);
+        $this->initVar('xoopartners_category',      XOBJ_DTYPE_INT,               0, false,     11);
+        $this->initVar('xoopartners_uid',           XOBJ_DTYPE_INT,               0, false,      8);
+        $this->initVar('xoopartners_title',         XOBJ_DTYPE_TXTBOX,           '', false,    255);
         $this->initVar('xoopartners_description',   XOBJ_DTYPE_TXTAREA,          '', false);
-        $this->initVar('xoopartners_url',           XOBJ_DTYPE_TXTBOX,           '', true,     255);
+        $this->initVar('xoopartners_url',           XOBJ_DTYPE_TXTBOX,           '', false,    255);
         $this->initVar('xoopartners_image',         XOBJ_DTYPE_TXTBOX,  'blank.gif', false,    100);
-        $this->initVar('xoopartners_order',         XOBJ_DTYPE_INT,               0, false,     3);
-        $this->initVar('xoopartners_online',        XOBJ_DTYPE_INT,               1, false,     1);
+        $this->initVar('xoopartners_order',         XOBJ_DTYPE_INT,               0, false,      3);
+        $this->initVar('xoopartners_online',        XOBJ_DTYPE_INT,               1, false,      1);
         $this->initVar('xoopartners_visit',         XOBJ_DTYPE_INT,               1, false,     10);
         $this->initVar('xoopartners_hits',          XOBJ_DTYPE_INT,               1, false,     10);
 
@@ -44,6 +45,7 @@ class Xoopartners extends XoopsObject
         $this->initVar('xoopartners_rates',         XOBJ_DTYPE_INT,               0, false,     1);
         $this->initVar('xoopartners_like',          XOBJ_DTYPE_INT,               0, false,     1);
         $this->initVar('xoopartners_dislike',       XOBJ_DTYPE_INT,               0, false,     1);
+        $this->initVar('xoopartners_published',     XOBJ_DTYPE_STIME,        time(), false,     10);
 
         // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
@@ -61,13 +63,47 @@ class Xoopartners extends XoopsObject
         return true;
     }
 
+    public function getMetaDescription()
+    {
+        $string = $this->getVar('xoopartners_description');
+        $string = str_replace('[breakpage]', '', $string);
+        // remove html tags
+        $string = strip_tags( $string );
+//        return preg_replace(array('/&amp;/i'), array('&'), $string);
+        return $string;
+    }
+    public function getMetaKeywords( $limit=5 )
+    {
+        $string = $this->getMetaDescription();
+
+        $string = html_entity_decode( $string, ENT_QUOTES );
+        $search_pattern=array("\t","\r\n","\r","\n",",",".","'",";",":",")","(",'"','?','!','{','}','[',']','<','>','/','+','_','\\','*','pagebreak','page');
+        $replace_pattern=array(' ',' ',' ',' ',' ',' ',' ','','','','','','','','','','','','','','','','','','','','');
+        $string = str_replace($search_pattern, $replace_pattern, $string);
+
+        $tmpkeywords = explode(' ',$string);
+        $tmpkeywords = array_count_values($tmpkeywords);
+        arsort($tmpkeywords);
+        $tmpkeywords = array_keys($tmpkeywords);
+
+        $tmpkeywords = array_unique($tmpkeywords);
+        foreach($tmpkeywords as $keyword) {
+            if ( strlen(trim($keyword)) >= $limit && !is_numeric($keyword) ) {
+                $keywords[] = htmlentities( trim( $keyword ) );
+            }
+        }
+        return implode(', ', $keywords);
+    }
+
     public function toArray()
     {
         $xoops = Xoops::getInstance();
         $myts = MyTextSanitizer::getInstance();
+        XoopsLoad::load('xoopreferences', 'xoopartners');
         $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
 
         $ret = $this->getValues();
+
         $ret['xoopartners_link'] =  XOOPS_URL . '/modules/xoopartners/partner.php?partner_id=' . $ret['xoopartners_id'];
         if ($ret['xoopartners_image'] != 'blank.gif') {
             $ret['xoopartners_image_link'] = XOOPS_UPLOAD_URL . '/xoopartners/partners/images/' . $ret['xoopartners_image'];
@@ -75,17 +111,24 @@ class Xoopartners extends XoopsObject
             $ret['xoopartners_image_link'] = XOOPS_URL . '/' . $xoops->theme->resourcePath('/modules/xoopartners/images/partners.png');
         }
 
+        if ( $xoops->isUser() ) {
+            $ret['xoopartners_uid_name'] = $xoops->user->getUnameFromId($ret['xoopartners_uid'], true);
+        } else {
+            $member_handler = $xoops->getHandlerMember();
+            $user = $member_handler->getUser( $ret['xoopartners_uid'] );
+            $ret['xoopartners_uid_name'] = $user->getUnameFromId($ret['xoopartners_uid'], true);
+        }
+
         if ($Partners_config['xoopartners_category']['use_categories']) {
             $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
             $ret['xoopartners_categories'] = $categories_handler->getParents($ret['xoopartners_category']);
         }
 
-        if ( basename($xoops->getenv('PHP_SELF'), '.php') == 'index' && strpos($ret['xoopartners_description'], '[breakpage]') !== false ) {
+        if ( (basename($xoops->getenv('PHP_SELF'), '.php') == 'index' || basename($xoops->getenv('PHP_SELF'), '.php') == 'search' ) && strpos($ret['xoopartners_description'], '[breakpage]') !== false ) {
             $ret['xoopartners_description'] = substr( $ret['xoopartners_description'], 0, strpos($ret['xoopartners_description'], '[breakpage]') );
         } else {
             $ret['xoopartners_description'] = str_replace('[breakpage]', '', $ret['xoopartners_description']);
         }
-//        $ret['xoopartners_description'] = stripSlashes($ret['xoopartners_description']);
 
         $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
         $ret['xoopartners_vote'] = $rld_handler->getVotes($ret['xoopartners_id']);
@@ -152,6 +195,8 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
         }
         $criteria->add( new Criteria('xoopartners_accepted', 1) ) ;
         $criteria->add( new Criteria('xoopartners_online', 1) ) ;
+        $criteria->add( new Criteria('xoopartners_published', 0, '>') ) ;
+        $criteria->add( new Criteria('xoopartners_published', time(), '<=') ) ;
         $criteria->setSort( 'xoopartners_order' );
         $criteria->setOrder( 'asc' );
         return $this->getObjects($criteria, null, false);

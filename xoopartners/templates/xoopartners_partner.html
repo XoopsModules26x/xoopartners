@@ -33,6 +33,12 @@
                     </div>
 
                     <div class="itemInfo">
+                        <div class="temPoster">
+                            <{$smarty.const._XOO_PARTNERS_AUTHOR}> : <a href="<{xoAppUrl userinfo.php}>?uid=<{$partner.xoopartners_uid}>" title="<{$partner.xoopartners_uid_name}>">
+                            <{$partner.xoopartners_uid_name}>
+                            </a>
+                        </div>
+
                         <{if $partner.xoopartners_categories}>
                             <div class="temCategories">
                                 <{$smarty.const._XOO_PARTNERS_CATEGORIES}> :

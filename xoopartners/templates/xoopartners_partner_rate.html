@@ -7,7 +7,7 @@
 
 <div id="rating" class="rating">
     <{section name=foo loop=$xoopartners_rld.rate_scale}>
-        <button id="button-container-rate" class="option" value="<{$smarty.section.foo.iteration}>" title="<{$smarty.section.foo.iteration}>"></button>
+        <button id="button-stars<{if $smarty.section.foo.last}>-last<{/if}>" value="<{$smarty.section.foo.iteration}>" title="<{$smarty.section.foo.iteration}>"><i class="stars"></i></button>
     <{/section}>
     <input type="hidden" id="partner_id" value="<{$partner.xoopartners_id}>">
 </div>

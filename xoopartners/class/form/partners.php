@@ -59,6 +59,15 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         } else {            $this->addElement( new XoopsFormHidden('xoopartners_category', 0) );
         }
 
+        // submitter
+        if ($xoops->isAdminSide) {
+            $xoopartners_uid = $this->xoopsObject->isNew() ? $xoops->user->getVar('uid') : $this->xoopsObject->getVar('xoopartners_uid');
+            $this->addElement(new XoopsFormSelectUser(_XOO_PARTNERS_AUTHOR, 'xoopartners_uid', true, $xoopartners_uid, 1, false));
+        } else {
+            $xoopartners_uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
+            $this->addElement( new XoopsFormHidden('xoopartners_uid', $xoopartners_uid) );
+        }
+
         // Partner Description
         $editor_configs=array();
         $editor_configs['name'] ='xoopartners_description';
@@ -112,6 +121,10 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         } else {
             $this->addElement( new XoopsFormHidden('xoopartners_accepted', $this->xoopsObject->getVar('xoopartners_accepted')) );
         }
+
+        // Published date
+        $published = ($this->xoopsObject->getVar('xoopartners_published') == 0) ? time() : $this->xoopsObject->getVar('xoopartners_published');
+        $this->addElement( new XoopsFormDateTime(_XOO_PARTNERS_PUBLISHED, 'xoopartners_published', 2, $published, false) );
 
         // hidden
         $this->addElement( new XoopsFormHidden('xoopartners_id', $this->xoopsObject->getVar('xoopartners_id')) );

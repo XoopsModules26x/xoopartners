@@ -63,11 +63,6 @@
 .itemStat {
     font-size:              2em;
 }
-
-.itemStat {
-    font-size:              2em;
-}
-
 #button-reads, #button-visits, #button-stats {
     background:             -moz-linear-gradient(bottom, #dadada, #fff);
     background:             -webkit-gradient(linear, center bottom, center top, from(#dadada), to(#fff));
@@ -87,10 +82,8 @@
     border-radius:          0px 3px 3px 0px;
 }
 #button-stats {
-    border-radius:          3px 3px 3px 3px;
+    border-radius:          3px 0px 0px 3px;
     width:                  auto;
-    padding:                0 10px;
-    margin-right:           10px;
 }
 .reads, .visits, .stats {
     background-size:        16px 18px;
