@@ -30,10 +30,3 @@
 }
 .thumbs-down {    background :   url("../icons/16/dislike.png") no-repeat scroll 0 0 transparent;
 }
-
-	.tup-hover{
-		background : url("images/icons.png") no-repeat scroll -37px -138px transparent;
-	}
-	.tdown-hover{
-		background : url("images/icons.png") no-repeat scroll -36px -255px transparent;
-	}

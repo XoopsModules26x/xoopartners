@@ -119,4 +119,9 @@ $modversion['blocks'][$i]['template']       = 'xoopartners_block.html';
 
 // Preferences
 $i = 0;
+
+// Search
+$modversion['hasSearch'] = 1;
+$modversion['search']['file'] = "include/search.php";
+$modversion['search']['func'] = "xoopartners_search";
 ?>

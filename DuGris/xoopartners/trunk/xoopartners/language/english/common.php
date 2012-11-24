@@ -29,6 +29,7 @@ define("_XOO_PARTNERS_URL",                    "Url");
 // Common
 define("_XOO_PARTNERS_TITLE",                  "Title");
 define("_XOO_PARTNERS_DESCRIPTION",            "Description");
+define("_XOO_PARTNERS_AUTHOR",                 "Author");
 define("_XOO_PARTNERS_SHOW_HIDE",              "Show / Hide");
 define("_XOO_PARTNERS_IMAGE",                  "Image");
 define("_XOO_PARTNERS_DISPLAY",                "Display").
@@ -36,6 +37,8 @@ define("_XOO_PARTNERS_ORDER",                  "Order");
 define("_XOO_PARTNERS_ACCEPTED",               "Accepted");
 define("_XOO_PARTNERS_ACCEPTED_YES",           "Accept this partnership");
 define("_XOO_PARTNERS_ACCEPTED_NO",            "Not accept this partnership");
+define("_XOO_PARTNERS_PUBLISHED",              "Publication date");
+
 
 // Common images
 define("_XOO_PARTNERS_IMAGE_SIZE",             "Maximum size of image files (K0)");
