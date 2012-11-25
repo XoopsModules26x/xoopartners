@@ -3,17 +3,22 @@
 @import url(like_dislike.css);
 @import url(rate.css);
 
-.xoopartnersSection {    border:             1px solid #eee;
+.xoopartnersSection {
+    border:             1px solid #eee;
     margin-bottom:      2em;
     padding:            1em;
 }
-.xoopartnersTitle {    margin-bottom:      1em;
-    padding-bottom:     .5em;    border-bottom:      1px solid #eee;
+.xoopartnersTitle {
+    margin-bottom:      1em;
+    padding-bottom:     .5em;
+    border-bottom:      1px solid #eee;
     font-size:          19.5px;
     text-align:         center;
 }
-.xoopartner {    margin:             20px 20px;
-    text-align:         right;}
+.xoopartner {
+    margin:             20px 20px;
+    text-align:         right;
+}
 
 .xoopartner img {
     width:              20px;
@@ -74,11 +79,15 @@
     color:                 #529214;
     border-color:          #c6d880;
 }
-.floatleft {    float:                 left;
+.floatleft {
+    float:                 left;
     margin:                0;
     padding-left:          0;
-    border:                0;}
-.floatright {    float:                 right;
+    border:                0;
+}
+.floatright {
+    float:                 right;
     margin:                0;
-    padding:               0;
-    border:                0;}
+    padding-right:       0;
+    border:                0;
+}

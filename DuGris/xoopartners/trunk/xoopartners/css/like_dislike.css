@@ -3,8 +3,8 @@
 
 #button-container-like, #button-container-unlike {    background:    -moz-linear-gradient(bottom, #dadada, #fff);
     background:    -webkit-gradient(linear, center bottom, center top, from(#dadada), to(#fff));
-    border:        1px solid #CCCCCC;
-    color:         #000000;
+    border:        1px solid #ccc;
+    color:         #000;
     cursor:        pointer;
     height:        2em;
     width :        70px;
@@ -13,10 +13,10 @@
     float:         left;
 }
 #button-container-like {
-    border-radius: 3px 0px 0px 3px;
+    border-radius: 3px 0 0 3px;
 }
 #button-container-unlike {
-    border-radius: 0px 3px 3px 0px;
+    border-radius: 0 3px 3px 0;
 }
 
 .thumbs-up, .thumbs-down {    position:      relative;
