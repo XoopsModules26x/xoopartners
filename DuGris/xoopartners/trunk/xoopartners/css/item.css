@@ -63,7 +63,7 @@
 .itemStat {
     font-size:              2em;
 }
-#button-reads, #button-visits, #button-stats {
+#button-reads, #button-visits {
     background:             -moz-linear-gradient(bottom, #dadada, #fff);
     background:             -webkit-gradient(linear, center bottom, center top, from(#dadada), to(#fff));
     border:                 1px solid #ccc;
@@ -81,11 +81,7 @@
 #button-visits {
     border-radius:          0 3px 3px 0;
 }
-#button-stats {
-    border-radius:          3px 0 0 3px;
-    width:                  auto;
-}
-.reads, .visits, .stats {
+.reads, .visits {
     background-size:        16px 18px;
     background-repeat:      no-repeat;
     background-position:    0 0;
@@ -102,9 +98,6 @@
 .visits {
     background-image:       url("../icons/16/weblink.png");
 }
-.stats {
-    background-image:       url("../icons/16/stats.png");
-}
 .categoryImage {
     float:                  left;
     margin:                 .5em;
@@ -119,7 +112,6 @@
     opacity:                .3;
     filter:                 alpha(opacity=30);
 }
-
 .partnerImage {    float:                  left;
 }
 .partnerImage img {
@@ -127,7 +119,6 @@
     opacity:                1;
     filter:                 alpha(opacity=100);
 }
-
 .partnerImage img:hover {
     opacity:                .3;
     filter:                 alpha(opacity=30);

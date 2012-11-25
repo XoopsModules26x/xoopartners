@@ -1,7 +1,36 @@
+#button-stats {
+    background:             -moz-linear-gradient(bottom, #dadada, #fff);
+    background:             -webkit-gradient(linear, center bottom, center top, from(#dadada), to(#fff));
+    border:                 1px solid #CCCCCC;
+    color:                  #000000;
+    cursor:                 pointer;
+    height:                 2em;
+    width :                 70px;
+    font-size:              .6em;
+    line-height:            1.5em;
+    float:                  left;
+}
+#button-stats {
+    border-radius:          3px 0px 0px 3px;
+    width:                  auto;
+}
+.stats {
+    background-size:        16px 18px;
+    background-repeat:      no-repeat;
+    background-position:    0 0;
+    position:               relative;
+    height:                 20px;
+    display:                block;
+    width:                  20px;
+    clear:                  right;
+    float:                  left;
+}
+.stats {
+    background-image:       url("../icons/16/stats.png");
+}
 #rating {    float:                  right;
     font-size:              2em;
 }
-
 #button-stars {
     background:             -moz-linear-gradient(bottom, #dadada, #fff);
     background:             -webkit-gradient(linear, center bottom, center top, from(#dadada), to(#fff));
