@@ -65,7 +65,8 @@ class Xoopartners extends XoopsObject
 
     public function getMetaDescription()
     {
-        $string = $this->getVar('xoopartners_description');
+        $myts = MyTextSanitizer::getInstance();
+        $string = $myts->undoHtmlSpecialChars( $this->getVar('xoopartners_description') );
         $string = str_replace('[breakpage]', '', $string);
         // remove html tags
         $string = strip_tags( $string );
