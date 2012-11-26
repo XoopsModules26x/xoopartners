@@ -17,13 +17,27 @@
  * @version         $Id$
  */
 
-define("_MB_XOO_PARTNERS_CONFIG_MODE_NEWS",            "News");
-define("_MB_XOO_PARTNERS_CONFIG_MODE_LIST",            "List");
-define("_MB_XOO_PARTNERS_CONFIG_MODE_TABLE",           "Table");
-define("_MB_XOO_PARTNERS_CONFIG_MODE_SELECT",          "Select");
-define("_MB_XOO_PARTNERS_CONFIG_MODE_IMAGES",          "Images");
+define("_MB_XOO_PARTNERS_MODE",           "Display mode of the main page");
+define("_MB_XOO_PARTNERS_MODE_NEWS",      "News");
+define("_MB_XOO_PARTNERS_MODE_LIST",      "List");
+define("_MB_XOO_PARTNERS_MODE_TABLE",     "Table");
+define("_MB_XOO_PARTNERS_MODE_SELECT",    "Select");
+define("_MB_XOO_PARTNERS_MODE_IMAGES",    "Images");
 
-define("_MB_XOO_PARTNERS_CONFIG_PARTNER_MODE",         "Display mode of the main page");
-define("_MB_XOO_PARTNERS_CATEGORY_TITLE",              "Category");
-define("_XOO_PARTNERS_CATEGORY_NONE",                  "No category");
+define("_MB_XOO_PARTNERS_CATEGORY_TITLE", "Category");
+define("_XOO_PARTNERS_CATEGORY_NONE",     "No category");
+
+define("_MB_XOO_PARTNERS_SORT",           "Sort by: ");
+define("_MB_XOO_PARTNERS_SORT_ID",        "ID");
+define("_MB_XOO_PARTNERS_SORT_ORDER",     "Order");
+define("_MB_XOO_PARTNERS_SORT_RECENTS",   "Recents");
+define("_MB_XOO_PARTNERS_SORT_HITS",      "Hits");
+define("_MB_XOO_PARTNERS_SORT_RATES",     "Rates");
+define("_MB_XOO_PARTNERS_SORT_LIKE",      "Like");
+define("_MB_XOO_PARTNERS_SORT_DISLIKE",   "Dislike");
+define("_MB_XOO_PARTNERS_SORT_RANDOM",    "Random");
+
+define("_MB_XOO_PARTNERS_ORDER",          "Order: ");
+define("_MB_XOO_PARTNERS_ORDER_ASC",      "Ascending");
+define("_MB_XOO_PARTNERS_ORDER_DESC",     "Descending");
 ?>

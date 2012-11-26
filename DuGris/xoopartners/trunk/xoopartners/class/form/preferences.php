@@ -113,7 +113,7 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
         $this->insertBreak(_MI_XOO_CONFIG_RLD,'preferenceTitle');
         // Rate / Like / Dislike Mode
         $rld_mode = new XoopsFormSelect(_MI_XOO_CONFIG_RLD_MODE, 'xoopartners_rld[rld_mode]', $xoopartners_rld['rld_mode']);
-        $rld_mode->addOption('',            _MI_XOO_CONFIG_RLD_NONE);
+        $rld_mode->addOption('none',        _MI_XOO_CONFIG_RLD_NONE);
         $rld_mode->addOption('rate',        _MI_XOO_CONFIG_RLD_RATE);
         $rld_mode->addOption('likedislike', _MI_XOO_CONFIG_RLD_LIKEDISLIKE);
         $this->addElement( $rld_mode );
