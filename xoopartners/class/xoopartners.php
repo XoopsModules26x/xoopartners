@@ -186,7 +186,7 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
         return $this->getObjects($criteria, null, false);
     }
 
-    public function GetPartners( $category_id = 0 )
+    public function GetPartners( $category_id = 0, $sort = 'order', $order = 'asc' )
     {
         $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
         $criteria = new CriteriaCompo();
@@ -197,8 +197,14 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
         $criteria->add( new Criteria('xoopartners_online', 1) ) ;
         $criteria->add( new Criteria('xoopartners_published', 0, '>') ) ;
         $criteria->add( new Criteria('xoopartners_published', time(), '<=') ) ;
-        $criteria->setSort( 'xoopartners_order' );
-        $criteria->setOrder( 'asc' );
+
+        if ( $sort == 'random' ) {
+            $criteria->setSort( 'rand()' );
+        } else {
+            $criteria->setSort( 'xoopartners_' . $sort );
+        }
+        $criteria->setOrder( $order );
+
         return $this->getObjects($criteria, null, false);
     }
 

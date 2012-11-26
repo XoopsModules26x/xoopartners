@@ -114,7 +114,7 @@ $modversion['blocks'][$i]['name']           = _MI_XOO_XOOPARTNERS_BLOCK_NAME;
 $modversion['blocks'][$i]['description']    = '';
 $modversion['blocks'][$i]['show_func']      = 'xoopartners_show';
 $modversion['blocks'][$i]['edit_func']      = 'xoopartners_edit';
-$modversion['blocks'][$i]['options']        = 'images|0';
+$modversion['blocks'][$i]['options']        = 'images|published|asc';
 $modversion['blocks'][$i]['template']       = 'xoopartners_block.html';
 
 // Preferences

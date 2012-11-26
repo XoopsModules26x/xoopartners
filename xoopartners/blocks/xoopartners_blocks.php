@@ -29,8 +29,8 @@ function xoopartners_show($options)
     $xooparnters_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
 
     $block['template'] = $options[0];
-    $options[1] = isset( $options[1] ) ? $options[1] : -1;
-    $block['partners'] = $xooparnters_handler->GetPartners( $options[1] );
+    $options[3] = isset( $options[3] ) ? $options[3] : -1;
+    $block['partners'] = $xooparnters_handler->GetPartners( $options[3], $options[1], $options[2] );
     $block['xoopartners_partner'] = $Partners_config['xoopartners_partner'];
 
     $xoops->tpl->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
@@ -41,20 +41,44 @@ function xoopartners_show($options)
 function xoopartners_edit($options)
 {    $xoops = Xoops::getInstance();    $block_form = new XoopsFormElementTray('&nbsp;', '<br />');
 
-    $tmp = new XoopsFormSelect(_MB_XOO_PARTNERS_CONFIG_PARTNER_MODE . ' : ', 'options[0]', $options[0]);
-    $tmp->addOption('list', _MB_XOO_PARTNERS_CONFIG_MODE_LIST);
-    $tmp->addOption('table', _MB_XOO_PARTNERS_CONFIG_MODE_TABLE);
-    $tmp->addOption('news', _MB_XOO_PARTNERS_CONFIG_MODE_NEWS);
-    $tmp->addOption('images', _MB_XOO_PARTNERS_CONFIG_MODE_IMAGES);
-    $block_form->addElement($tmp);
+    $display_mode = new XoopsFormSelect(_MB_XOO_PARTNERS_MODE . ' : ', 'options[0]', $options[0]);
+    $display_mode->addOption('list', _MB_XOO_PARTNERS_MODE_LIST);
+    $display_mode->addOption('table', _MB_XOO_PARTNERS_MODE_TABLE);
+    $display_mode->addOption('news', _MB_XOO_PARTNERS_MODE_NEWS);
+    $display_mode->addOption('images', _MB_XOO_PARTNERS_MODE_IMAGES);
+    $block_form->addElement($display_mode);
 
     XoopsLoad::load('xoopreferences', 'xoopartners');
     $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
-    if ($Partners_config['xoopartners_category']['use_categories']) {            $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
-            ob_start();
-            $categories_handler->makeSelectBox('options[1]', $options[1] );
-            $block_form->addElement(new XoopsFormLabel(_MB_XOO_PARTNERS_CATEGORY_TITLE, ob_get_contents()));
-            ob_end_clean();
+
+    $sort_mode = new XoopsFormSelect(_MB_XOO_PARTNERS_SORT . ' : ', 'options[1]', $options[1]);
+    $sort_mode->addOption('id',        _MB_XOO_PARTNERS_SORT_ID);
+    $sort_mode->addOption('order',     _MB_XOO_PARTNERS_SORT_ORDER);
+    $sort_mode->addOption('published', _MB_XOO_PARTNERS_SORT_RECENTS);
+    $sort_mode->addOption('hits',      _MB_XOO_PARTNERS_SORT_HITS);
+
+    if ( $Partners_config['xoopartners_rld']['rld_mode'] != 'none' ) {
+        if ( $Xooghost_config['xoopartners_rld']['rld_mode'] == 'rate' ) {
+            $sort_mode->addOption('rates',     _MB_XOO_PARTNERS_SORT_RATES);
+        } else {
+            $sort_mode->addOption('like',      _MB_XOO_PARTNERS_SORT_LIKE);
+            $sort_mode->addOption('dislike',   _MB_XOO_PARTNERS_SORT_DISLIKE);
+        }
+    }
+    $sort_mode->addOption('random',    _MB_XOO_PARTNERS_SORT_RANDOM);
+    $block_form->addElement($sort_mode);
+
+    $order_mode = new XoopsFormSelect(_MB_XOO_PARTNERS_ORDER . ' : ', 'options[2]', $options[2]);
+    $order_mode->addOption('asc',  _MB_XOO_PARTNERS_ORDER_ASC);
+    $order_mode->addOption('desc', _MB_XOO_PARTNERS_ORDER_DESC);
+    $block_form->addElement($order_mode);
+
+    if ($Partners_config['xoopartners_category']['use_categories']) {
+        $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
+        ob_start();
+        $categories_handler->makeSelectBox('options[3]', $options[3] );
+        $block_form->addElement(new XoopsFormLabel(_MB_XOO_PARTNERS_CATEGORY_TITLE, ob_get_contents()));
+        ob_end_clean();
     }
 
 	return $block_form->render();
