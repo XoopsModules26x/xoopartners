@@ -18,6 +18,7 @@
  */
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+$_SESSION['xoopartners_stat'] = true;
 
 $partner_id = $system->CleanVars($_REQUEST, 'partner_id', 0, 'int');
 $partner = $partners_handler->get($partner_id);

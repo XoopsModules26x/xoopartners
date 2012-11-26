@@ -130,9 +130,11 @@ class Xoopartners extends XoopsObject
             $ret['xoopartners_description'] = str_replace('[breakpage]', '', $ret['xoopartners_description']);
         }
 
-        $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
-        $ret['xoopartners_vote'] = $rld_handler->getVotes($ret['xoopartners_id']);
-        $ret['xoopartners_yourvote'] = $rld_handler->getbyUser($ret['xoopartners_id']);
+        if ( isset($_SESSION['xoopartners_stat'])) {
+            $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
+            $ret['xoopartners_vote'] = $rld_handler->getVotes($ret['xoopartners_id']);
+            $ret['xoopartners_yourvote'] = $rld_handler->getbyUser($ret['xoopartners_id']);
+        }
         return $ret;
     }
 
