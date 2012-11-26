@@ -41,7 +41,6 @@ function getMetaKeywords( $string, $limit = 5)
     // remove html tags
     $string = strip_tags( $string );
 
-
     $string = html_entity_decode( $string, ENT_QUOTES );
     $search_pattern=array("\t","\r\n","\r","\n",",",".","'",";",":",")","(",'"','?','!','{','}','[',']','<','>','/','+','_','\\','*','pagebreak','page');
     $replace_pattern=array(' ',' ',' ',' ',' ',' ',' ','','','','','','','','','','','','','','','','','','','','');

@@ -103,19 +103,21 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return $categories;
     }
 
-    public function GetCategories( $category_parent_id = 0, $main = true, $sub = true)
+    public function GetCategories( $category_parent_id = 0, $main = true, $sub = true, $empty = false)
     {
         $criteria = new CriteriaCompo();
         $criteria->add( new Criteria('xoopartners_category_parent_id', $category_parent_id) ) ;
         $criteria->add( new Criteria('xoopartners_category_online', 1) ) ;
-        $criteria->add( new Criteria('xoopartners_category_partners', 0, '!=') ) ;
+        if ($empty) {
+            $criteria->add( new Criteria('xoopartners_category_partners', 0, '!=') ) ;
+        }
         $criteria->setSort( 'xoopartners_category_order' );
         $criteria->setOrder( 'asc' );
 
         $categories = $this->getObjects($criteria, true, false);
         if ($sub) {
             foreach ($categories as $k => $category) {
-                $categories[$k]['categories'] = $this->GetCategories($category['xoopartners_category_id'], false);
+                $categories[$k]['categories'] = $this->GetCategories($category['xoopartners_category_id'], false, $sub, $empty);
             }
         }
 
