@@ -300,7 +300,7 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
         return false;
     }
 
-    public function upload_images()
+    public function upload_images( $image_name )
     {
         $xoops = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig( 'xoopartners' );
@@ -311,7 +311,8 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
         $ret = array();
         foreach ( $_POST['xoops_upload_file'] as $k => $input_image ) {
             if ( $_FILES[$input_image]['tmp_name'] != '' || is_readable( $_FILES[$input_image]['tmp_name'] ) ) {
-                $uploader->setTargetFileName( $this->CleanImage($_FILES[$input_image]['name']) );
+                $path_parts = pathinfo( $_FILES[$input_image]['name'] );
+                $uploader->setTargetFileName( $this->CleanImage( $image_name . '.' . $path_parts['extension'] ) );
                 if ( $uploader->fetchMedia( $_POST['xoops_upload_file'][$k] ) ) {
                     if ( $uploader->upload() ) {
                         $ret[$input_image] = array( 'filename' => $uploader->getSavedFileName(), 'error' => false, 'message' => '');

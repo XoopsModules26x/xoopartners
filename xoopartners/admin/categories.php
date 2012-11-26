@@ -35,7 +35,7 @@ switch ($op) {    case 'save':
 
     // uploads images
     $myts = MyTextSanitizer::getInstance();
-    $upload_images = $categories_handler->upload_images();
+    $upload_images = $categories_handler->upload_images( $category->getVar('xoopartners_category_title') );
 
     if ( is_array( $upload_images ) && count( $upload_images) != 0 ) {
         foreach ($upload_images as $k => $reponse ) {

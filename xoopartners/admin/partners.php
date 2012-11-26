@@ -39,7 +39,7 @@ switch ($op) {    case 'save':
 
     // uploads images
     $myts = MyTextSanitizer::getInstance();
-    $upload_images = $partners_handler->upload_images();
+    $upload_images = $partners_handler->upload_images( $partner->getVar('xoopartners_title') );
 
     if ( is_array( $upload_images ) && count( $upload_images) != 0 ) {
         foreach ($upload_images as $k => $reponse ) {
