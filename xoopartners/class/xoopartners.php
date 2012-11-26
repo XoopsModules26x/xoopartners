@@ -105,6 +105,11 @@ class Xoopartners extends XoopsObject
 
         $ret = $this->getValues();
 
+        $ret['xoopartners_date_day'] = date('d', $ret['xoopartners_published'] );
+        $ret['xoopartners_date_month'] = date('m', $ret['xoopartners_published'] );
+        $ret['xoopartners_date_year'] = date('Y', $ret['xoopartners_published'] );
+        $ret['xoopartners_published'] = date(_SHORTDATESTRING, $ret['xoopartners_published']);
+
         $ret['xoopartners_link'] =  XOOPS_URL . '/modules/xoopartners/partner.php?partner_id=' . $ret['xoopartners_id'];
         if ($ret['xoopartners_image'] != 'blank.gif') {
             $ret['xoopartners_image_link'] = XOOPS_UPLOAD_URL . '/xoopartners/partners/images/' . $ret['xoopartners_image'];
