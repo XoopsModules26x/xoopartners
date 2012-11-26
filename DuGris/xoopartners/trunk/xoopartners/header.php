@@ -18,6 +18,7 @@
  */
 
 include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include dirname(__FILE__) . '/include/functions.php';
 
 XoopsLoad::load('xoopreferences', 'xoopartners');
 $Partners_config = XooPartnersPreferences::getInstance()->getConfig();
