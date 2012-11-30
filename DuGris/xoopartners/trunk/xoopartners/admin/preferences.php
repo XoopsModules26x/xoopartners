@@ -29,7 +29,7 @@ switch ($op) {    case 'save':
     // Write configuration file
     $object = new XooPartnersPreferences();
     $object->writeConfig( $object->Prepare2Save() );
-    $xoops->redirect("preferences.php", 3, _AM_XOO_PARTNERS_SAVED);
+    $xoops->redirect("preferences.php", 3, _XOO_CONFIG_SAVED);
     break;
     default:
     $form = $xoops->getModuleForm(null, 'preferences', 'xoopartners');

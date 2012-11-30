@@ -37,10 +37,10 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
     {        extract( $this->_config );
         parent::__construct('', "form_preferences", "preferences.php", 'post', true);
         $this->setExtra('enctype="multipart/form-data"');
-        $this->insertBreak(_MI_XOO_CONFIG_MAINPAGE,'preferenceTitle');
+        $this->insertBreak(_XOO_CONFIG_MAINPAGE,'preferenceTitle');
 
         //welcome
-        $this->addElement( new XoopsFormTextArea(_MI_XOO_CONFIG_WELCOME, 'xoopartners_welcome', $xoopartners_welcome, 12, 12) );
+        $this->addElement( new XoopsFormTextArea(_XOO_CONFIG_WELCOME, 'xoopartners_welcome', $xoopartners_welcome, 12, 12) );
 
         $this->CategoryForm();
         $this->PartnerForm();
@@ -62,20 +62,20 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
     {
         extract( $this->_config );
         // Category
-        $this->insertBreak(_MI_XOO_CONFIG_CATEGORY,'preferenceTitle');
+        $this->insertBreak(_XOO_CONFIG_CATEGORY,'preferenceTitle');
 
         // use category
-        $this->addElement( new XoopsFormRadioYN(_MI_XOO_CONFIG_USE_CATEGORIES, 'xoopartners_category[use_categories]', $xoopartners_category['use_categories']) );
+        $this->addElement( new XoopsFormRadioYN(_XOO_CONFIG_USE_CATEGORIES, 'xoopartners_category[use_categories]', $xoopartners_category['use_categories']) );
 
         // main menu
-        $this->addElement( new XoopsFormRadioYN(_MI_XOO_CONFIG_MAIN_MENU, 'xoopartners_category[main_menu]', $xoopartners_category['main_menu']) );
+        $this->addElement( new XoopsFormRadioYN(_XOO_CONFIG_MAIN_MENU, 'xoopartners_category[main_menu]', $xoopartners_category['main_menu']) );
 
         // Category mode
-        $category_mode = new XoopsFormSelect(_MI_XOO_CONFIG_CATEGORY_MODE, 'xoopartners_category[display_mode]', $xoopartners_category['display_mode']);
-        $category_mode->addOption('list',   _MI_XOO_CONFIG_MODE_LIST);
-        $category_mode->addOption('table',  _MI_XOO_CONFIG_MODE_TABLE);
-        $category_mode->addOption('select', _MI_XOO_CONFIG_MODE_SELECT);
-        $category_mode->addOption('images', _MI_XOO_CONFIG_MODE_IMAGES);
+        $category_mode = new XoopsFormSelect(_XOO_CONFIG_CATEGORY_MODE, 'xoopartners_category[display_mode]', $xoopartners_category['display_mode']);
+        $category_mode->addOption('list',   _XOO_CONFIG_MODE_LIST);
+        $category_mode->addOption('table',  _XOO_CONFIG_MODE_TABLE);
+        $category_mode->addOption('select', _XOO_CONFIG_MODE_SELECT);
+        $category_mode->addOption('images', _XOO_CONFIG_MODE_IMAGES);
         $this->addElement( $category_mode );
 
         // image_size
@@ -89,14 +89,14 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
     private function PartnerForm()
     {        extract( $this->_config );
         // Partner
-        $this->insertBreak(_MI_XOO_CONFIG_PARTNER,'preferenceTitle');
+        $this->insertBreak(_XOO_CONFIG_PARTNER,'preferenceTitle');
 
         // Partner mode
-        $partner_mode = new XoopsFormSelect(_MI_XOO_CONFIG_PARTNER_MODE, 'xoopartners_partner[display_mode]', $xoopartners_partner['display_mode']);
-        $partner_mode->addOption('list',   _MI_XOO_CONFIG_MODE_LIST);
-        $partner_mode->addOption('table',  _MI_XOO_CONFIG_MODE_TABLE);
-        $partner_mode->addOption('news',   _MI_XOO_CONFIG_MODE_NEWS);
-        $partner_mode->addOption('images', _MI_XOO_CONFIG_MODE_IMAGES);
+        $partner_mode = new XoopsFormSelect(_XOO_CONFIG_PARTNER_MODE, 'xoopartners_partner[display_mode]', $xoopartners_partner['display_mode']);
+        $partner_mode->addOption('list',   _XOO_CONFIG_MODE_LIST);
+        $partner_mode->addOption('table',  _XOO_CONFIG_MODE_TABLE);
+        $partner_mode->addOption('news',   _XOO_CONFIG_MODE_NEWS);
+        $partner_mode->addOption('images', _XOO_CONFIG_MODE_IMAGES);
         $this->addElement( $partner_mode );
 
         // image_size
@@ -110,15 +110,15 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
     private function rldForm()
     {
         extract( $this->_config );
-        $this->insertBreak(_MI_XOO_CONFIG_RLD,'preferenceTitle');
+        $this->insertBreak(_XOO_CONFIG_RLD,'preferenceTitle');
         // Rate / Like / Dislike Mode
-        $rld_mode = new XoopsFormSelect(_MI_XOO_CONFIG_RLD_MODE, 'xoopartners_rld[rld_mode]', $xoopartners_rld['rld_mode']);
-        $rld_mode->addOption('none',        _MI_XOO_CONFIG_RLD_NONE);
-        $rld_mode->addOption('rate',        _MI_XOO_CONFIG_RLD_RATE);
-        $rld_mode->addOption('likedislike', _MI_XOO_CONFIG_RLD_LIKEDISLIKE);
+        $rld_mode = new XoopsFormSelect(_XOO_CONFIG_RLD_MODE, 'xoopartners_rld[rld_mode]', $xoopartners_rld['rld_mode']);
+        $rld_mode->addOption('none',        _XOO_CONFIG_RLD_NONE);
+        $rld_mode->addOption('rate',        _XOO_CONFIG_RLD_RATE);
+        $rld_mode->addOption('likedislike', _XOO_CONFIG_RLD_LIKEDISLIKE);
         $this->addElement( $rld_mode );
 
-        $rate_scale = new XoopsFormSelect(_MI_XOO_CONFIG_RATE_SCALE, 'xoopartners_rld[rate_scale]', $xoopartners_rld['rate_scale']);
+        $rate_scale = new XoopsFormSelect(_XOO_CONFIG_RATE_SCALE, 'xoopartners_rld[rate_scale]', $xoopartners_rld['rate_scale']);
         for ($i=4; $i <= 10; $i++) {
             $rate_scale->addOption($i, $i);
         }
@@ -129,23 +129,23 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
     {
         if ( file_exists(XOOPS_PATH . '/phpqrcode/qrlib.php') ) {
             extract( $this->_config );
-            $this->insertBreak(_MI_XOO_CONFIG_QRCODE,'preferenceTitle');
+            $this->insertBreak(_XOO_CONFIG_QRCODE,'preferenceTitle');
 
             // use QR code
-            $this->addElement( new XoopsFormRadioYN(_MI_XOO_CONFIG_QRCODE_USE, 'xoopartners_qrcode[use_qrcode]', $xoopartners_qrcode['use_qrcode']) );
+            $this->addElement( new XoopsFormRadioYN(_XOO_CONFIG_QRCODE_USE, 'xoopartners_qrcode[use_qrcode]', $xoopartners_qrcode['use_qrcode']) );
 
             // Error Correction Level
-            $ecl_mode = new XoopsFormSelect(_MI_XOO_CONFIG_QRCODE_ECL, 'xoopartners_qrcode[CorrectionLevel]', $xoopartners_qrcode['CorrectionLevel']);
-            $ecl_mode->addOption('L',   _MI_XOO_CONFIG_QRCODE_ECL_L);
-            $ecl_mode->addOption('M',   _MI_XOO_CONFIG_QRCODE_ECL_M);
-            $ecl_mode->addOption('Q',   _MI_XOO_CONFIG_QRCODE_ECL_Q);
-            $ecl_mode->addOption('H',   _MI_XOO_CONFIG_QRCODE_ECL_H);
+            $ecl_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_ECL, 'xoopartners_qrcode[CorrectionLevel]', $xoopartners_qrcode['CorrectionLevel']);
+            $ecl_mode->addOption('L',   _XOO_CONFIG_QRCODE_ECL_L);
+            $ecl_mode->addOption('M',   _XOO_CONFIG_QRCODE_ECL_M);
+            $ecl_mode->addOption('Q',   _XOO_CONFIG_QRCODE_ECL_Q);
+            $ecl_mode->addOption('H',   _XOO_CONFIG_QRCODE_ECL_H);
             $this->addElement( $ecl_mode );
 
             // Matrix Point Size
             $this->addElement( new XoopsFormHidden('xoopartners_qrcode[matrixPointSize]', 2) );
 /*
-            $matrix_mode = new XoopsFormSelect(_MI_XOO_CONFIG_QRCODE_MATRIX, 'xoopartners_qrcode[matrixPointSize]', $xoopartners_qrcode['matrixPointSize']);
+            $matrix_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_MATRIX, 'xoopartners_qrcode[matrixPointSize]', $xoopartners_qrcode['matrixPointSize']);
             for ($i = 1; $i <= 5; $i++) {
                 $matrix_mode->addOption($i, $i * 37 . ' px');
             }
@@ -153,7 +153,7 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
 */
 
             // Margin
-            $margin_mode = new XoopsFormSelect(_MI_XOO_CONFIG_QRCODE_MARGIN, 'xoopartners_qrcode[whiteMargin]', $xoopartners_qrcode['whiteMargin']);
+            $margin_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_MARGIN, 'xoopartners_qrcode[whiteMargin]', $xoopartners_qrcode['whiteMargin']);
             for ($i = 0; $i <= 20; $i++) {
                 $margin_mode->addOption($i,   $i);
             }
