@@ -93,10 +93,10 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
 
         // Partner mode
         $partner_mode = new XoopsFormSelect(_XOO_CONFIG_PARTNER_MODE, 'xoopartners_partner[display_mode]', $xoopartners_partner['display_mode']);
+        $partner_mode->addOption('blog',   _XOO_CONFIG_MODE_BLOG);
+        $partner_mode->addOption('images', _XOO_CONFIG_MODE_IMAGES);
         $partner_mode->addOption('list',   _XOO_CONFIG_MODE_LIST);
         $partner_mode->addOption('table',  _XOO_CONFIG_MODE_TABLE);
-        $partner_mode->addOption('news',   _XOO_CONFIG_MODE_NEWS);
-        $partner_mode->addOption('images', _XOO_CONFIG_MODE_IMAGES);
         $this->addElement( $partner_mode );
 
         // image_size

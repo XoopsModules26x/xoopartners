@@ -132,6 +132,7 @@ class Xoopartners extends XoopsObject
 
         if ( (basename($xoops->getenv('PHP_SELF'), '.php') == 'index' || basename($xoops->getenv('PHP_SELF'), '.php') == 'search' ) && strpos($ret['xoopartners_description'], '[breakpage]') !== false ) {
             $ret['xoopartners_description'] = substr( $ret['xoopartners_description'], 0, strpos($ret['xoopartners_description'], '[breakpage]') );
+            $ret['readmore'] = true;
         } else {
             $ret['xoopartners_description'] = str_replace('[breakpage]', '', $ret['xoopartners_description']);
         }

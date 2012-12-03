@@ -26,7 +26,7 @@
                 <div class="partner<{$partner.xoopartners_id}>">
                     <div class="itemTitle">
                         <{if $partners}>
-                            <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><img src="<{xoImgUrl modules/xoopartners/icons/16/view.png}>" alt="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
+                            <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
                         <{else}>
                             <a rel="external" href="visitpartner.php?partner_id=<{$partner.xoopartners_id}>" title="<{$partner.xoopartners_title}>"><img src="<{xoImgUrl modules/xoopartners/icons/16/weblink.png}>" alt="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
                         <{/if}>
@@ -56,11 +56,22 @@
             </div>
         </div>
 
-        <div class="itemBody">
-            <div class="itemText">
-                <{$partner.xoopartners_description}>
+        <{if $partner.xoopartners_description}>
+            <div class="itemBody">
+                <div class="itemText">
+                    <{$partner.xoopartners_description}>
+                </div>
             </div>
-        </div>
+        <{else}>
+            <div class="clear"></div>
+        <{/if}>
+
+        <{if $partner.readmore}>
+            <div class="itemFoot floatright">
+                <a href="<{$partner.xoopartners_link}>" title="<{$smarty.const._XOO_PARTNERS_READMORE}>"><{$smarty.const._XOO_PARTNERS_READMORE}></a>
+            </div>
+            <div class="clear"></div>
+        <{/if}>
 
         <{if !$partners}>
             <div class="itemFoot">
