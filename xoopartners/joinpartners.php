@@ -33,7 +33,7 @@ if ( isset( $_GET ) ){
 
 switch ($op) {
     case 'save':
-    if ( !$GLOBALS['xoopsSecurity']->check() ) {
+    if ( !$xoops->security->check() ) {
         $xoops->redirect('index.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
     }
 
@@ -48,7 +48,7 @@ switch ($op) {
 
     // uploads images
     $myts = MyTextSanitizer::getInstance();
-    $upload_images = $partners_handler->upload_images();
+    $upload_images = $partners_handler->upload_images( $partner->getVar('xoopartners_title') );
 
     if ( is_array( $upload_images ) && count( $upload_images) != 0 ) {
         foreach ($upload_images as $k => $reponse ) {
@@ -67,7 +67,7 @@ switch ($op) {
         if ( isset($errors) && count($errors) != 0) {
             $msg .= '<br />' . implode('<br />', $errors);;
         }
-        $xoops->redirect('joinpartners.php', 5, $msg);
+        $xoops->redirect('index.php', 5, $msg);
     }
     break;
 

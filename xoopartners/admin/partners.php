@@ -22,7 +22,7 @@ include dirname(__FILE__) . '/header.php';
 $category_id = $system->CleanVars($_REQUEST, 'category_id', 0, 'int');
 
 switch ($op) {    case 'save':
-    if ( !$GLOBALS['xoopsSecurity']->check() ) {
+    if ( !$xoops->security->check() ) {
         $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
     }
 
@@ -53,12 +53,19 @@ switch ($op) {    case 'save':
         $partner->setVar('xoopartners_image', $myts->htmlspecialchars( $_POST['image_list'] ) );
     }
 
-    if ($partner_id = $partners_handler->insert($partner)) {        $partner = $partners_handler->get( $partner_id );
+    if ($partner_id = $partners_handler->insert($partner)) {        $msg = _AM_XOO_PARTNERS_SAVED;
+        $partner = $partners_handler->get( $partner_id );
+
+        // tags
+        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {
+            $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+            $msg .= '<br />' . $xootags_handler->updateByItem( 'tags', $partner_id, $xoopartners_category) ;
+        }
+
         if ($partner->getVar('xoopartners_accepted')) {            if ($category_id != $partner->getVar('xoopartners_category')) {                $categories_handler->Delpartner( $category_id );
                 $categories_handler->Addpartner( $partner->getVar('xoopartners_category') );
             }        }
 
-        $msg = _AM_XOO_PARTNERS_SAVED;
         if ( isset($errors) && count($errors) != 0) {
             $msg .= '<br />' . implode('<br />', $errors);;
         }
@@ -87,7 +94,7 @@ switch ($op) {    case 'save':
         if ($partner = $partners_handler->get($xoopartners_id) ) {
             $delete = $system->CleanVars( $_POST, 'ok', 0, 'int' );
             if ($delete == 1) {
-                if ( !$GLOBALS['xoopsSecurity']->check() ) {
+                if ( !$xoops->security->check() ) {
                     $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
                 $categories_handler->Delpartner( $partner->getVar('xoopartners_category') );

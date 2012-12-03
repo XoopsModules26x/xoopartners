@@ -3,6 +3,14 @@
 @import url(like_dislike.css);
 @import url(rate.css);
 
+.xoopartnersMsg {
+    padding:               1em;
+    margin-bottom:         1em;
+    text-align:            center;
+    background-color:      #f1f1f1;
+    color:                 #049cd9;
+    border:                2px solid #049cd9;
+}
 .xoopartnersSection {
     border:             1px solid #eee;
     margin-bottom:      2em;
