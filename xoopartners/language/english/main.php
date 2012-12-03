@@ -26,6 +26,7 @@ define("_XOO_PARTNERS_READS",                  "Read(s)");
 define("_XOO_PARTNERS_VISITS",                 "Visit(s)");
 
 define("_XOO_PARTNERS_NOTFOUND",               "Partner not found");
+define("_XOO_PARTNERS_READMORE",               "Read more ...");
 
 // Rates
 define("_XOO_PARTNERS_RATE_VOTES",             "Vote(s)");

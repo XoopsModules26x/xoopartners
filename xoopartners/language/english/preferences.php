@@ -28,7 +28,7 @@ define("_XOO_CONFIG_MAIN",                 "Display pages in main menu");
 define("_XOO_CONFIG_WELCOME",              "Text to display in index page");
 
 define("_XOO_CONFIG_CATEGORY_MODE",        "Display mode of the main page");
-define("_XOO_CONFIG_MODE_NEWS",            "News");
+define("_XOO_CONFIG_MODE_BLOG",            "Blog");
 define("_XOO_CONFIG_MODE_LIST",            "List");
 define("_XOO_CONFIG_MODE_TABLE",           "Table");
 define("_XOO_CONFIG_MODE_SELECT",          "Select");
