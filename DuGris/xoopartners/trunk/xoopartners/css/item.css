@@ -35,8 +35,11 @@
     font-size:              .9em;
     font-style:             italic;
 }
-.itemPoster, .itemCaregories, .itemTags {
-    clear:                  left;
+.itemPoster, .itemCaregories, .itemTags, .itemDate {
+    padding:               5px 0;
+}
+.itemPoster span, .itemCaregories span, .itemTags span, .itemDate span {
+    color:                 #08C;
 }
 .itemInfo a:hover, .itemTitle a:hover, .itemPoster a:hover, .itemAdminLink a:hover { text-decoration: underline;}
 .itemImage {

@@ -141,6 +141,12 @@ class Xoopartners extends XoopsObject
             $ret['xoopartners_vote'] = $rld_handler->getVotes($ret['xoopartners_id']);
             $ret['xoopartners_yourvote'] = $rld_handler->getbyUser($ret['xoopartners_id']);
         }
+
+        // tags
+        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {
+            $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+            $ret['tags'] = $xootags_handler->getbyItem($ret['xoopartners_id']);
+        }
         return $ret;
     }
 

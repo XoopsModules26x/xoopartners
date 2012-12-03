@@ -31,7 +31,7 @@ class XooPartnersPreferences
     {        $xoops = Xoops::getInstance();
         $this->configFile = 'config.' . $this->module_dirname . '.php';
 
-        $this->configPath = XOOPS_VAR_PATH . '/configs/xoopartners/';
+        $this->configPath = XOOPS_VAR_PATH . '/configs/' . $this->module_dirname . '/';
 
         $this->basicConfig = $this->loadBasicConfig();
         $this->config = @$this->loadConfig();
@@ -155,11 +155,11 @@ class XooPartnersPreferences
     }
 
     public function Prepare2Save( $data = null, $module = true)
-    {        $xoops = Xoops::getInstance();        if ( !isset($data) ) {            $data = $_POST;        }
+    {        if ( !isset($data) ) {            $data = $_POST;        }
 
         $config = array();
         foreach ( array_keys($data) as $k) {
-            if ( is_array($data[$k]) ) {                $config[$k] = $this->Prepare2Save( $data[$k], false );            } else {                if ( strstr($k, $xoops->module->dirname() . '_') || !$module ) {
+            if ( is_array($data[$k]) ) {                $config[$k] = $this->Prepare2Save( $data[$k], false );            } else {                if ( strstr($k, $this->module_dirname . '_') || !$module ) {
                     $config[$k] = $data[$k];
                 }
             }

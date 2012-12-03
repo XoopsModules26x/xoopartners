@@ -35,6 +35,8 @@ class XoopartnersPartnersForm extends XoopsThemeForm
     public function PartnerForm( $category_id = 0 )
     {        global $partners_handler, $categories_handler;
         $xoops = Xoops::getInstance();
+        //XoopsLoad::load('xoopsform/formmail', 'core');
+        //XoopsLoad::load('xoopsform/formurl', 'core');
         $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
 
         if ($this->xoopsObject->isNew() ) {            $script = ($xoops->isAdminSide) ? 'partners.php' : 'joinpartners.php';
@@ -83,6 +85,16 @@ class XoopartnersPartnersForm extends XoopsThemeForm
             $this->addElement( new XoopsFormEditor(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $editor_configs), true );
         }
 
+        // tags
+        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {
+            if ($xoops->isAdminSide) {
+                $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
+                $tagform = $TagForm_handler->TagsForm( 'tags', $this->xoopsObject->getVar('xoopartners_id'));
+                $this->addElement( $tagform );
+            } else {                $this->addElement( new XoopsFormHidden('tags', '') );
+            }
+        }
+
         // image
         $upload_msg[] = _XOO_PARTNERS_IMAGE_SIZE . ' : ' . $Partners_config['xoopartners_partner']['image_size'];
         $upload_msg[] = _XOO_PARTNERS_IMAGE_WIDTH . ' : ' . $Partners_config['xoopartners_partner']['image_width'];
@@ -123,8 +135,11 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         }
 
         // Published date
-        $published = ($this->xoopsObject->getVar('xoopartners_published') == 0) ? time() : $this->xoopsObject->getVar('xoopartners_published');
-        $this->addElement( new XoopsFormDateTime(_XOO_PARTNERS_PUBLISHED, 'xoopartners_published', 2, $published, false) );
+        if ($xoops->isAdminSide) {
+            $published = ($this->xoopsObject->getVar('xoopartners_published') == 0) ? time() : $this->xoopsObject->getVar('xoopartners_published');
+            $this->addElement( new XoopsFormDateTime(_XOO_PARTNERS_PUBLISHED, 'xoopartners_published', 2, $published, false) );
+        } else {            $this->addElement( new XoopsFormHidden('xoopartners_published', time() ) );
+        }
 
         // hidden
         $this->addElement( new XoopsFormHidden('xoopartners_id', $this->xoopsObject->getVar('xoopartners_id')) );

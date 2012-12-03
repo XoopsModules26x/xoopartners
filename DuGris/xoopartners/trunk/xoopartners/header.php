@@ -37,6 +37,7 @@ $xoops->theme->addStylesheet('modules/xoopartners/css/module.css');
 $xoops->tpl->assign('template', $Partners_config['xoopartners_main_mode'] );
 $xoops->tpl->assign('welcome', $Partners_config['xoopartners_welcome'] );
 
+$xoops->tpl->assign('welcome', $Partners_config['xoopartners_welcome'] );
 $xoops->tpl->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
 $xoops->tpl->assign('xoopartners_partner', $Partners_config['xoopartners_partner'] );
 $xoops->tpl->assign('xoopartners_qrcode', $Partners_config['xoopartners_qrcode'] );

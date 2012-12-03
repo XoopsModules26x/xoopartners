@@ -33,14 +33,14 @@
                     </div>
 
                     <div class="itemInfo">
-                        <div class="temPoster">
+                        <div class="itemPoster">
                             <{$smarty.const._XOO_PARTNERS_AUTHOR}> : <a href="<{xoAppUrl userinfo.php}>?uid=<{$partner.xoopartners_uid}>" title="<{$partner.xoopartners_uid_name}>">
                             <{$partner.xoopartners_uid_name}>
                             </a>
                         </div>
 
                         <{if $partner.xoopartners_categories}>
-                            <div class="temCategories">
+                            <div class="itemCategories">
                                 <{$smarty.const._XOO_PARTNERS_CATEGORIES}> :
                                 <{foreachq from=$partner.xoopartners_categories item=category name=foo}>
                                     <a href="<{$category.xoopartners_category_link}>" title="<{$category.xoopartners_category_title}>"><{$category.xoopartners_category_title}></a><{if !$smarty.foreach.foo.last}>,&nbsp;<{/if}>
@@ -48,10 +48,8 @@
                             </div>
                         <{/if}>
 
-                        <{if $message.xooblog_message_tags}>
-                            <div class="temTags">
-                                <{$smarty.const._XOO_PARTNERS_TAGS}> :
-                            </div>
+                        <{if $partner.tags}>
+                            <{includeq file="module:xootags|xootags_bar.html" tags=$partner.tags}>
                         <{/if}>
                     </div>
                 </div>

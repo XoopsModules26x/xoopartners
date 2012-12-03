@@ -20,7 +20,7 @@
 include dirname(__FILE__) . '/header.php';
 
 switch ($op) {    case 'save':
-    if ( !$GLOBALS['xoopsSecurity']->check() ) {
+    if ( !$xoops->security->check() ) {
         $xoops->redirect('categories.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
     }
 
