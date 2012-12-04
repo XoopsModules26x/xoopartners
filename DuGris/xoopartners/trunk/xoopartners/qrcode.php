@@ -21,6 +21,41 @@ include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 $url = $system->CleanVars($_REQUEST, 'url', '', 'string');
 extract($Partners_config['xoopartners_qrcode']);
 
-if ( $url != '' ) {    include XOOPS_PATH . '/phpqrcode/qrlib.php';
-    QRcode::png($url, false, $CorrectionLevel, $matrixPointSize, $whiteMargin );}
+if ( count($_GET) > 1 ) {
+    if ( isset($_GET['bgcolor']) ) {
+        $xoops->registry->set('XP_BGCOLOR', $_GET['bgcolor']);
+    }
+    $backgroundColor = ($xoops->registry->offsetExists('XP_BGCOLOR')) ? $xoops->registry->get('XP_BGCOLOR') : $backgroundColor;
+
+    if ( isset($_GET['fgcolor']) ) {
+        $xoops->registry->set('XP_FGCOLOR', $_GET['fgcolor']);
+    }
+    $foregroundColor = ($xoops->registry->offsetExists('XP_FGCOLOR')) ? $xoops->registry->get('XP_FGCOLOR') : $foregroundColor;
+
+    if ( isset($_GET['margin']) ) {
+        $xoops->registry->set('XP_MARGIN', $_GET['margin']);
+    }
+    $whiteMargin = ($xoops->registry->offsetExists('XP_MARGIN')) ? $xoops->registry->get('XP_MARGIN') : $whiteMargin;
+
+    if ( isset($_GET['correction']) ) {
+        $xoops->registry->set('XP_CORRECTION', $_GET['correction']);
+    }
+    $CorrectionLevel = ($xoops->registry->offsetExists('XP_CORRECTION')) ? $xoops->registry->get('XP_CORRECTION') : $CorrectionLevel;
+
+    if ( isset($_GET['size']) ) {
+        $xoops->registry->set('XP_SIZE', $_GET['size']);
+    }
+    $matrixPointSize = ($xoops->registry->offsetExists('XP_SIZE')) ? $xoops->registry->get('XP_SIZE') :$matrixPointSize;
+}
+if ( $url != '' ) {
+    $qrcode = new Xoops_QRcode();
+    $qrcode->setLevel( intval($CorrectionLevel) );
+    $qrcode->setSize( intval($matrixPointSize) );
+    $qrcode->setMargin( intval($whiteMargin) );
+    $qrcode->setBackground( constant(strtoupper('_' . $backgroundColor)) );
+    $qrcode->setForeground( constant(strtoupper('_' . $foregroundColor)) );
+    $qrcode->render( $url );
+//    include XOOPS_PATH . '/phpqrcode/qrlib.php';
+//    QRcode::png($url, false, $CorrectionLevel, $matrixPointSize, $whiteMargin );
+}
 ?>

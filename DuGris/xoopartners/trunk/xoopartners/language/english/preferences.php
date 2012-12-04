@@ -59,4 +59,7 @@ define("_XOO_CONFIG_QRCODE_ECL_Q",        "Hight");
 define("_XOO_CONFIG_QRCODE_ECL_H",        "Best");
 define("_XOO_CONFIG_QRCODE_MATRIX",       "Image width");
 define("_XOO_CONFIG_QRCODE_MARGIN",       "Image margin (px)");
+define("_XOO_CONFIG_QRCODE_COLORS",       "QR Code Colors");
+define("_XOO_CONFIG_QRCODE_COLORS_BG",    "Background");
+define("_XOO_CONFIG_QRCODE_COLORS_FG",    "Foreground");
 ?>
