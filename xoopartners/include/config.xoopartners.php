@@ -15,7 +15,7 @@ return $config = array(
     ),
 
     'xoopartners_partner'   => array(
-        'display_mode'      => 'list',
+        'display_mode'      => 'blog',
         'image_size'        => 100000,
         'image_width'       => 100,
         'image_height'      => 100,
@@ -28,13 +28,11 @@ return $config = array(
 
     'xoopartners_qrcode'    => array(
         'use_qrcode'        => 0,
-        'CorrectionLevel'   => 'L',
+        'CorrectionLevel'   => 0,
         'matrixPointSize'   => 2,
         'whiteMargin'       => 0,
-/*
-        'backgroundColor'   => 'FFFFFF',
-        'foregroundColor'   => '000000',
-*/
+        'backgroundColor'   => 'White',
+        'foregroundColor'   => 'Black',
     ),
 );
 ?>
