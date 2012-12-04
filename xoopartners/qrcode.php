@@ -55,7 +55,5 @@ if ( $url != '' ) {
     $qrcode->setBackground( constant(strtoupper('_' . $backgroundColor)) );
     $qrcode->setForeground( constant(strtoupper('_' . $foregroundColor)) );
     $qrcode->render( $url );
-//    include XOOPS_PATH . '/phpqrcode/qrlib.php';
-//    QRcode::png($url, false, $CorrectionLevel, $matrixPointSize, $whiteMargin );
 }
 ?>
