@@ -86,7 +86,7 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         }
 
         // tags
-        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {
+        if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
             if ($xoops->isAdminSide) {
                 $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
                 $tagform = $TagForm_handler->TagsForm( 'tags', $this->xoopsObject->getVar('xoopartners_id'));

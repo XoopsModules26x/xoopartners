@@ -33,8 +33,8 @@ if ( isset( $_GET ) ){
 
 switch ($op) {
     case 'save':
-    if ( !$xoops->security->check() ) {
-        $xoops->redirect('index.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+    if ( !$xoops->security()->check() ) {
+        $xoops->redirect('index.php', 5, implode(',', $xoops->security()->getErrors()));
     }
 
     $xoopartners_id = $system->CleanVars($_POST, 'xoopartners_id', 0, 'int');
@@ -75,7 +75,7 @@ switch ($op) {
     $partner = $partners_handler->create();
     $form = $xoops->getModuleForm($partner, 'partners', 'xoopartners');
     $form->PartnerForm();
-    $form->render();
+    $form->display();
     break;
 }
 

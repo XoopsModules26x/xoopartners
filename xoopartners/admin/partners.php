@@ -22,8 +22,8 @@ include dirname(__FILE__) . '/header.php';
 $category_id = $system->CleanVars($_REQUEST, 'category_id', 0, 'int');
 
 switch ($op) {    case 'save':
-    if ( !$xoops->security->check() ) {
-        $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+    if ( !$xoops->security()->check() ) {
+        $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $xoops->security()->getErrors()));
     }
 
     $xoopartners_id = $system->CleanVars($_POST, 'xoopartners_id', 0, 'int');
@@ -57,7 +57,7 @@ switch ($op) {    case 'save':
         $partner = $partners_handler->get( $partner_id );
 
         // tags
-        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {
+        if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
             $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
             $msg .= '<br />' . $xootags_handler->updateByItem( 'tags', $partner_id, $xoopartners_category) ;
         }
@@ -77,7 +77,7 @@ switch ($op) {    case 'save':
     $partner = $partners_handler->create();
     $form = $xoops->getModuleForm($partner, 'partners', 'xoopartners');
     $form->PartnerForm( $category_id );
-    $form->render();
+    $form->display();
     break;
 
     case 'edit':
@@ -85,7 +85,7 @@ switch ($op) {    case 'save':
     $partner = $partners_handler->get( $xoopartners_id);
     $form = $xoops->getModuleForm($partner, 'partners', 'xoopartners');
     $form->PartnerForm( $category_id );
-    $form->render();
+    $form->display();
     break;
 
     case 'del':
@@ -94,8 +94,8 @@ switch ($op) {    case 'save':
         if ($partner = $partners_handler->get($xoopartners_id) ) {
             $delete = $system->CleanVars( $_POST, 'ok', 0, 'int' );
             if ($delete == 1) {
-                if ( !$xoops->security->check() ) {
-                    $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+                if ( !$xoops->security()->check() ) {
+                    $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $xoops->security()->getErrors()));
                 }
                 $categories_handler->Delpartner( $partner->getVar('xoopartners_category') );
                 $partners_handler->delete($partner);
@@ -128,15 +128,15 @@ switch ($op) {    case 'save':
     default:
     if ($Partners_config['xoopartners_category']['use_categories']) {        ob_start();
         $categories_handler->makeSelectBox('category_id', $category_id, true, 'window.location.href="partners.php?category_id="+this.options[this.selectedIndex].value');
-        $xoops->tpl->assign('categories', ob_get_contents() );
+        $xoops->tpl()->assign('categories', ob_get_contents() );
         ob_end_clean();
     }
 
     $admin_page->addItemButton(_AM_XOO_PARTNERS_ADD, 'partners.php?op=add', 'add');
     $admin_page->renderButton();
 
-    $xoops->tpl->assign('partners', $partners_handler->renderAdminList( $category_id ) );
-    $xoops->tpl->assign('category_id', $category_id );
+    $xoops->tpl()->assign('partners', $partners_handler->renderAdminList( $category_id ) );
+    $xoops->tpl()->assign('category_id', $category_id );
 
     break;
 }

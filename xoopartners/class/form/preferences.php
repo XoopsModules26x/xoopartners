@@ -148,7 +148,7 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
     {
         if ( file_exists(XOOPS_PATH . '/phpqrcode/qrlib.php') ) {
             $xoops = xoops::getinstance();
-            $xoops->theme->addScript('modules/xoopartners/include/qrcode.js');
+            $xoops->theme()->addScript('modules/xoopartners/include/qrcode.js');
             extract( $this->_config );
             $this->insertBreak(_XOO_CONFIG_QRCODE,'preferenceTitle');
 

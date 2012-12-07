@@ -34,7 +34,7 @@ if ( is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartner
 
     echo "<html><head><meta http-equiv='Refresh' content='0; URL=" . $partner->getVar("xoopartners_url")."'></head><body></body></html>";
     exit();
-} else {    $xoops->tpl->assign('not_found', true);
+} else {    $xoops->tpl()->assign('not_found', true);
 }
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
 ?>

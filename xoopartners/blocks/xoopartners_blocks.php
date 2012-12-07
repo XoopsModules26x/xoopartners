@@ -21,8 +21,8 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 function xoopartners_show($options)
 {    $xoops = Xoops::getInstance();
-    $xoops->theme->addStylesheet('modules/xoopartners/css/module.css');
-    $xoops->theme->addStylesheet('modules/xoopartners/css/blocks.css');
+    $xoops->theme()->addStylesheet('modules/xoopartners/css/module.css');
+    $xoops->theme()->addStylesheet('modules/xoopartners/css/blocks.css');
 
     XoopsLoad::load('xoopreferences', 'xoopartners');
     $Partners_config = XooPartnersPreferences::getInstance()->getConfig();
@@ -33,8 +33,8 @@ function xoopartners_show($options)
     $block['partners'] = $xooparnters_handler->GetPartners( $options[3], $options[1], $options[2] );
     $block['xoopartners_partner'] = $Partners_config['xoopartners_partner'];
 
-    $xoops->tpl->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
-    $xoops->tpl->assign('xoopartners_partner', $Partners_config['xoopartners_partner'] );
+    $xoops->tpl()->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
+    $xoops->tpl()->assign('xoopartners_partner', $Partners_config['xoopartners_partner'] );
 	return $block;
 }
 

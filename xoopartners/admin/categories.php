@@ -20,8 +20,8 @@
 include dirname(__FILE__) . '/header.php';
 
 switch ($op) {    case 'save':
-    if ( !$xoops->security->check() ) {
-        $xoops->redirect('categories.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+    if ( !$xoops->security()->check() ) {
+        $xoops->redirect('categories.php', 5, implode(',', $xoops->security()->getErrors()));
     }
 
     $xoopartners_category_id = $system->CleanVars($_POST, 'xoopartners_category_id', 0, 'int');
@@ -63,14 +63,14 @@ switch ($op) {    case 'save':
     $category = $categories_handler->create();
     $form = $xoops->getModuleForm($category, 'categories', 'xoopartners');
     $form->CategoryForm();
-    $form->render();
+    $form->display();
     break;
     case 'edit':
     $xoopartners_category_id = $system->CleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
     $category = $categories_handler->get($xoopartners_category_id);
     $form = $xoops->getModuleForm($category, 'categories', 'xoopartners');
     $form->CategoryForm();
-    $form->render();
+    $form->display();
     break;
 
     case 'view':
@@ -84,7 +84,7 @@ switch ($op) {    case 'save':
     $admin_page->addItemButton(_AM_XOO_PARTNERS_CATEGORY_ADD, 'categories.php?op=add', 'add');
     $admin_page->renderButton();
 
-    $xoops->tpl->assign('categories', $categories_handler->renderAdminList() );
+    $xoops->tpl()->assign('categories', $categories_handler->renderAdminList() );
     break;}
 
 include dirname(__FILE__) . '/footer.php';
