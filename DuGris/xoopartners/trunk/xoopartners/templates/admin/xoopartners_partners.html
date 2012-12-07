@@ -9,7 +9,9 @@
 <{includeq file="admin:system|admin_buttons.html"}>
 
 <!-- Display form -->
-<{includeq file="module:system|system_form.html"}>
+<{if $form}>
+    <{$form}>
+<{/if}>
 
 <{if $partners}>
     <table class="outer">

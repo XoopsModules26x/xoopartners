@@ -41,12 +41,15 @@ $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
 if ($script_name != 'about') {    $xoops->header('xoopartners_' . $script_name . '.html');} else {    $xoops->header();}
-
-$xoops->theme->addStylesheet('modules/xoopartners/css/moduladmin.css');
+$xoops->theme()->addStylesheet('modules/xoopartners/css/moduladmin.css');
 $xoops->loadLanguage('common', 'xoopartners');
 
 $admin_page = new XoopsModuleAdmin();
-$admin_page->renderNavigation( basename($_SERVER['SCRIPT_NAME']) );
+if ($script_name != 'about' && $script_name != 'index') {
+    $admin_page->renderNavigation( basename($_SERVER['SCRIPT_NAME']) );
+} elseif ($script_name != 'index') {
+    $admin_page->displayNavigation( basename($_SERVER['SCRIPT_NAME']) );
+}
 
 $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
 $partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');

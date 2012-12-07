@@ -66,7 +66,7 @@
 .itemStat {
     font-size:              2em;
 }
-#button-reads, #button-visits {
+#button-reads, #button-visits, #button-print, #button-pdf {
     background:             -moz-linear-gradient(bottom, #dadada, #fff);
     background:             -webkit-gradient(linear, center bottom, center top, from(#dadada), to(#fff));
     border:                 1px solid #ccc;
@@ -82,9 +82,17 @@
     border-radius:          3px 0 0 3px;
 }
 #button-visits {
+    border-radius:          0;
+}
+#button-print {
+    width :                 30px;
+    border-radius:          0;
+}
+#button-pdf {
+    width :                 30px;
     border-radius:          0 3px 3px 0;
 }
-.reads, .visits {
+.reads, .visits, .print, .pdf {
     background-size:        16px 18px;
     background-repeat:      no-repeat;
     background-position:    0 0;
@@ -100,6 +108,12 @@
 }
 .visits {
     background-image:       url("../icons/16/weblink.png");
+}
+.print {
+    background-image:       url("../icons/16/print.png");
+}
+.pdf {
+    background-image:       url("../icons/16/pdf.png");
 }
 .categoryImage {
     float:                  left;

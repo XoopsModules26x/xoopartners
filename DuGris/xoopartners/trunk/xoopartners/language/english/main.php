@@ -24,6 +24,8 @@ define("_XOO_PARTNERS_ERROR",                  "No such partner!");
 define("_XOO_PARTNERS_SAVED",                  "Your request has been registered");
 define("_XOO_PARTNERS_READS",                  "Read(s)");
 define("_XOO_PARTNERS_VISITS",                 "Visit(s)");
+define("_XOO_PARTNERS_PRINT",                  "Print");
+define("_XOO_PARTNERS_PDF",                    "Pdf");
 
 define("_XOO_PARTNERS_NOTFOUND",               "Partner not found");
 define("_XOO_PARTNERS_READMORE",               "Read more ...");

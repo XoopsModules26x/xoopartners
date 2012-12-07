@@ -27,7 +27,7 @@ define("_MI_XOO_PARTNERS_CATEGORIES",           "Categories");
 define("_MI_XOO_PARTNERS_PARTNERS",             "Partners");
 define("_MI_XOO_PARTNERS_PREFERENCES",          "Preferences");
 
-define("_MI_XOO_XOOPARTNERS_BLOCK_NAME",        "Block : Xoopartners - Partners Module");
+define("_MI_XOO_XOOPARTNERS_BLOCK_NAME",        "Partners");
 
 // Main menu
 define("_XOO_PARTNERS_JOIN",                    "Join our partners network");

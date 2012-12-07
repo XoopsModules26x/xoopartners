@@ -96,57 +96,55 @@ class Xoopartners extends XoopsObject
         return implode(', ', $keywords);
     }
 
-    public function toArray()
+    public function getValues($keys = null, $format = null, $maxDepth = null)
     {
         $xoops = Xoops::getInstance();
         $myts = MyTextSanitizer::getInstance();
+
         XoopsLoad::load('xoopreferences', 'xoopartners');
         $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
 
-        $ret = $this->getValues();
-
+        $ret = parent::getValues();
         $ret['xoopartners_date_day'] = date('d', $ret['xoopartners_published'] );
         $ret['xoopartners_date_month'] = date('m', $ret['xoopartners_published'] );
         $ret['xoopartners_date_year'] = date('Y', $ret['xoopartners_published'] );
+        $ret['xoopartners_time']      = $ret['xoopartners_published'];
         $ret['xoopartners_published'] = date(_SHORTDATESTRING, $ret['xoopartners_published']);
 
         $ret['xoopartners_link'] =  XOOPS_URL . '/modules/xoopartners/partner.php?partner_id=' . $ret['xoopartners_id'];
         if ($ret['xoopartners_image'] != 'blank.gif') {
             $ret['xoopartners_image_link'] = XOOPS_UPLOAD_URL . '/xoopartners/partners/images/' . $ret['xoopartners_image'];
         } else {
-            $ret['xoopartners_image_link'] = XOOPS_URL . '/' . $xoops->theme->resourcePath('/modules/xoopartners/images/partners.png');
+            $ret['xoopartners_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xoopartners/images/partners.png');
         }
 
-        if ( $xoops->isUser() ) {
-            $ret['xoopartners_uid_name'] = $xoops->user->getUnameFromId($ret['xoopartners_uid'], true);
-        } else {
-            $member_handler = $xoops->getHandlerMember();
-            $user = $member_handler->getUser( $ret['xoopartners_uid'] );
-            $ret['xoopartners_uid_name'] = $user->getUnameFromId($ret['xoopartners_uid'], true);
-        }
+        $ret['xoopartners_uid_name'] = XoopsUser::getUnameFromId($ret['xoopartners_uid'], true);
 
         if ($Partners_config['xoopartners_category']['use_categories']) {
             $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
             $ret['xoopartners_categories'] = $categories_handler->getParents($ret['xoopartners_category']);
         }
 
-        if ( (basename($xoops->getenv('PHP_SELF'), '.php') == 'index' || basename($xoops->getenv('PHP_SELF'), '.php') == 'search' ) && strpos($ret['xoopartners_description'], '[breakpage]') !== false ) {
+        $page = array('index','search','tag','userinfo');
+        if ( in_array( basename($xoops->getenv('PHP_SELF'), '.php'), $page) && strpos($ret['xoopartners_description'], '[breakpage]') !== false ) {
             $ret['xoopartners_description'] = substr( $ret['xoopartners_description'], 0, strpos($ret['xoopartners_description'], '[breakpage]') );
             $ret['readmore'] = true;
         } else {
             $ret['xoopartners_description'] = str_replace('[breakpage]', '', $ret['xoopartners_description']);
         }
 
-        if ( isset($_SESSION['xoopartners_stat'])) {
-            $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
-            $ret['xoopartners_vote'] = $rld_handler->getVotes($ret['xoopartners_id']);
-            $ret['xoopartners_yourvote'] = $rld_handler->getbyUser($ret['xoopartners_id']);
-        }
+        if ( !in_array( basename($xoops->getenv('PHP_SELF'), '.php'), $page) ) {
+            if ( isset($_SESSION['xoopartners_stat'])) {
+                $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
+                $ret['xoopartners_vote'] = $rld_handler->getVotes($ret['xoopartners_id']);
+                $ret['xoopartners_yourvote'] = $rld_handler->getbyUser($ret['xoopartners_id']);
+            }
 
-        // tags
-        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {
-            $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
-            $ret['tags'] = $xootags_handler->getbyItem($ret['xoopartners_id']);
+            // tags
+            if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
+                $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                $ret['tags'] = $xootags_handler->getbyItem($ret['xoopartners_id']);
+            }
         }
         return $ret;
     }
@@ -285,7 +283,7 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
                         $partner->setVar('xoopartners_like', $xoopartners_like);
                     }
                     $this->insert( $partner );
-                    return $partner->toArray();
+                    return $partner->getValues();
                 }
             }
             return false;

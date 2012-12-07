@@ -42,16 +42,17 @@ class Xoopartners_category extends XoopsObject
         $this->__construct();
     }
 
-    public function toArray()
+    public function getValues($keys = null, $format = null, $maxDepth = null)
     {
         $xoops = Xoops::getInstance();
         $myts = MyTextSanitizer::getInstance();
-        $ret = $this->getValues();
+
+        $ret = parent::getValues();
         $ret['xoopartners_category_link'] = XOOPS_URL . '/modules/xoopartners/index.php?category_id=' . $ret['xoopartners_category_id'];
         if ($ret['xoopartners_category_image'] != 'blank.gif') {
             $ret['xoopartners_category_image_link'] = XOOPS_UPLOAD_URL . '/xoopartners/categories/images/' . $ret['xoopartners_category_image'];
         } else {
-            $ret['xoopartners_category_image_link'] = XOOPS_URL . '/' . $xoops->theme->resourcePath('/modules/xoopartners/images/categories.png');
+            $ret['xoopartners_category_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xoopartners/images/categories.png');
         }
         return $ret;
     }
