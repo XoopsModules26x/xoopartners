@@ -52,6 +52,7 @@ function getCategory( $category )
     $ret['title'] = $category['xoopartners_category_title'];
     $ret['url']   = XOOPS_URL . '/modules/xoopartners/index.php?category_id=' . $category['xoopartners_category_id'];
     $ret['image'] = $category['xoopartners_category_image_link'];
+    $ret['category'] = true;
 
     $partners = $partners_handler->GetPartners($category['xoopartners_category_id'], 'published', 'desc');
     foreach ($partners as $p => $partner) {        $ret['item'][$p]['id']    = $p;
