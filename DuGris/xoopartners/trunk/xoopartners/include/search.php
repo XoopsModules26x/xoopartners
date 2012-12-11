@@ -54,7 +54,7 @@ function xoopartners_search($queryarray, $andor, $limit, $offset, $userid)
     foreach ( $partners as $k => $partner ) {        $ret[$k]['image']    = 'icons/logo_small.png';
         $ret[$k]['link']     = 'partner.php?partner_id=' . $partner['xoopartners_id'] . '' . $searchstring;
         $ret[$k]['title']    = $partner['xoopartners_title'];
-        $ret[$k]['time']     = $partner['xoopartners_published'];
+        $ret[$k]['time']     = $partner['xoopartners_time'];
         $ret[$k]['uid']      = $partner['xoopartners_uid'];
         $ret[$k]['content']  = $partner['xoopartners_description'];
     }
