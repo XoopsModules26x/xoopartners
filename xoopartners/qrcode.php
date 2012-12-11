@@ -48,12 +48,20 @@ if ( count($_GET) > 1 ) {
     $matrixPointSize = ($xoops->registry()->offsetExists('PARTNERS_SIZE')) ? $xoops->registry()->get('PARTNERS_SIZE') :$matrixPointSize;
 }
 if ( $url != '' ) {
-    $qrcode = new Xoops_QRcode();
+    $qrcode = new Xoops_qrcode();
     $qrcode->setLevel( intval($CorrectionLevel) );
     $qrcode->setSize( intval($matrixPointSize) );
     $qrcode->setMargin( intval($whiteMargin) );
     $qrcode->setBackground( constant(strtoupper('_' . $backgroundColor)) );
     $qrcode->setForeground( constant(strtoupper('_' . $foregroundColor)) );
     $qrcode->render( $url );
-}
-?>
+} else {
+    $contents = '';
+    $size = getimagesize($xoops->url('/images/blank.gif'));
+    $handle = fopen($xoops->url('/images/blank.gif'), "rb");
+    while (!feof($handle)) {
+        $contents .= fread($handle, 1024);
+    }
+    fclose($handle);
+    echo $contents;
+}?>
