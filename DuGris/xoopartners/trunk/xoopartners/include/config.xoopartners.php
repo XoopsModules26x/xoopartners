@@ -28,7 +28,7 @@ return $config = array(
 
     'xoopartners_qrcode'    => array(
         'use_qrcode'        => 0,
-        'CorrectionLevel'   => 0,
+        'CorrectionLevel'   => 1,
         'matrixPointSize'   => 2,
         'whiteMargin'       => 0,
         'backgroundColor'   => 'White',
