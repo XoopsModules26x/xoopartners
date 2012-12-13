@@ -63,6 +63,20 @@ class Xoopartners extends XoopsObject
         return true;
     }
 
+    public function setPost( $addpost = true )
+    {
+        $xoops = Xoops::getinstance();
+        $member_handler = $xoops->getHandlerMember();
+        $poster = $member_handler->getUser( $this->getVar('xoopartners_uid'));
+        if ($poster instanceof XoopsUser) {
+            if ($addpost) {
+                $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
+            } else {
+                $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') - 1);
+            }
+        }
+    }
+
     public function getMetaDescription()
     {
         $myts = MyTextSanitizer::getInstance();
@@ -154,7 +168,7 @@ class Xoopartners extends XoopsObject
     {
         $myts = MyTextSanitizer::getInstance();
         $system = System::getInstance();
-        foreach ( $this->getValues() as $k => $v ) {
+        foreach ( parent::getValues() as $k => $v ) {
             if ( $k != 'dohtml' ) {
                 if ( $this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
                     $value = $system->CleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->CleanVars($_POST[$k], 'time', date('u'), 'int');
@@ -186,6 +200,18 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
         parent::__construct($db, 'xoopartners', 'xoopartners', 'xoopartners_id', 'xoopartners_title');
     }
 
+    public function insert(XoopsObject $object, $force = true)
+    {
+        $xoops = Xoops::getinstance();
+        if ( parent::insert($object, $force) ) {
+            if ($object->isNew()) {
+                return $xoops->db()->getInsertId();
+            } else {
+                return $object->getVar('xoopartners_id');
+            }
+        }
+        return false;
+    }
 
     public function renderAdminList( $category_id = 0 )
     {

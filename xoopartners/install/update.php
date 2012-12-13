@@ -19,7 +19,7 @@
 
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
-include_once XOOPS_ROOT_PATH . "/modules/xoopartners/install/install.php";
+include_once XOOPS_ROOT_PATH . '/modules/xoopartners/install/install.php';
 
 function xoops_module_update_xoopartners()
 {

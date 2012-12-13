@@ -26,9 +26,9 @@ if ($Partners_config['xoopartners_category']['use_categories']) {    $category_
     $xoops->tpl()->assign('categories', $categories);
     $xoops->tpl()->assign('partners', $partners);
 
-    if ( $Partners_config['xoopartners_category']['display_mode'] == "select" ) {        $xoops->tpl()->assign('category_header', '<div class="txtcenter"><select name="category_id" onchange=\'window.location.href="index.php?category_id="+this.options[this.selectedIndex].value\'>' );
+    if ( $Partners_config['xoopartners_category']['display_mode'] == 'select' ) {        $xoops->tpl()->assign('category_header', '<div class="txtcenter"><select name="category_id" onchange=\'window.location.href="index.php?category_id="+this.options[this.selectedIndex].value\'>' );
         $xoops->tpl()->assign('category_footer', '</select></div>' );
-    } elseif ( $Partners_config['xoopartners_category']['display_mode'] == "table" ) {        $xoops->tpl()->assign('category_header', '<table class="outer">' );
+    } elseif ( $Partners_config['xoopartners_category']['display_mode'] == 'table' ) {        $xoops->tpl()->assign('category_header', '<table class="outer">' );
         $xoops->tpl()->assign('category_footer', '</table>' );
     }
 } else {    $partners = $partners_handler->GetPartners();

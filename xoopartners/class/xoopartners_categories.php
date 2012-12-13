@@ -256,14 +256,14 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
             foreach( $datas as $key => $data ) {
                 $level = isset($level) ? $level + 1: 0;
                 $style = 5 * $level;
-                $selected = "";
+                $selected = '';
                 if ( $data['xoopartners_category_id'] == $id ) {
                     $selected = " selected='selected'";
                 }
                     echo "<option value='" . $data['xoopartners_category_id'] . "' " . $selected . ">" . str_repeat("-", $style) . " " . $data['xoopartners_category_title'] . "</option>\n";
 
-                if ( count($data["categories"]) != 0 ) {
-                    $this->makeSelectOptions($data["categories"], $id);
+                if ( count($data['categories']) != 0 ) {
+                    $this->makeSelectOptions($data['categories'], $id);
                 }
                 $level = $level -1;
             }

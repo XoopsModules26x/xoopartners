@@ -19,8 +19,7 @@
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 
-error_reporting(0);
-$xoopsLogger->activated = false;
+$xoops->disableErrorReporting();
 
 $partner_id = $system->CleanVars($_REQUEST, 'partner_id', 0, 'int');
 $partner = $partners_handler->get($partner_id);
