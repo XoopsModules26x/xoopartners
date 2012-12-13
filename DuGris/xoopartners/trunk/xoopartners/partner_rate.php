@@ -19,8 +19,7 @@
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 
-error_reporting(0);
-$xoopsLogger->activated = false;
+$xoops->disableErrorReporting();
 
 $ret['error'] = 1;
 

@@ -58,7 +58,7 @@ if ( $url != '' ) {
 } else {
     $contents = '';
     $size = getimagesize($xoops->url('/images/blank.gif'));
-    $handle = fopen($xoops->url('/images/blank.gif'), "rb");
+    $handle = fopen($xoops->url('/images/blank.gif'), 'rb');
     while (!feof($handle)) {
         $contents .= fread($handle, 1024);
     }

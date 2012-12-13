@@ -86,8 +86,13 @@ $modversion['blocks'][$i]['template']       = 'xoopartners_block.html';
 
 // Search
 $modversion['hasSearch'] = 1;
-$modversion['search']['file'] = "include/search.php";
-$modversion['search']['func'] = "xoopartners_search";
+$modversion['search']['file'] = 'include/search.php';
+$modversion['search']['func'] = 'xoopartners_search';
+
+// Users Synchronize post
+$modversion['sync']['table_name'] = 'xoopartners';
+$modversion['sync']['uid_column'] = 'xoopartners_uid';
+$modversion['sync']['criteria']   = new Criteria('xoopartners_online', 1);
 
 // Menu
 $modversion['hasMain'] = 1;
@@ -101,12 +106,12 @@ if ( is_object($xoops->module) && $xoops->module->dirname() == 'xoopartners' && 
         $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
         $categories = $categories_handler->GetCategories(0, false, false);
         foreach ($categories as $k => $category ) {
-            $modversion["sub"][$i]["name"]  = $category['xoopartners_category_title'];
-            $modversion["sub"][$i]["url"]   = 'index.php?category_id=' . $category['xoopartners_category_id'];
+            $modversion['sub'][$i]['name']  = $category['xoopartners_category_title'];
+            $modversion['sub'][$i]['url']   = 'index.php?category_id=' . $category['xoopartners_category_id'];
             $i++;
         }
     }
 }
-$modversion["sub"][$i]["name"]  = _XOO_PARTNERS_JOIN;
-$modversion["sub"][$i]["url"]   = 'joinpartners.php';
+$modversion['sub'][$i]['name']  = _XOO_PARTNERS_JOIN;
+$modversion['sub'][$i]['url']   = 'joinpartners.php';
 ?>

@@ -30,9 +30,11 @@ switch ($op) {    case 'save':
     if( isset($xoopartners_id) && $xoopartners_id > 0 ){
         $partner = $partners_handler->get($xoopartners_id);
         $category_id = $partner->getVar('xoopartners_category');
+        $isnew = false;
     } else {
         $partner = $partners_handler->create();
         $category_id = 0;
+        $isnew = true;
     }
 
     $partner->CleanVarsForDB();
@@ -53,7 +55,8 @@ switch ($op) {    case 'save':
         $partner->setVar('xoopartners_image', $myts->htmlspecialchars( $_POST['image_list'] ) );
     }
 
-    if ($partner_id = $partners_handler->insert($partner)) {        $msg = _AM_XOO_PARTNERS_SAVED;
+    if ($partners_handler->insert($partner)) {        $partner_id = $xoops->db()->getInsertId();
+        $msg = _AM_XOO_PARTNERS_SAVED;
         $partner = $partners_handler->get( $partner_id );
 
         // tags
@@ -68,6 +71,10 @@ switch ($op) {    case 'save':
 
         if ( isset($errors) && count($errors) != 0) {
             $msg .= '<br />' . implode('<br />', $errors);;
+        }
+
+        if ($isnew) {
+            $partner->setPost(true);
         }
         $xoops->redirect('partners.php?category_id=' . $partner->getVar('xoopartners_category'), 5, $msg);
     }
@@ -97,6 +104,12 @@ switch ($op) {    case 'save':
                 if ( !$xoops->security()->check() ) {
                     $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $xoops->security()->getErrors()));
                 }
+                // tags
+                if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
+                    $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                    $xootags_handler->deleteByItem($partner->getVar('xoopartners_id')) ;
+                }
+                $partner->setPost(false);
                 $categories_handler->Delpartner( $partner->getVar('xoopartners_category') );
                 $partners_handler->delete($partner);
                 $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_DELETED);
