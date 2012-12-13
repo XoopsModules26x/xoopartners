@@ -1,0 +1,36 @@
+<{if $xoopages}>
+    <link rel="stylesheet" href="<{xoImgUrl modules/xootags/css/xoopaginate.css}>" type="text/css" media="screen" />
+    <div id="pagination">
+        <{if $xoopaginate->getValue('first') != false}>
+            <a href="<{$xoopaginate->getValue('first')}>"><u>&laquo;&laquo;</u></a>
+        <{else}>
+            <span class="disabled"><u>&laquo;&laquo;</u></span>
+        <{/if}>
+
+        <{if $xoopaginate->getValue('prev') != false}>
+            <a href="<{$xoopaginate->getValue('prev')}>"><u>&laquo;</u></a>
+        <{else}>
+            <span class="disabled"><u>&laquo;</u></span>
+        <{/if}>
+
+        <{foreachq from=$xoopages item=xoopage name=foo}>
+            <{if $xoopage.link != false}>
+                <a <{if $xoopaginate->getValue('current') == $xoopage.value}>class="current" <{/if}>href="<{$xoopage.link}>" title="<{$xoopage.text}>"><{$xoopage.text}></a>
+            <{else}>
+                <span>...</span>
+            <{/if}>
+        <{/foreach}>
+
+        <{if $xoopaginate->getValue('next') != false}>
+            <a href="<{$xoopaginate->getValue('next')}>"><u>&raquo;</u></a>
+        <{else}>
+            <span class="disabled"><u>&raquo;</u></span>
+        <{/if}>
+
+        <{if $xoopaginate->getValue('last') != false}>
+            <a href="<{$xoopaginate->getValue('last')}>"><u>&raquo;&raquo;</u></a>
+        <{else}>
+            <span class="disabled"><u>&raquo;&raquo;</u></span>
+        <{/if}>
+    </div>
+<{/if}>

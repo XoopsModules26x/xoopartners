@@ -35,9 +35,7 @@ define("_XOO_CONFIG_MODE_SELECT",          "Select");
 define("_XOO_CONFIG_MODE_IMAGES",          "Images");
 
 define("_XOO_CONFIG_PARTNER_MODE",         "Display mode of the main page");
-
-define("_XOO_CONFIG_PAGE_LIMIT",           "Limit");
-define("_XOO_CONFIG_PAGE_LIMIT_DESC",      "Number of items to display on the main page (0 = no limit)");
+define("_XOO_CONFIG_LIMIT_MAIN",           "Number Partners on the main page<br />(0 = no limit)");
 define("_XOO_CONFIG_USE_CATEGORIES",       "Use categories");
 define("_XOO_CONFIG_MAIN_MENU",            "Display categories in main menu");
 

@@ -1,4 +1,6 @@
 <{includeq file='module:xoopartners|xoopartners_partners_css.html'}>
+
+<{$xoopaginate->display()}>
 <{if $template == 'blog'}>
     <{includeq file='module:xoopartners|xoopartners_partners_blog.html'}>
 <{elseif $template == 'list'}>
@@ -8,3 +10,4 @@
 <{elseif $template == 'images'}>
     <{includeq file='module:xoopartners|xoopartners_partners_images.html'}>
 <{/if}>
+<{$xoopaginate->display()}>
