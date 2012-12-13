@@ -73,13 +73,15 @@
             <div class="clear"></div>
         <{/if}>
 
-        <{if !$partners}>
+        <{if !$partners && !$print}>
             <div class="itemFoot">
                 <div class="itemStat floatleft">
                     <button id="button-reads" title="<{$smarty.const._XOO_PARTNERS_READS}>"><i class="reads"></i><{$partner.xoopartners_hits}></button>
                     <button id="button-visits" title="<{$smarty.const._XOO_PARTNERS_VISITS}>"><i class="visits"></i><{$partner.xoopartners_visit}></button>
                     <button id="button-print" title="<{$smarty.const._XOO_PARTNERS_PRINT}>"><i class="print"></i></button>
+<!--
                     <button id="button-pdf" title="<{$smarty.const._XOO_PARTNERS_PDF}>"><i class="pdf"></i></button>
+-->
                 </div>
 
                 <{if $xoopartners_rld.rld_mode != ''}>
@@ -104,3 +106,12 @@
         <{$smarty.const._XOO_PARTNERS_NOTFOUND}>
     </div>
 <{/if}>
+<script language="javascript">
+<!--
+$("#button-print").click(function(){    window.open('partner_print.php?partner_id=<{$partner.xoopartners_id}>', 'New Project', 'left=20, top=20, width=1100, height=700, toolbar=0, resizable=1, scrollbars=1');
+});
+$("#button-pdf").click(function(){
+    window.open('partner_print.php?partner_id=<{$partner.xoopartners_id}>&output=pdf', 'New Project', 'left=20, top=20, width=1100, height=700, toolbar=0, resizable=1, scrollbars=1');
+});
+//-->
+</script>

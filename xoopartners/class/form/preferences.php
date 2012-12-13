@@ -118,6 +118,9 @@ class XoopartnersPreferencesForm extends XoopsThemeForm
         $partner_mode->addOption('table',  _XOO_CONFIG_MODE_TABLE);
         $this->addElement( $partner_mode );
 
+        // limit per page
+        $this->addElement( new XoopsFormText(_XOO_CONFIG_LIMIT_MAIN, 'xoopartners_partner[limit_main]', 1, 10, $xoopartners_partner['limit_main']) );
+
         // image_size
         $this->addElement( new XoopsFormText(_XOO_PARTNERS_IMAGE_SIZE, 'xoopartners_partner[image_size]', 1, 10, $xoopartners_partner['image_size']) );
         // image_width

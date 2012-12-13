@@ -21,9 +21,15 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 class Xoopartners extends XoopsObject
 {
+    private $exclude_page = array('index','search','tag','userinfo');
+    private $php_self = '';
+
     // constructor
     public function __construct()
     {
+        $xoops = Xoops::getinstance();
+        $this->php_self = basename($xoops->getenv('PHP_SELF'), '.php');
+
         $this->initVar('xoopartners_id',            XOBJ_DTYPE_INT,               0, true,      11);
         $this->initVar('xoopartners_category',      XOBJ_DTYPE_INT,               0, false,     11);
         $this->initVar('xoopartners_uid',           XOBJ_DTYPE_INT,               0, false,      8);
@@ -139,22 +145,23 @@ class Xoopartners extends XoopsObject
             $ret['xoopartners_categories'] = $categories_handler->getParents($ret['xoopartners_category']);
         }
 
-        $page = array('index','search','tag','userinfo');
-        if ( in_array( basename($xoops->getenv('PHP_SELF'), '.php'), $page) && strpos($ret['xoopartners_description'], '[breakpage]') !== false ) {
+        if ( in_array( $this->php_self, $this->exclude_page) && strpos($ret['xoopartners_description'], '[breakpage]') !== false ) {
             $ret['xoopartners_description'] = substr( $ret['xoopartners_description'], 0, strpos($ret['xoopartners_description'], '[breakpage]') );
             $ret['readmore'] = true;
         } else {
             $ret['xoopartners_description'] = str_replace('[breakpage]', '', $ret['xoopartners_description']);
         }
 
-        if ( !in_array( basename($xoops->getenv('PHP_SELF'), '.php'), $page) ) {
+        if ( !in_array( $this->php_self, $this->exclude_page) ) {
             if ( isset($_SESSION['xoopartners_stat'])) {
                 $rld_handler = $xoops->getModuleHandler('xoopartners_rld', 'xoopartners');
                 $ret['xoopartners_vote'] = $rld_handler->getVotes($ret['xoopartners_id']);
                 $ret['xoopartners_yourvote'] = $rld_handler->getbyUser($ret['xoopartners_id']);
             }
+        }
 
-            // tags
+        // tags
+        if ( !in_array( $this->php_self, $this->exclude_page) || $this->php_self == 'index' || $this->php_self == 'partner_print' ) {
             if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
                 $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
                 $ret['tags'] = $xootags_handler->getbyItem($ret['xoopartners_id']);
@@ -225,7 +232,7 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
         return $this->getObjects($criteria, null, false);
     }
 
-    public function GetPartners( $category_id = 0, $sort = 'order', $order = 'asc' )
+    public function GetPartners( $category_id = 0, $sort = 'order', $order = 'asc', $start=0, $limit=0 )
     {
         $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
         $criteria = new CriteriaCompo();
@@ -243,6 +250,8 @@ class XoopartnersxoopartnersHandler extends XoopsPersistableObjectHandler
             $criteria->setSort( 'xoopartners_' . $sort );
         }
         $criteria->setOrder( $order );
+        $criteria->setStart( $start );
+        $criteria->setLimit( $limit );
 
         return $this->getObjects($criteria, null, false);
     }
