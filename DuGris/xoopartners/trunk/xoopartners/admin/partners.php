@@ -55,14 +55,14 @@ switch ($op) {    case 'save':
         $partner->setVar('xoopartners_image', $myts->htmlspecialchars( $_POST['image_list'] ) );
     }
 
-    if ($partners_handler->insert($partner)) {        $partner_id = $xoops->db()->getInsertId();
-        $msg = _AM_XOO_PARTNERS_SAVED;
-        $partner = $partners_handler->get( $partner_id );
+    if ($partners_handler->insert($partner)) {        if ($isnew) {            $xoopartners_id = $xoops->db()->getInsertId();
+        }        $msg = _AM_XOO_PARTNERS_SAVED;
+        $partner = $partners_handler->get( $xoopartners_id );
 
         // tags
         if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
             $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
-            $msg .= '<br />' . $xootags_handler->updateByItem( 'tags', $partner_id, $xoopartners_category) ;
+            $msg .= '<br />' . $xootags_handler->updateByItem( 'tags', $xoopartners_id) ;
         }
 
         if ($partner->getVar('xoopartners_accepted')) {            if ($category_id != $partner->getVar('xoopartners_category')) {                $categories_handler->Delpartner( $category_id );
