@@ -32,7 +32,7 @@ switch ($op) {    case 'save':
     $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
     break;
     default:
-    $xoops->theme()->addStylesheet('modules/xooghost/css/preferences.css');
+    $xoops->theme()->addStylesheet('modules/xoopartners/css/preferences.css');
     $form = $xoops->getModuleForm(null, 'preferences', 'xoopartners');
     $form->PreferencesForm();
     $form->display();
