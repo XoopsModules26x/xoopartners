@@ -31,7 +31,7 @@ function XooSitemap_xoopartners( $subcategories = true)
     $sitemap = array();
     if ( $subcategories && $Partners_config['xoopartners_category']['use_categories'] ) {        $categories = $categories_handler->GetCategories();
         foreach ($categories as $c => $category) {            $sitemap[$c]['id'] = $c;
-            $sitemap[$c] = getCategory( $category );        }
+            $sitemap[$c] = xoopartners_getCategory( $category );        }
     } elseif (!$subcategories || ($subcategories && !$Partners_config['xoopartners_category']['use_categories']) ) {        $partners = $partners_handler->GetPartners(0, 'published', 'desc');
 
         foreach ($partners as $p => $partner) {            $sitemap[$p]['id']    = $p;
@@ -45,27 +45,30 @@ function XooSitemap_xoopartners( $subcategories = true)
     }
     return $sitemap;
 }
-function getCategory( $category )
+
+function xoopartners_getCategory( $category )
 {    $xoops = Xoops::getInstance();
     $partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
     $ret = array();
-    $ret['title'] = $category['xoopartners_category_title'];
-    $ret['url']   = XOOPS_URL . '/modules/xoopartners/index.php?category_id=' . $category['xoopartners_category_id'];
-    $ret['image'] = $category['xoopartners_category_image_link'];
-    $ret['category'] = true;
-
     $partners = $partners_handler->GetPartners($category['xoopartners_category_id'], 'published', 'desc');
-    foreach ($partners as $p => $partner) {        $ret['item'][$p]['id']    = $p;
-        $ret['item'][$p]['title'] = $partner['xoopartners_title'];
-        $ret['item'][$p]['url']   = XOOPS_URL . '/modules/xoopartners/partner.php?partner_id=' . $partner['xoopartners_id'];
-        $ret['item'][$p]['uid']   = $partner['xoopartners_uid'];
-        $ret['item'][$p]['uname'] = $partner['xoopartners_uid_name'];
-        $ret['item'][$p]['image'] = $partner['xoopartners_image_link'];
-        $ret['item'][$p]['date']  = $partner['xoopartners_published'];
+    if ( count($partners) > 0 ) {        $ret['title'] = $category['xoopartners_category_title'];
+        $ret['url']   = XOOPS_URL . '/modules/xoopartners/index.php?category_id=' . $category['xoopartners_category_id'];
+        $ret['image'] = $category['xoopartners_category_image_link'];
+        $ret['category'] = true;
+
+        foreach ($partners as $p => $partner) {
+            $ret['item'][$p]['id']    = $p;
+            $ret['item'][$p]['title'] = $partner['xoopartners_title'];
+            $ret['item'][$p]['url']   = XOOPS_URL . '/modules/xoopartners/partner.php?partner_id=' . $partner['xoopartners_id'];
+            $ret['item'][$p]['uid']   = $partner['xoopartners_uid'];
+            $ret['item'][$p]['uname'] = $partner['xoopartners_uid_name'];
+            $ret['item'][$p]['image'] = $partner['xoopartners_image_link'];
+            $ret['item'][$p]['date']  = $partner['xoopartners_published'];
+        }
     }
 
     if ( isset($category['categories']) ) {        foreach ($category['categories'] as $subcategory ) {
-            $ret['categories'][] = getCategory( $subcategory );
+            $ret['categories'][] = xoopartners_getCategory( $subcategory );
         }
     }
     return $ret;}
