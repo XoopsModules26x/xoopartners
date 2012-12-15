@@ -20,7 +20,7 @@
             <div class="floatleft">
                 <{if $partner.xoopartners_image != "blank.gif"}>
                     <div class="partnerImage">
-                        <img src="<{$partner.xoopartners_image_link}>">
+                        <img src="<{$partner.xoopartners_image_link}>" alt="">
                     </div>
                 <{/if}>
                 <div class="partner<{$partner.xoopartners_id}>">
@@ -108,7 +108,8 @@
 <{/if}>
 <script language="javascript">
 <!--
-$("#button-print").click(function(){    window.open('partner_print.php?partner_id=<{$partner.xoopartners_id}>', 'New Project', 'left=20, top=20, width=1100, height=700, toolbar=0, resizable=1, scrollbars=1');
+$("#button-print").click(function(){
+    window.open('partner_print.php?partner_id=<{$partner.xoopartners_id}>', 'New Project', 'left=20, top=20, width=1100, height=700, toolbar=0, resizable=1, scrollbars=1');
 });
 $("#button-pdf").click(function(){
     window.open('partner_print.php?partner_id=<{$partner.xoopartners_id}>&output=pdf', 'New Project', 'left=20, top=20, width=1100, height=700, toolbar=0, resizable=1, scrollbars=1');

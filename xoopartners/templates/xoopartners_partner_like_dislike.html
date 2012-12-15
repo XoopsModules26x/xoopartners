@@ -6,18 +6,24 @@
 
 <script language="javascript">
 <!--
-$(".option").click(function(){
+$(".option").click(function(){
+
     var option = $(this).val();
     var item   = $("#partner_id").val();
     var token  = "<{$security}>";
 
-    $.ajax({        type: "POST",
+    $.ajax({
+        type: "POST",
         url: "partner_like_dislike.php",
         data: "option="+option+"&partner_id="+item+"&XOOPS_TOKEN_REQUEST="+token,
-        success: function(responce) {            var json = jQuery.parseJSON(responce);
+        success: function(responce) {
+            var json = jQuery.parseJSON(responce);
             //alert( json.error );
-            if(json.error == "0") {                if ( option == "1" ) {                    $(".like").html( json.xoopartners_like );
-                } else {                    $(".dislike").html( json.xoopartners_dislike );
+            if(json.error == "0") {
+                if ( option == "1" ) {
+                    $(".like").html( json.xoopartners_like );
+                } else {
+                    $(".dislike").html( json.xoopartners_dislike );
                 }
             }
         }
