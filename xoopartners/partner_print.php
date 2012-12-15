@@ -65,6 +65,10 @@ if ( is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartner
     } else {
         $tpl->display('module:xoopartners|xoopartners_partner_print.html');
     }} else {
-    $xoops->tpl()->assign('not_found', true);
+    $tpl = new XoopsTpl();
+    $tpl->assign('xoops_sitename', $xoops->getConfig('sitename'));
+    $tpl->assign('xoops_slogan', htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES));
+    $tpl->assign('not_found', true);
+    $tpl->display('module:xoopartners|xoopartners_partner_print.html');
 }
 ?>
