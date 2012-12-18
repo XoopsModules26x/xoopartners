@@ -25,14 +25,14 @@ function xoopartners_show($options)
     $xoops->theme()->addStylesheet('modules/xoopartners/css/blocks.css');
 
     $xoopartners_module = Xoopartners::getInstance();
-    $xoopartners_module->loadLanguage('common', 'xoopartners');
+    $xoopartners_module->loadLanguage('common');
     $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
     $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
     $Partners_config = $xoopartners_module->LoadConfig();
 
     $block['template'] = $options[0];
     $options[3] = isset( $options[3] ) ? $options[3] : -1;
-    $block['partners'] = $xooparnters_handler->GetPartners( $options[3], $options[1], $options[2] );
+    $block['partners'] = $partners_handler->GetPartners( $options[3], $options[1], $options[2] );
     $block['xoopartners_partner'] = $Partners_config['xoopartners_partner'];
 
     $xoops->tpl()->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
