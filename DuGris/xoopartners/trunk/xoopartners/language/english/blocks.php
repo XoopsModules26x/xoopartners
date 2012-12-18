@@ -25,7 +25,6 @@ define("_MB_XOO_PARTNERS_MODE_SELECT",    "Select");
 define("_MB_XOO_PARTNERS_MODE_IMAGES",    "Images");
 
 define("_MB_XOO_PARTNERS_CATEGORY_TITLE", "Category");
-define("_XOO_PARTNERS_CATEGORY_NONE",     "No category");
 
 define("_MB_XOO_PARTNERS_SORT",           "Sort by: ");
 define("_MB_XOO_PARTNERS_SORT_ID",        "ID");
