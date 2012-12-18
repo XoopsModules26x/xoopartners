@@ -26,15 +26,11 @@ class XoopartnersCategoriesForm extends XoopsThemeForm
      */
     public function __construct($obj = null)
     {        $this->xoopsObject = $obj;
-    }
+        $xoops = Xoops::getInstance();
 
-    /**
-     * Maintenance Form
-     * @return void
-     */
-    public function CategoryForm()
-    {        global $categories_handler;
-        $xoops = Xoops::getInstance();        $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
+        $xoopartners_module = Xoopartners::getInstance();
+        $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
+        $Partners_config = $xoopartners_module->LoadConfig();
 
         if ($this->xoopsObject->isNew() ) {
             parent::__construct(_AM_XOO_PARTNERS_CATEGORY_ADD, 'form_category', 'categories.php', 'post', true);

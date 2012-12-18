@@ -75,7 +75,7 @@ class XooPartners_rld extends XoopsObject
 
 class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
 {
-    public function __construct(&$db)
+    public function __construct($db)
     {
         parent::__construct($db, 'xoopartners_rld', 'XooPartners_rld', 'xoopartners_rld_id', 'xoopartners_rld_partner');
     }

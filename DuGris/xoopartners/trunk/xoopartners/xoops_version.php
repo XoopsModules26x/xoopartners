@@ -84,11 +84,6 @@ $modversion['blocks'][$i]['edit_func']      = 'xoopartners_edit';
 $modversion['blocks'][$i]['options']        = 'images|published|asc';
 $modversion['blocks'][$i]['template']       = 'xoopartners_block.html';
 
-// Search
-$modversion['hasSearch'] = 1;
-$modversion['search']['file'] = 'include/search.php';
-$modversion['search']['func'] = 'xoopartners_search';
-
 // Users Synchronize post
 $modversion['sync']['table_name'] = 'xoopartners';
 $modversion['sync']['uid_column'] = 'xoopartners_uid';
@@ -99,11 +94,13 @@ $modversion['hasMain'] = 1;
 
 $i = 0;
 $xoops = Xoops::getInstance();
-if ( is_object($xoops->module) && $xoops->module->dirname() == 'xoopartners' && !$xoops->isAdminSide ) {
-    XoopsLoad::load('xoopreferences', 'xoopartners');
-    $Partners_config = XooPartnersPreferences::getInstance()->getConfig();
+if ( is_object($xoops->module) && $xoops->module->dirname() == 'xoopartners' && !$xoops->isAdminSide ) {    $xoopartners_module = Xoopartners::getInstance();
+    $Partners_config = $xoopartners_module->LoadConfig();
+
     if ( $Partners_config['xoopartners_category']['use_categories'] && $Partners_config['xoopartners_category']['main_menu']) {
-        $categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
+
+        $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
+
         $categories = $categories_handler->GetCategories(0, false, false);
         foreach ($categories as $k => $category ) {
             $modversion['sub'][$i]['name']  = $category['xoopartners_category_title'];

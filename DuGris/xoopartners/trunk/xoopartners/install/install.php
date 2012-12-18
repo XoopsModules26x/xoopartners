@@ -35,8 +35,6 @@ function xoops_module_install_xoopartners()
             }
         }
     }
-
-    xoopartners_mkdirs($xoops->path(XOOPS_VAR_PATH) . '/configs/xoopartners');
     return true;
 }
 

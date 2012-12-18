@@ -73,11 +73,9 @@ switch ($op) {
 
     default:
     $partner = $partners_handler->create();
-    $form = $xoops->getModuleForm($partner, 'partners', 'xoopartners');
-    $form->PartnerForm();
+    $form = $xoopartners_module->getForm($partner, 'partners');
     $form->display();
     break;
 }
-
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
 ?>

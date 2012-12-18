@@ -82,16 +82,14 @@ switch ($op) {    case 'save':
 
     case 'add';
     $partner = $partners_handler->create();
-    $form = $xoops->getModuleForm($partner, 'partners', 'xoopartners');
-    $form->PartnerForm( $category_id );
+    $form = $xoopartners_module->getForm($partner, 'partners');
     $form->display();
     break;
 
     case 'edit':
     $xoopartners_id = $system->CleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
     $partner = $partners_handler->get( $xoopartners_id);
-    $form = $xoops->getModuleForm($partner, 'partners', 'xoopartners');
-    $form->PartnerForm( $category_id );
+    $form = $xoopartners_module->getForm($partner, 'partners');
     $form->display();
     break;
 
