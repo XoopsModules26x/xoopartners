@@ -39,9 +39,14 @@ define("_XOO_PARTNERS_ACCEPTED_YES",           "Accept this partnership");
 define("_XOO_PARTNERS_ACCEPTED_NO",            "Not accept this partnership");
 define("_XOO_PARTNERS_PUBLISHED",              "Publication date");
 
-
 // Common images
 define("_XOO_PARTNERS_IMAGE_SIZE",             "Maximum size of image files (K0)");
 define("_XOO_PARTNERS_IMAGE_WIDTH",            "Maximum width of images (px)");
 define("_XOO_PARTNERS_IMAGE_HEIGHT",           "Maximum height of images (px)");
+
+// Tab Form
+define("_XOO_TABFORM_MAIN",                    "Index");
+define("_XOO_TABFORM_METAS",                   "Metas");
+define("_XOO_TABFORM_OPTIONS",                 "Options");
+define("_XOO_TABFORM_TAGS",                    "Tags");
 ?>

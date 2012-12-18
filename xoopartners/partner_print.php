@@ -20,18 +20,17 @@
 include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
 include dirname(__FILE__) . '/include/functions.php';
 
-XoopsLoad::load('xoopreferences', 'xoopartners');
-$Partners_config = XooPartnersPreferences::getInstance()->getConfig();
+$xoopartners_module = Xoopartners::getInstance();
+$xoopartners_module->loadLanguage('common', 'xoopartners');
+$categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
+$partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+$Partners_config = $xoopartners_module->LoadConfig();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
-$xoops->loadLanguage('common', 'xoopartners');
-
-$categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
-$partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
 
 $partner_id = $system->CleanVars($_REQUEST, 'partner_id', 0, 'int');
 $partner = $partners_handler->get($partner_id);

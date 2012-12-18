@@ -17,23 +17,16 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . '/header.php';
+defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
-$xoopartners_module->loadLanguage('preferences', 'xoopartners');
-
-switch ($op) {    case 'save':
-    if (!$xoops->security()->check()) {
-        $xoops->redirect('preferences.php', 3, implode('<br />', $xoops->security()->getErrors()));
+class XoopartnersCorePreload extends XoopsPreloadItem
+{
+    static function eventCoreIncludeCommonEnd($args)
+    {
+        $path = dirname(dirname(__FILE__));
+        XoopsLoad::addMap(array(
+            'xoopartners' => $path . '/class/xoopartners.php',
+        ));
     }
-
-    // Write configuration file
-    $object = new XooPartnersPreferences();
-    $object->writeConfig( $object->Prepare2Save() );
-    $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
-    break;
-    default:
-    $form = $xoopartners_module->getForm($Partners_config, 'preferences');
-    $form->display();
 }
-include dirname(__FILE__) . '/footer.php';
 ?>

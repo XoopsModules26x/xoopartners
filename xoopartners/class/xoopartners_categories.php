@@ -84,7 +84,7 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
 {
     private $_published = null;
 
-    public function __construct(&$db)
+    public function __construct($db)
     {
         parent::__construct($db, 'xoopartners_categories', 'xoopartners_category', 'xoopartners_category_id', 'xoopartners_category_title');
     }
@@ -192,7 +192,8 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
     {
         $xoops = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig( 'xoopartners' );
-        $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
+        $xoopartners_module = Xoopartners::getInstance();
+        $Partners_config = $xoopartners_module->LoadConfig();
 
         $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xoopartners/categories/images', $autoload['mimetypes'], $Partners_config['xoopartners_category']['image_size'], $Partners_config['xoopartners_category']['image_width'], $Partners_config['xoopartners_category']['image_height']);
 

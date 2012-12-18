@@ -31,10 +31,13 @@ if ( isset( $_GET ) ){
     }
 }
 
-$script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
+$xoopartners_module = Xoopartners::getInstance();
+$xoopartners_module->loadLanguage('common');
+$categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
+$partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+$Partners_config = $xoopartners_module->LoadConfig();
 
-XoopsLoad::load('xoopreferences', 'xoopartners');
-$Partners_config = XooPartnersPreferences::getInstance()->getConfig();
+$script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
@@ -42,7 +45,6 @@ $system = System::getInstance();
 $xoops = Xoops::getInstance();
 if ($script_name != 'about') {    $xoops->header('xoopartners_' . $script_name . '.html');} else {    $xoops->header();}
 $xoops->theme()->addStylesheet('modules/xoopartners/css/moduladmin.css');
-$xoops->loadLanguage('common', 'xoopartners');
 
 $admin_page = new XoopsModuleAdmin();
 if ($script_name != 'about' && $script_name != 'index') {
@@ -50,7 +52,4 @@ if ($script_name != 'about' && $script_name != 'index') {
 } elseif ($script_name != 'index') {
     $admin_page->displayNavigation( basename($_SERVER['SCRIPT_NAME']) );
 }
-
-$categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
-$partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
 ?>

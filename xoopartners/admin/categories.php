@@ -61,15 +61,13 @@ switch ($op) {    case 'save':
 
     case 'add':
     $category = $categories_handler->create();
-    $form = $xoops->getModuleForm($category, 'categories', 'xoopartners');
-    $form->CategoryForm();
+    $form = $xoopartners_module->getForm($category, 'categories');
     $form->display();
     break;
     case 'edit':
     $xoopartners_category_id = $system->CleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
     $category = $categories_handler->get($xoopartners_category_id);
-    $form = $xoops->getModuleForm($category, 'categories', 'xoopartners');
-    $form->CategoryForm();
+    $form = $xoopartners_module->getForm($category, 'categories');
     $form->display();
     break;
 

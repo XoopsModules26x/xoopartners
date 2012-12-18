@@ -19,7 +19,6 @@
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 
-XoopsLoad::load('xoopaginate', 'xoopartners');
 $start = $system->CleanVars($_REQUEST, 'start', 0, 'int');
 
 $criteria = new CriteriaCompo();

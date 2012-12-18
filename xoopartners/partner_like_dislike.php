@@ -29,7 +29,10 @@ if ( $xoops->security()->check() ) {    $partner_id = $system->CleanVars($_REQU
     $time = time();
     if ( !isset($_SESSION['xoopartners_like' . $partner_id]) || $_SESSION['xoopartners_like' . $partner_id] < $time ) {
         $_SESSION['xoopartners_like' . $partner_id] = $time + 3600;
-        $partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
+
+        $xoopartners_module = Xoopartners::getInstance();
+        $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+
         $ret = $partners_handler->SetLike_Dislike( $partner_id, $option );
         if ( is_array($ret) && count($ret) > 1) {            $ret['error'] = 0;
         } else {            $ret['error'] = 1;        }

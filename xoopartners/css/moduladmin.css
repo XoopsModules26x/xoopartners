@@ -30,3 +30,10 @@
     color:                 #529214;
     border-color:          #c6d880;
 }
+.form-horizontal .control-label {
+  width:                   0;
+}
+
+.form-horizontal .controls {
+  margin-left:            0;
+}

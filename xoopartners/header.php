@@ -20,14 +20,16 @@
 include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
 include dirname(__FILE__) . '/include/functions.php';
 
-XoopsLoad::load('xoopreferences', 'xoopartners');
-$Partners_config = XooPartnersPreferences::getInstance()->getConfig();
+$xoopartners_module = Xoopartners::getInstance();
+$xoopartners_module->loadLanguage('common', 'xoopartners');
+$categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
+$partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+$Partners_config = $xoopartners_module->LoadConfig();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
-$xoops->loadLanguage('common', 'xoopartners');
 
 $script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
 $xoops->header('xoopartners_' . $script_name . '.html');
@@ -44,7 +46,4 @@ $xoops->tpl()->assign('xoopartners_qrcode', $Partners_config['xoopartners_qrcode
 $xoops->tpl()->assign('xoopartners_rld', $Partners_config['xoopartners_rld'] );
 
 $xoops->tpl()->assign('moduletitle', $xoops->module->name() );
-
-$categories_handler = $xoops->getModuleHandler('xoopartners_categories', 'xoopartners');
-$partners_handler = $xoops->getModuleHandler('xoopartners', 'xoopartners');
 ?>
