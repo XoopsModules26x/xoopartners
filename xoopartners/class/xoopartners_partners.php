@@ -387,9 +387,9 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         $path_parts = pathinfo( $filename );
         $string = $path_parts['filename'];
 
-        $string = str_replace('_', md5('xooghost'), $string);
-        $string = str_replace('-', md5('xooghost'), $string);
-        $string = str_replace(' ', md5('xooghost'), $string);
+        $string = str_replace('_', md5('xoopartners'), $string);
+        $string = str_replace('-', md5('xoopartners'), $string);
+        $string = str_replace(' ', md5('xoopartners'), $string);
 
         $string = preg_replace('~\p{P}~','', $string);
         $string = htmlentities($string, ENT_NOQUOTES, _CHARSET);
@@ -397,7 +397,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         $string = preg_replace("~\&([A-za-z]{2})(?:lig)\;~", "$1", $string); // pour les ligatures e.g. "&oelig;"
         $string = preg_replace("~\&[^;]+\;~", "", $string); // supprime les autres caractères
 
-        $string = str_replace(md5('xooghost'), '_' , $string);
+        $string = str_replace(md5('xoopartners'), '_' , $string);
         return $string . '.' . $path_parts['extension'];
     }
 }
