@@ -63,7 +63,7 @@ function xoopartners_edit($options)
     $sort_mode->addOption('hits',      _MB_XOO_PARTNERS_SORT_HITS);
 
     if ( $Partners_config['xoopartners_rld']['rld_mode'] != 'none' ) {
-        if ( $Xooghost_config['xoopartners_rld']['rld_mode'] == 'rate' ) {
+        if ( $Partners_config['xoopartners_rld']['rld_mode'] == 'rate' ) {
             $sort_mode->addOption('rates',     _MB_XOO_PARTNERS_SORT_RATES);
         } else {
             $sort_mode->addOption('like',      _MB_XOO_PARTNERS_SORT_LIKE);
