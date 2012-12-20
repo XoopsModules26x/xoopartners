@@ -40,7 +40,7 @@ class XoopartnersXootagsPlugin extends Xoops_Plugin_Abstract implements XootagsP
 
         $ret = array();
         foreach ( $partners as $k =>  $partner ) {
-            $k = $partner['xoopartners_time'];
+            $k = $partner['xoopartners_time'] . '-' . $message['xoopartners_id'] ;
             $ret[$k]['itemid']   = $partner['xoopartners_id'];
             $ret[$k]['title']    = $partner['xoopartners_title'];
             $ret[$k]['link']     = 'partner.php?partner_id=' . $partner['xoopartners_id'];
