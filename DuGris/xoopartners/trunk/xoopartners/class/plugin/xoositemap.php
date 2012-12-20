@@ -27,16 +27,16 @@ class XoopartnersXoositemapPlugin extends Xoops_Plugin_Abstract implements Xoosi
         $xoopartners_module->loadLanguage('common', 'xoopartners');
         $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
         $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
-        $Partners_config = $xoopartners_module->LoadConfig();
+        $partners_config = $xoopartners_module->LoadConfig();
 
         $sitemap = array();
-        if ( $subcategories && $Partners_config['xoopartners_category']['use_categories'] ) {
+        if ( $subcategories && $partners_config['xoopartners_category']['use_categories'] ) {
             $categories = $categories_handler->GetCategories();
             foreach ($categories as $c => $category) {
                 $sitemap[$c]['id'] = $c;
                 $sitemap[$c] = $this->xoopartners_getCategory( $category );
             }
-        } elseif (!$subcategories || ($subcategories && !$Partners_config['xoopartners_category']['use_categories']) ) {
+        } elseif (!$subcategories || ($subcategories && !$partners_config['xoopartners_category']['use_categories']) ) {
             $partners = $partners_handler->GetPartners(0, 'published', 'desc');
 
             foreach ($partners as $p => $partner) {

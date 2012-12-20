@@ -122,7 +122,7 @@ class Xoopartners_partners extends XoopsObject
 
         $xoopartners_module = Xoopartners::getInstance();
         $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
-        $Partners_config = $xoopartners_module->LoadConfig();
+        $partners_config = $xoopartners_module->LoadConfig();
 
         $ret = parent::getValues();
         $ret['xoopartners_date_day'] = date('d', $ret['xoopartners_published'] );
@@ -140,7 +140,7 @@ class Xoopartners_partners extends XoopsObject
 
         $ret['xoopartners_uid_name'] = XoopsUser::getUnameFromId($ret['xoopartners_uid'], true);
 
-        if ($Partners_config['xoopartners_category']['use_categories']) {
+        if ($partners_config['xoopartners_category']['use_categories']) {
             $ret['xoopartners_categories'] = $categories_handler->getParents($ret['xoopartners_category']);
         }
 
@@ -223,9 +223,9 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
 
     public function renderAdminList( $category_id = 0 )
     {
-        $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
+        $partners_config = XooPartnersPreferences::getInstance()->loadConfig();
         $criteria = new CriteriaCompo();
-        if ($Partners_config['xoopartners_category']['use_categories']) {
+        if ($partners_config['xoopartners_category']['use_categories']) {
             $criteria->add( new Criteria('xoopartners_category', $category_id) ) ;
         }
         $criteria->setSort( 'xoopartners_order' );
@@ -235,9 +235,9 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
 
     public function GetPartners( $category_id = 0, $sort = 'order', $order = 'asc', $start=0, $limit=0 )
     {
-        $Partners_config = XooPartnersPreferences::getInstance()->loadConfig();
+        $partners_config = XooPartnersPreferences::getInstance()->loadConfig();
         $criteria = new CriteriaCompo();
-        if ($Partners_config['xoopartners_category']['use_categories'] && $category_id >= 0) {
+        if ($partners_config['xoopartners_category']['use_categories'] && $category_id >= 0) {
             $criteria->add( new Criteria('xoopartners_category', $category_id) ) ;
         }
         $criteria->add( new Criteria('xoopartners_accepted', 1) ) ;
@@ -359,9 +359,9 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         $autoload = XoopsLoad::loadConfig( 'xoopartners' );
 
         $xoopartners_module = Xoopartners::getInstance();
-        $Partners_config = $xoopartners_module->LoadConfig();
+        $partners_config = $xoopartners_module->LoadConfig();
 
-        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xoopartners/partners/images', $autoload['mimetypes'], $Partners_config['xoopartners_partner']['image_size'], $Partners_config['xoopartners_partner']['image_width'], $Partners_config['xoopartners_partner']['image_height']);
+        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xoopartners/partners/images', $autoload['mimetypes'], $partners_config['xoopartners_partner']['image_size'], $partners_config['xoopartners_partner']['image_width'], $partners_config['xoopartners_partner']['image_height']);
 
         $ret = array();
         foreach ( $_POST['xoops_upload_file'] as $k => $input_image ) {

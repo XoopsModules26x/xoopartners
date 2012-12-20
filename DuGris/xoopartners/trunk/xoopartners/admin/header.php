@@ -35,7 +35,7 @@ $xoopartners_module = Xoopartners::getInstance();
 $xoopartners_module->loadLanguage('common');
 $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
 $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
-$Partners_config = $xoopartners_module->LoadConfig();
+$partners_config = $xoopartners_module->LoadConfig();
 
 $script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
 

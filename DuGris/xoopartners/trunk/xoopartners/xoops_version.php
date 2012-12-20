@@ -95,9 +95,9 @@ $modversion['hasMain'] = 1;
 $i = 0;
 $xoops = Xoops::getInstance();
 if ( is_object($xoops->module) && $xoops->module->dirname() == 'xoopartners' && !$xoops->isAdminSide ) {    $xoopartners_module = Xoopartners::getInstance();
-    $Partners_config = $xoopartners_module->LoadConfig();
+    $partners_config = $xoopartners_module->LoadConfig();
 
-    if ( $Partners_config['xoopartners_category']['use_categories'] && $Partners_config['xoopartners_category']['main_menu']) {
+    if ( $partners_config['xoopartners_category']['use_categories'] && $partners_config['xoopartners_category']['main_menu']) {
 
         $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
 

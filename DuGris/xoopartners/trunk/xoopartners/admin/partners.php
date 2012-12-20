@@ -137,7 +137,7 @@ switch ($op) {    case 'save':
     break;
 
     default:
-    if ($Partners_config['xoopartners_category']['use_categories']) {        ob_start();
+    if ($partners_config['xoopartners_category']['use_categories']) {        ob_start();
         $categories_handler->makeSelectBox('category_id', $category_id, true, 'window.location.href="partners.php?category_id="+this.options[this.selectedIndex].value');
         $xoops->tpl()->assign('categories', ob_get_contents() );
         ob_end_clean();

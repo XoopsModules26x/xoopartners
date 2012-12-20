@@ -193,9 +193,9 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         $xoops = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig( 'xoopartners' );
         $xoopartners_module = Xoopartners::getInstance();
-        $Partners_config = $xoopartners_module->LoadConfig();
+        $partners_config = $xoopartners_module->LoadConfig();
 
-        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xoopartners/categories/images', $autoload['mimetypes'], $Partners_config['xoopartners_category']['image_size'], $Partners_config['xoopartners_category']['image_width'], $Partners_config['xoopartners_category']['image_height']);
+        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xoopartners/categories/images', $autoload['mimetypes'], $partners_config['xoopartners_category']['image_size'], $partners_config['xoopartners_category']['image_width'], $partners_config['xoopartners_category']['image_height']);
 
         $ret = array();
         foreach ( $_POST['xoops_upload_file'] as $k => $input_image ) {
