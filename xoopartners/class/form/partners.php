@@ -138,11 +138,11 @@ class XoopartnersPartnersForm extends XoopsThemeForm
          */
         if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
             if ($xoops->isAdminSide) {
-                $tab4 = new XoopsFormTab(_XOO_TABFORM_TAGS, 'tabid-4');
+                $tags_tray = new XoopsFormTab(_XOO_TABFORM_TAGS, 'tabid-tags');
                 $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
                 $tagform = $TagForm_handler->TagsForm( 'tags', $this->xoopsObject->getVar('xoopartners_id'));
-                $tab4->addElement( $tagform );
-                $tabtray->addElement($tab4);
+                $tags_tray->addElement( $tagform );
+                $tabtray->addElement($tags_tray);
             } else {
                 $this->addElement( new XoopsFormHidden('tags', '') );
             }
