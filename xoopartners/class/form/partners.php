@@ -34,7 +34,7 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         $xoops = Xoops::getInstance();
 
         $xoopartners_module = Xoopartners::getInstance();
-        $Partners_config = $xoopartners_module->LoadConfig();
+        $partners_config = $xoopartners_module->LoadConfig();
 
         if ($this->xoopsObject->isNew() ) {            $script = ($xoops->isAdminSide) ? 'partners.php' : 'joinpartners.php';
             $title  = ($xoops->isAdminSide) ? _AM_XOO_PARTNERS_ADD : _XOO_PARTNERS_JOIN;
@@ -57,7 +57,7 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         $tab1->addElement( new XoopsFormUrl(_XOO_PARTNERS_URL, 'xoopartners_url', 100, 255, $this->xoopsObject->getVar('xoopartners_url')) , true );
 
         // Category
-        if ($Partners_config['xoopartners_category']['use_categories']) {
+        if ($partners_config['xoopartners_category']['use_categories']) {
             ob_start();
             $categories_handler->makeSelectBox('xoopartners_category', $this->xoopsObject->getVar('xoopartners_category') );
             $tab1->addElement(new XoopsFormLabel(_XOO_PARTNERS_CATEGORY_TITLE, ob_get_contents()));
@@ -90,10 +90,9 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         }
 
         // image
-        $upload_msg[] = _XOO_PARTNERS_IMAGE_SIZE . ' : ' . $Partners_config['xoopartners_partner']['image_size'];
-        $upload_msg[] = _XOO_PARTNERS_IMAGE_WIDTH . ' : ' . $Partners_config['xoopartners_partner']['image_width'];
-        $upload_msg[] = _XOO_PARTNERS_IMAGE_HEIGHT . ' : ' . $Partners_config['xoopartners_partner']['image_height'];
-
+        $upload_msg[] = _XOO_PARTNERS_IMAGE_SIZE . ' : ' . $partners_config['xoopartners_partner']['image_size'];
+        $upload_msg[] = _XOO_PARTNERS_IMAGE_WIDTH . ' : ' . $partners_config['xoopartners_partner']['image_width'];
+        $upload_msg[] = _XOO_PARTNERS_IMAGE_HEIGHT . ' : ' . $partners_config['xoopartners_partner']['image_height'];
 
         $warning_tray = new XoopsFormElementTray($this->message($upload_msg, '') );
         $image_tray = new XoopsFormElementTray(_XOO_PARTNERS_IMAGE, '' );

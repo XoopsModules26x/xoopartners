@@ -24,7 +24,7 @@ $xoopartners_module = Xoopartners::getInstance();
 $xoopartners_module->loadLanguage('common', 'xoopartners');
 $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
 $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
-$Partners_config = $xoopartners_module->LoadConfig();
+$partners_config = $xoopartners_module->LoadConfig();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
@@ -39,10 +39,10 @@ $output = $system->CleanVars($_REQUEST, 'output', 'print', 'string');
 
 if ( is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted') ) {    $tpl = new XoopsTpl();
 
-    $tpl->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
-    $tpl->assign('xoopartners_partner', $Partners_config['xoopartners_partner'] );
-    $tpl->assign('xoopartners_qrcode', $Partners_config['xoopartners_qrcode'] );
-    $tpl->assign('xoopartners_rld', $Partners_config['xoopartners_rld'] );
+    $tpl->assign('xoopartners_category', $partners_config['xoopartners_category'] );
+    $tpl->assign('xoopartners_partner', $partners_config['xoopartners_partner'] );
+    $tpl->assign('xoopartners_qrcode', $partners_config['xoopartners_qrcode'] );
+    $tpl->assign('xoopartners_rld', $partners_config['xoopartners_rld'] );
 
     $tpl->assign('moduletitle', $xoops->module->name() );
 

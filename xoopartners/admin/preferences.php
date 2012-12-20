@@ -32,7 +32,7 @@ switch ($op) {    case 'save':
     $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
     break;
     default:
-    $form = $xoopartners_module->getForm($Partners_config, 'preferences');
+    $form = $xoopartners_module->getForm($partners_config, 'preferences');
     $form->display();
 }
 include dirname(__FILE__) . '/footer.php';

@@ -28,15 +28,15 @@ function xoopartners_show($options)
     $xoopartners_module->loadLanguage('common');
     $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
     $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
-    $Partners_config = $xoopartners_module->LoadConfig();
+    $partners_config = $xoopartners_module->LoadConfig();
 
     $block['template'] = $options[0];
     $options[3] = isset( $options[3] ) ? $options[3] : -1;
     $block['partners'] = $partners_handler->GetPartners( $options[3], $options[1], $options[2] );
-    $block['xoopartners_partner'] = $Partners_config['xoopartners_partner'];
+    $block['xoopartners_partner'] = $partners_config['xoopartners_partner'];
 
-    $xoops->tpl()->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
-    $xoops->tpl()->assign('xoopartners_partner', $Partners_config['xoopartners_partner'] );
+    $xoops->tpl()->assign('xoopartners_category', $partners_config['xoopartners_category'] );
+    $xoops->tpl()->assign('xoopartners_partner', $partners_config['xoopartners_partner'] );
 	return $block;
 }
 
@@ -54,7 +54,7 @@ function xoopartners_edit($options)
     $xoopartners_module->loadLanguage('common', 'xoopartners');
     $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
     $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
-    $Partners_config = $xoopartners_module->LoadConfig();
+    $partners_config = $xoopartners_module->LoadConfig();
 
     $sort_mode = new XoopsFormSelect(_MB_XOO_PARTNERS_SORT . ' : ', 'options[1]', $options[1]);
     $sort_mode->addOption('id',        _MB_XOO_PARTNERS_SORT_ID);
@@ -62,8 +62,8 @@ function xoopartners_edit($options)
     $sort_mode->addOption('published', _MB_XOO_PARTNERS_SORT_RECENTS);
     $sort_mode->addOption('hits',      _MB_XOO_PARTNERS_SORT_HITS);
 
-    if ( $Partners_config['xoopartners_rld']['rld_mode'] != 'none' ) {
-        if ( $Partners_config['xoopartners_rld']['rld_mode'] == 'rate' ) {
+    if ( $partners_config['xoopartners_rld']['rld_mode'] != 'none' ) {
+        if ( $partners_config['xoopartners_rld']['rld_mode'] == 'rate' ) {
             $sort_mode->addOption('rates',     _MB_XOO_PARTNERS_SORT_RATES);
         } else {
             $sort_mode->addOption('like',      _MB_XOO_PARTNERS_SORT_LIKE);
@@ -78,7 +78,7 @@ function xoopartners_edit($options)
     $order_mode->addOption('desc', _MB_XOO_PARTNERS_ORDER_DESC);
     $block_form->addElement($order_mode);
 
-    if ($Partners_config['xoopartners_category']['use_categories']) {
+    if ($partners_config['xoopartners_category']['use_categories']) {
         ob_start();
         $categories_handler->makeSelectBox('options[3]', $options[3] );
         $block_form->addElement(new XoopsFormLabel(_MB_XOO_PARTNERS_CATEGORY_TITLE, ob_get_contents()));

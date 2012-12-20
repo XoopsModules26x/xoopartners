@@ -18,7 +18,7 @@
  */
 
 $xoopartners_module = Xoopartners::getInstance();
-$Partners_config = $xoopartners_module->LoadConfig();
+$partners_config = $xoopartners_module->LoadConfig();
 
 $i = 0;
 $adminmenu[$i]['title']   = _MI_XOO_PARTNERS_INDEX;
@@ -33,7 +33,7 @@ if ($xoops->isadmin()) {
     $adminmenu[$i]['icon']  = 'administration.png';
 }
 
-if ($Partners_config['xoopartners_category']['use_categories']) {    $i++;
+if ($partners_config['xoopartners_category']['use_categories']) {    $i++;
     $adminmenu[$i]['title'] = _MI_XOO_PARTNERS_CATEGORIES;
     $adminmenu[$i]['link']  = 'admin/categories.php';
     $adminmenu[$i]['icon']  = 'category.png';

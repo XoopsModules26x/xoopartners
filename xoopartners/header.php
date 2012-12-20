@@ -24,7 +24,7 @@ $xoopartners_module = Xoopartners::getInstance();
 $xoopartners_module->loadLanguage('common', 'xoopartners');
 $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
 $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
-$Partners_config = $xoopartners_module->LoadConfig();
+$partners_config = $xoopartners_module->LoadConfig();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
@@ -36,14 +36,14 @@ $xoops->header('xoopartners_' . $script_name . '.html');
 
 $xoops->theme()->addStylesheet('modules/xoopartners/css/module.css');
 
-$xoops->tpl()->assign('template', $Partners_config['xoopartners_main_mode'] );
-$xoops->tpl()->assign('welcome', $Partners_config['xoopartners_welcome'] );
+$xoops->tpl()->assign('template', $partners_config['xoopartners_main_mode'] );
+$xoops->tpl()->assign('welcome', $partners_config['xoopartners_welcome'] );
 
-$xoops->tpl()->assign('welcome', $Partners_config['xoopartners_welcome'] );
-$xoops->tpl()->assign('xoopartners_category', $Partners_config['xoopartners_category'] );
-$xoops->tpl()->assign('xoopartners_partner', $Partners_config['xoopartners_partner'] );
-$xoops->tpl()->assign('xoopartners_qrcode', $Partners_config['xoopartners_qrcode'] );
-$xoops->tpl()->assign('xoopartners_rld', $Partners_config['xoopartners_rld'] );
+$xoops->tpl()->assign('welcome', $partners_config['xoopartners_welcome'] );
+$xoops->tpl()->assign('xoopartners_category', $partners_config['xoopartners_category'] );
+$xoops->tpl()->assign('xoopartners_partner', $partners_config['xoopartners_partner'] );
+$xoops->tpl()->assign('xoopartners_qrcode', $partners_config['xoopartners_qrcode'] );
+$xoops->tpl()->assign('xoopartners_rld', $partners_config['xoopartners_rld'] );
 
 $xoops->tpl()->assign('moduletitle', $xoops->module->name() );
 ?>

@@ -30,7 +30,7 @@ class XoopartnersCategoriesForm extends XoopsThemeForm
 
         $xoopartners_module = Xoopartners::getInstance();
         $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
-        $Partners_config = $xoopartners_module->LoadConfig();
+        $partners_config = $xoopartners_module->LoadConfig();
 
         if ($this->xoopsObject->isNew() ) {
             parent::__construct(_AM_XOO_PARTNERS_CATEGORY_ADD, 'form_category', 'categories.php', 'post', true);
@@ -52,9 +52,9 @@ class XoopartnersCategoriesForm extends XoopsThemeForm
         $this->addElement( new XoopsFormTextArea(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_category_description', $this->xoopsObject->getVar('xoopartners_category_description'), 7, 50));
 
         // image
-        $upload_msg[] = _XOO_PARTNERS_IMAGE_SIZE . ' : ' . $Partners_config['xoopartners_category']['image_size'];
-        $upload_msg[] = _XOO_PARTNERS_IMAGE_WIDTH . ' : ' . $Partners_config['xoopartners_category']['image_width'];
-        $upload_msg[] = _XOO_PARTNERS_IMAGE_HEIGHT . ' : ' . $Partners_config['xoopartners_category']['image_height'];
+        $upload_msg[] = _XOO_PARTNERS_IMAGE_SIZE . ' : ' . $partners_config['xoopartners_category']['image_size'];
+        $upload_msg[] = _XOO_PARTNERS_IMAGE_WIDTH . ' : ' . $partners_config['xoopartners_category']['image_width'];
+        $upload_msg[] = _XOO_PARTNERS_IMAGE_HEIGHT . ' : ' . $partners_config['xoopartners_category']['image_height'];
 
         $image_tray = new XoopsFormElementTray(_XOO_PARTNERS_IMAGE, '' );
         $image_tray->setDescription( $this->message($upload_msg) );
