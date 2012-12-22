@@ -32,7 +32,7 @@ function xoopartners_show($options)
 
     $block['template'] = $options[0];
     $options[3] = isset( $options[3] ) ? $options[3] : -1;
-    $block['partners'] = $partners_handler->GetPartners( $options[3], $options[1], $options[2] );
+    $block['partners'] = $partners_handler->GetPartners( $options[3], $options[1], $options[2], 0, $options[3]);
     $block['xoopartners_partner'] = $partners_config['xoopartners_partner'];
 
     $xoops->tpl()->assign('xoopartners_category', $partners_config['xoopartners_category'] );
@@ -85,6 +85,7 @@ function xoopartners_edit($options)
         ob_end_clean();
     }
 
+    $block_form->addElement( new XoopsFormText(_MB_XOO_PARTNERS_LIMIT, 'options[3]', 1, 2, $options[3]) );
 	return $block_form->render();
 }
 ?>
