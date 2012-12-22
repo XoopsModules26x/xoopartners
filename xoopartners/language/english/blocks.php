@@ -39,4 +39,6 @@ define("_MB_XOO_PARTNERS_SORT_RANDOM",    "Random");
 define("_MB_XOO_PARTNERS_ORDER",          "Order: ");
 define("_MB_XOO_PARTNERS_ORDER_ASC",      "Ascending");
 define("_MB_XOO_PARTNERS_ORDER_DESC",     "Descending");
+
+define("_MB_XOO_PARTNERS_LIMIT",          "Limit per block: ");
 ?>
