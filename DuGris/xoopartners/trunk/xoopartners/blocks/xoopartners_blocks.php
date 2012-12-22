@@ -25,7 +25,6 @@ function xoopartners_show($options)
     $xoops->theme()->addStylesheet('modules/xoopartners/css/blocks.css');
 
     $xoopartners_module = Xoopartners::getInstance();
-    $xoopartners_module->loadLanguage('common');
     $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
     $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
     $partners_config = $xoopartners_module->LoadConfig();
