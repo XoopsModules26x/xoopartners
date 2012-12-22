@@ -39,9 +39,11 @@
 }
 .ul-xoopartners {
     list-style-type:       none;
+    padding:               1em 0;
 }
 .ul-xoocategories {
     list-style-type:       none;
+    padding:               1em 0;
 }
 /*========  Icons ======== */
 [class^="xoopartners-ico-"], [class*=" xoopartners-ico-"] {
