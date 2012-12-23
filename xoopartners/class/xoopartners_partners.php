@@ -121,7 +121,7 @@ class Xoopartners_partners extends XoopsObject
         $myts = MyTextSanitizer::getInstance();
 
         $xoopartners_module = Xoopartners::getInstance();
-        $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
+        $categories_handler = $xoopartners_module->CategoriesHandler();
         $partners_config = $xoopartners_module->LoadConfig();
 
         $ret = parent::getValues();
@@ -154,7 +154,7 @@ class Xoopartners_partners extends XoopsObject
         if ( !in_array( $this->php_self, $this->exclude_page) ) {
             if ( isset($_SESSION['xoopartners_stat'])) {
                 $xoopartners_module = Xoopartners::getInstance();
-                $rld_handler = $xoopartners_module->getHandler('xoopartners_rld');
+                $rld_handler = $xoopartners_module->RldHandler();
 
                 $ret['xoopartners_vote'] = $rld_handler->getVotes($ret['xoopartners_id']);
                 $ret['xoopartners_yourvote'] = $rld_handler->getbyUser($ret['xoopartners_id']);
@@ -311,7 +311,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
                 $xoops = Xoops::getInstance();
 
                 $xoopartners_module = Xoopartners::getInstance();
-                $rld_handler = $xoopartners_module->getHandler('xoopartners_rld');
+                $rld_handler = $xoopartners_module->RldHandler();
 
                 if ( $ret = $rld_handler->SetLike_Dislike($partner_id, $like_dislike) ) {
                     if ($like_dislike == 0) {
@@ -338,7 +338,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
                 $xoops = Xoops::getInstance();
 
                 $xoopartners_module = Xoopartners::getInstance();
-                $rld_handler = $xoopartners_module->getHandler('xoopartners_rld');
+                $rld_handler = $xoopartners_module->RldHandler();
 
                 if ( $ret = $rld_handler->SetRate($partner_id, $rate) ) {
                     if ( is_array($ret) && count($ret) == 3 ) {

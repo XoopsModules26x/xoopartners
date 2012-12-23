@@ -52,7 +52,7 @@ class XoopartnersSearchPlugin extends Xoops_Plugin_Abstract implements SearchPlu
     	}
 
         $xoopartners_module = Xoopartners::getInstance();
-        $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+        $partners_handler = $xoopartners_module->PartnersHandler();
 
         $partners = $partners_handler->getObjects($criteria, false, false);
 

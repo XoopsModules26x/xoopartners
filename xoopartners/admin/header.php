@@ -32,9 +32,8 @@ if ( isset( $_GET ) ){
 }
 
 $xoopartners_module = Xoopartners::getInstance();
-$xoopartners_module->loadLanguage('common');
-$categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
-$partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+$categories_handler = $xoopartners_module->CategoriesHandler();
+$partners_handler = $xoopartners_module->PartnersHandler();
 $partners_config = $xoopartners_module->LoadConfig();
 
 $script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
