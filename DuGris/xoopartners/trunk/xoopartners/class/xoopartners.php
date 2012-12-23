@@ -29,6 +29,9 @@ class Xoopartners extends Xoops_Module_Abstract
     public function init()
     {
         $this->setDirname('xoopartners');
+        @$this->loadLanguage('common');
+        @$this->loadLanguage('preferences');
+
         XoopsLoad::load('xoopaginate', $this->_dirname);
     }
 
@@ -36,6 +39,21 @@ class Xoopartners extends Xoops_Module_Abstract
     {
         XoopsLoad::load('xoopreferences', $this->_dirname);
         return XooPartnersPreferences::getInstance()->getConfig();
+    }
+
+    public function CategoriesHandler()
+    {
+        return $this->getHandler('xoopartners_categories');
+    }
+
+    public function PartnersHandler()
+    {
+        return $this->getHandler('xoopartners_partners');
+    }
+
+    public function RldHandler()
+    {
+        return $this->getHandler('xoopartners_rld');
     }
 }
 ?>

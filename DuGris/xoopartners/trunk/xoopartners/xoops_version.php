@@ -84,11 +84,6 @@ $modversion['blocks'][$i]['edit_func']      = 'xoopartners_edit';
 $modversion['blocks'][$i]['options']        = 'list|published|desc|10';
 $modversion['blocks'][$i]['template']       = 'xoopartners_block.html';
 
-// Users Synchronize post
-$modversion['sync']['table_name'] = 'xoopartners';
-$modversion['sync']['uid_column'] = 'xoopartners_uid';
-$modversion['sync']['criteria']   = new Criteria('xoopartners_online', 1);
-
 // Menu
 $modversion['hasMain'] = 1;
 
@@ -99,7 +94,7 @@ if ( is_object($xoops->module) && $xoops->module->dirname() == 'xoopartners' && 
 
     if ( $partners_config['xoopartners_category']['use_categories'] && $partners_config['xoopartners_category']['main_menu']) {
 
-        $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
+        $categories_handler = $xoopartners_module->CategoriesHandler();
 
         $categories = $categories_handler->GetCategories(0, false, false);
         foreach ($categories as $k => $category ) {

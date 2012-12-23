@@ -29,7 +29,7 @@ class XoopartnersCategoriesForm extends XoopsThemeForm
         $xoops = Xoops::getInstance();
 
         $xoopartners_module = Xoopartners::getInstance();
-        $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
+        $categories_handler = $xoopartners_module->CategoriesHandler();
         $partners_config = $xoopartners_module->LoadConfig();
 
         if ($this->xoopsObject->isNew() ) {

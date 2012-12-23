@@ -31,7 +31,7 @@ if ( $xoops->security()->check() ) {    $partner_id = $system->CleanVars($_REQU
         $_SESSION['xoopartners_rates' . $partner_id] = $time + 3600;
 
         $xoopartners_module = Xoopartners::getInstance();
-        $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+        $partners_handler = $xoopartners_module->PartnersHandler();
 
         $ret = $partners_handler->SetRate( $partner_id, $option );
         if ( is_array($ret) && count($ret) > 1) {            $ret['error'] = 0;

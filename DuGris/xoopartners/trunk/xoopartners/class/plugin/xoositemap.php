@@ -24,9 +24,8 @@ class XoopartnersXoositemapPlugin extends Xoops_Plugin_Abstract implements Xoosi
     public function Xoositemap($subcategories)
     {
         $xoopartners_module = Xoopartners::getInstance();
-        $xoopartners_module->loadLanguage('common', 'xoopartners');
-        $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
-        $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+        $categories_handler = $xoopartners_module->CategoriesHandler();
+        $partners_handler = $xoopartners_module->PartnersHandler();
         $partners_config = $xoopartners_module->LoadConfig();
 
         $sitemap = array();
@@ -55,7 +54,7 @@ class XoopartnersXoositemapPlugin extends Xoops_Plugin_Abstract implements Xoosi
     function xoopartners_getCategory( $category )
     {
         $xoopartners_module = Xoopartners::getInstance();
-        $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+        $partners_handler = $xoopartners_module->PartnersHandler();
 
         $ret = array();
         $partners = $partners_handler->GetPartners($category['xoopartners_category_id'], 'published', 'desc');

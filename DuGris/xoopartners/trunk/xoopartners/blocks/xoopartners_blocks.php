@@ -25,8 +25,7 @@ function xoopartners_show($options)
     $xoops->theme()->addStylesheet('modules/xoopartners/css/blocks.css');
 
     $xoopartners_module = Xoopartners::getInstance();
-    $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
-    $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+    $partners_handler = $xoopartners_module->PartnersHandler();
     $partners_config = $xoopartners_module->LoadConfig();
 
     $block['template'] = $options[0];
@@ -50,9 +49,7 @@ function xoopartners_edit($options)
     $block_form->addElement($display_mode);
 
     $xoopartners_module = Xoopartners::getInstance();
-    $xoopartners_module->loadLanguage('common', 'xoopartners');
-    $categories_handler = $xoopartners_module->getHandler('xoopartners_categories');
-    $partners_handler = $xoopartners_module->getHandler('xoopartners_partners');
+    $categories_handler = $xoopartners_module->CategoriesHandler();
     $partners_config = $xoopartners_module->LoadConfig();
 
     $sort_mode = new XoopsFormSelect(_MB_XOO_PARTNERS_SORT . ' : ', 'options[1]', $options[1]);
