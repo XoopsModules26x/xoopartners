@@ -66,7 +66,7 @@
 .itemStat {
     font-size:              2em;
 }
-#button-reads, #button-visits, #button-print, #button-pdf {
+#button-reads, #button-visits, #button-comments, #button-print, #button-pdf {
     background:             -moz-linear-gradient(bottom, #dadada, #fff);
     background:             -webkit-gradient(linear, center bottom, center top, from(#dadada), to(#fff));
     border:                 1px solid #ccc;
@@ -84,6 +84,9 @@
 #button-visits {
     border-radius:          0;
 }
+#button-comments {
+    border-radius:          0;
+}
 #button-print {
     width :                 30px;
     border-radius:          0 3px 3px 0;
@@ -92,7 +95,7 @@
     width :                 30px;
     border-radius:          0 3px 3px 0;
 }
-.reads, .visits, .print, .pdf {
+.reads, .visits, .comments, .print, .pdf {
     background-size:        16px 18px;
     background-repeat:      no-repeat;
     background-position:    0 0;
@@ -108,6 +111,9 @@
 }
 .visits {
     background-image:       url("../icons/16/weblink.png");
+}
+.comments {
+    background-image:       url("../icons/16/comments.png");
 }
 .print {
     background-image:       url("../icons/16/print.png");

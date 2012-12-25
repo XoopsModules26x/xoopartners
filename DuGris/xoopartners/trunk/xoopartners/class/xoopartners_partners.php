@@ -50,6 +50,7 @@ class Xoopartners_partners extends XoopsObject
         $this->initVar('xoopartners_rates',         XOBJ_DTYPE_INT,               0, false,     1);
         $this->initVar('xoopartners_like',          XOBJ_DTYPE_INT,               0, false,     1);
         $this->initVar('xoopartners_dislike',       XOBJ_DTYPE_INT,               0, false,     1);
+        $this->initVar('xoopartners_comments',      XOBJ_DTYPE_INT,               0, false,     1);
         $this->initVar('xoopartners_published',     XOBJ_DTYPE_STIME,        time(), false,     10);
 
         // Pour autoriser le html
@@ -221,12 +222,16 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return false;
     }
 
-    public function renderAdminList( $category_id = 0 )
+    public function renderAdminList( $category_id = 0, $online = -1 )
     {
         $partners_config = XooPartnersPreferences::getInstance()->loadConfig();
         $criteria = new CriteriaCompo();
         if ($partners_config['xoopartners_category']['use_categories']) {
             $criteria->add( new Criteria('xoopartners_category', $category_id) ) ;
+        }
+        if ($online >= 0) {
+            $criteria->add( new Criteria('xoopartners_online', $online) ) ;
+            $criteria->add( new Criteria('xoopartners_accepted', $online), 'OR' ) ;
         }
         $criteria->setSort( 'xoopartners_order' );
         $criteria->setOrder( 'asc' );

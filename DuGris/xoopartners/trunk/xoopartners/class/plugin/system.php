@@ -19,9 +19,9 @@
 
 class XoopartnersSystemPlugin extends Xoops_Plugin_Abstract implements SystemPluginInterface
 {
-    public function UserSync($uid)
-    {        $xoopartners_module = Xoopartners::getInstance();
-        $partners_handler = $xoopartners_module->PartnersHandler();
+    public function userPosts($uid)
+    {        $partners_module = Xoopartners::getInstance();
+        $partners_handler = $partners_module->PartnersHandler();
 
         $criteria = new CriteriaCompo();
         $criteria->add( new Criteria('xoopartners_online', 1) ) ;
@@ -29,5 +29,19 @@ class XoopartnersSystemPlugin extends Xoops_Plugin_Abstract implements SystemPlu
         $criteria->add( new Criteria('xoopartners_uid', $uid) );
 
         return $partners_handler->getCount($criteria);
+    }
+
+    public function waiting()
+    {
+        $partners_module = Xoopartners::getInstance();
+        $partners_handler = $partners_module->PartnersHandler();
+        $criteria = new CriteriaCompo(new Criteria('xoopartners_online', 0));
+        $criteria->add(new Criteria('xoopartners_accepted', 0), 'OR');
+        if ($count = $partners_handler->getCount($criteria)) {            $ret['count'] = $count;
+            $ret['name'] = Xoops::getInstance()->getHandlerModule()->getBydirname('xoopartners')->getVar('name');
+            $ret['link'] = Xoops::getInstance()->url('modules/xoopartners/admin/partners.php?online=0');
+            return $ret;
+        }
+        return false;
     }
 }

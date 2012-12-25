@@ -30,7 +30,6 @@ if ( is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartner
     }
 
     $xoops->tpl()->assign('security', $xoops->security()->createToken() );
-
     $xoops->tpl()->assign('partner', $partner->getValues() );
     $xoops->tpl()->assign('xoops_pagetitle' , $partner->getVar('xoopartners_title') . ' - ' . $xoops->module->getVar('name') );
     $xoops->theme()->addMeta($type = 'meta', 'description', $partner->getMetaDescription() );

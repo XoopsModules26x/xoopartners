@@ -26,14 +26,5 @@ return $config = array(
         'rld_mode'          => 'likedislike',
         'rate_scale'        => 10,
     ),
-
-    'xoopartners_qrcode'    => array(
-        'use_qrcode'        => 0,
-        'CorrectionLevel'   => 1,
-        'matrixPointSize'   => 2,
-        'whiteMargin'       => 0,
-        'backgroundColor'   => 'White',
-        'foregroundColor'   => 'Black',
-    ),
 );
 ?>

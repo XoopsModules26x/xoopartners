@@ -11,7 +11,7 @@
 <{if !$not_found}>
     <div class="item">
         <div class="itemHead">
-            <{if $xoopartners_qrcode.use_qrcode}>
+            <{if $qrcode}>
                 <div class="itemQRcode">
                     <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><img src="<{xoAppUrl modules/xoopartners/qrcode.php}>?url=<{$partner.xoopartners_link}>" alt="<{$partner.xoopartners_link}>"></a>
                 </div>
@@ -78,6 +78,9 @@
                 <div class="itemStat floatleft">
                     <button id="button-reads" title="<{$smarty.const._XOO_PARTNERS_READS}>"><i class="reads"></i><{$partner.xoopartners_hits}></button>
                     <button id="button-visits" title="<{$smarty.const._XOO_PARTNERS_VISITS}>"><i class="visits"></i><{$partner.xoopartners_visit}></button>
+                    <{if $comments}>
+                        <button id="button-comments" title="<{$smarty.const._XOO_PARTNERS_COMMENTS}>"><i class="comments"></i><{$partner.xoopartners_comments}></button>
+                    <{/if}>
                     <button id="button-print" title="<{$smarty.const._XOO_PARTNERS_PRINT}>"><i class="print"></i></button>
 <!--
                     <button id="button-pdf" title="<{$smarty.const._XOO_PARTNERS_PDF}>"><i class="pdf"></i></button>
@@ -101,6 +104,10 @@
             <{/if}>
         <{/if}>
     </div>
+
+    <{if !$partners && !$print}>
+        <{includeq file='module:comments|comments.html'}>
+    <{/if}>
 <{else}>
     <div class="errorMsg">
         <{$smarty.const._XOO_PARTNERS_NOTFOUND}>
