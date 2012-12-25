@@ -154,6 +154,7 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         $this->addElement( new XoopsFormHidden('xoopartners_rates', $this->xoopsObject->getVar('xoopartners_rates')) );
         $this->addElement( new XoopsFormHidden('xoopartners_like', $this->xoopsObject->getVar('xoopartners_like')) );
         $this->addElement( new XoopsFormHidden('xoopartners_dislike', $this->xoopsObject->getVar('xoopartners_dislike')) );
+        $this->addElement( new XoopsFormHidden('xoopartners_comments', $this->xoopsObject->getVar('xoopartners_comments')) );
 
         $this->addElement($tabtray);
 

@@ -14,6 +14,7 @@ CREATE TABLE `xoopartners` (
   `xoopartners_rates` float(5,2) NOT NULL DEFAULT '0.00',
   `xoopartners_like` int(11) NOT NULL DEFAULT '0',
   `xoopartners_dislike` int(11) NOT NULL DEFAULT '0',
+  `xoopartners_comments` int(11) NOT NULL DEFAULT '0',
   `xoopartners_published` int(10) NOT NULL,
   PRIMARY KEY (`xoopartners_id`)
 ) ENGINE=MyISAM;

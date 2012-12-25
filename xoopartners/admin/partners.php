@@ -137,6 +137,7 @@ switch ($op) {    case 'save':
     break;
 
     default:
+    $online = $system->CleanVars($_REQUEST, 'online', -1, 'int');
     if ($partners_config['xoopartners_category']['use_categories']) {        ob_start();
         $categories_handler->makeSelectBox('category_id', $category_id, true, 'window.location.href="partners.php?category_id="+this.options[this.selectedIndex].value');
         $xoops->tpl()->assign('categories', ob_get_contents() );
@@ -146,7 +147,7 @@ switch ($op) {    case 'save':
     $admin_page->addItemButton(_AM_XOO_PARTNERS_ADD, 'partners.php?op=add', 'add');
     $admin_page->renderButton();
 
-    $xoops->tpl()->assign('partners', $partners_handler->renderAdminList( $category_id ) );
+    $xoops->tpl()->assign('partners', $partners_handler->renderAdminList( $category_id, $online ) );
     $xoops->tpl()->assign('category_id', $category_id );
 
     break;
