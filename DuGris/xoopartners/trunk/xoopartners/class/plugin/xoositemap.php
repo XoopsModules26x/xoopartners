@@ -24,9 +24,9 @@ class XoopartnersXoositemapPlugin extends Xoops_Plugin_Abstract implements Xoosi
     public function Xoositemap($subcategories)
     {
         $xoopartners_module = Xoopartners::getInstance();
+        $partners_config = $xoopartners_module->LoadConfig();
         $categories_handler = $xoopartners_module->CategoriesHandler();
         $partners_handler = $xoopartners_module->PartnersHandler();
-        $partners_config = $xoopartners_module->LoadConfig();
 
         $sitemap = array();
         if ( $subcategories && $partners_config['xoopartners_category']['use_categories'] ) {

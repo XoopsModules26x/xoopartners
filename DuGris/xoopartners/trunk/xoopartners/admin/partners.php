@@ -55,9 +55,10 @@ switch ($op) {    case 'save':
         $partner->setVar('xoopartners_image', $myts->htmlspecialchars( $_POST['image_list'] ) );
     }
 
-    if ($partners_handler->insert($partner)) {        if ($isnew) {            $xoopartners_id = $xoops->db()->getInsertId();
-        }        $msg = _AM_XOO_PARTNERS_SAVED;
-        $partner = $partners_handler->get( $xoopartners_id );
+    if ($xoopartners_id = $partners_handler->insert($partner)) {        $msg = _AM_XOO_PARTNERS_SAVED;
+        if ( isset($errors) && count($errors) != 0) {
+            $msg .= '<br />' . implode('<br />', $errors);;
+        }
 
         // tags
         if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
@@ -69,12 +70,11 @@ switch ($op) {    case 'save':
                 $categories_handler->Addpartner( $partner->getVar('xoopartners_category') );
             }        }
 
-        if ( isset($errors) && count($errors) != 0) {
-            $msg .= '<br />' . implode('<br />', $errors);;
-        }
-
         if ($isnew) {
             $partner->setPost(true);
+
+            //notifications
+            $partner->sendNotifications();
         }
         $xoops->redirect('partners.php?category_id=' . $partner->getVar('xoopartners_category'), 5, $msg);
     }

@@ -86,24 +86,4 @@ $modversion['blocks'][$i]['template']       = 'xoopartners_block.html';
 
 // Menu
 $modversion['hasMain'] = 1;
-
-$i = 0;
-$xoops = Xoops::getInstance();
-if ( is_object($xoops->module) && $xoops->module->dirname() == 'xoopartners' && !$xoops->isAdminSide ) {    $xoopartners_module = Xoopartners::getInstance();
-    $partners_config = $xoopartners_module->LoadConfig();
-
-    if ( $partners_config['xoopartners_category']['use_categories'] && $partners_config['xoopartners_category']['main_menu']) {
-
-        $categories_handler = $xoopartners_module->CategoriesHandler();
-
-        $categories = $categories_handler->GetCategories(0, false, false);
-        foreach ($categories as $k => $category ) {
-            $modversion['sub'][$i]['name']  = $category['xoopartners_category_title'];
-            $modversion['sub'][$i]['url']   = 'index.php?category_id=' . $category['xoopartners_category_id'];
-            $i++;
-        }
-    }
-}
-$modversion['sub'][$i]['name']  = _XOO_PARTNERS_JOIN;
-$modversion['sub'][$i]['url']   = 'joinpartners.php';
 ?>
