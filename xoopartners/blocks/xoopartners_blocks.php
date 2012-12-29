@@ -25,8 +25,8 @@ function xoopartners_show($options)
     $xoops->theme()->addStylesheet('modules/xoopartners/css/blocks.css');
 
     $xoopartners_module = Xoopartners::getInstance();
-    $partners_handler = $xoopartners_module->PartnersHandler();
     $partners_config = $xoopartners_module->LoadConfig();
+    $partners_handler = $xoopartners_module->PartnersHandler();
 
     $block['template'] = $options[0];
     $options[3] = isset( $options[3] ) ? $options[3] : -1;
@@ -39,7 +39,7 @@ function xoopartners_show($options)
 }
 
 function xoopartners_edit($options)
-{    $block_form = new XoopsFormElementTray('&nbsp;', '<br />');
+{    $block_form = new XoopsBlockForm();
 
     $display_mode = new XoopsFormSelect(_MB_XOO_PARTNERS_MODE . ' : ', 'options[0]', $options[0]);
     $display_mode->addOption('list', _MB_XOO_PARTNERS_MODE_LIST);
@@ -49,8 +49,8 @@ function xoopartners_edit($options)
     $block_form->addElement($display_mode);
 
     $xoopartners_module = Xoopartners::getInstance();
-    $categories_handler = $xoopartners_module->CategoriesHandler();
     $partners_config = $xoopartners_module->LoadConfig();
+    $categories_handler = $xoopartners_module->CategoriesHandler();
 
     $sort_mode = new XoopsFormSelect(_MB_XOO_PARTNERS_SORT . ' : ', 'options[1]', $options[1]);
     $sort_mode->addOption('id',        _MB_XOO_PARTNERS_SORT_ID);

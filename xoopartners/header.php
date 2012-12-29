@@ -21,9 +21,9 @@ include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.ph
 include dirname(__FILE__) . '/include/functions.php';
 
 $xoopartners_module = Xoopartners::getInstance();
+$partners_config = $xoopartners_module->LoadConfig();
 $categories_handler = $xoopartners_module->CategoriesHandler();
 $partners_handler = $xoopartners_module->PartnersHandler();
-$partners_config = $xoopartners_module->LoadConfig();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
@@ -35,16 +35,17 @@ $xoops->header('xoopartners_' . $script_name . '.html');
 
 $xoops->theme()->addStylesheet('modules/xoopartners/css/module.css');
 
-$xoops->tpl()->assign('template', $partners_config['xoopartners_main_mode'] );
-$xoops->tpl()->assign('welcome', $partners_config['xoopartners_welcome'] );
+$xoops->tpl()->assign('moduletitle', $xoops->module->name() );
 
+$xoops->tpl()->assign('template', $partners_config['xoopartners_main_mode'] );
 $xoops->tpl()->assign('welcome', $partners_config['xoopartners_welcome'] );
 $xoops->tpl()->assign('xoopartners_category', $partners_config['xoopartners_category'] );
 $xoops->tpl()->assign('xoopartners_partner', $partners_config['xoopartners_partner'] );
 $xoops->tpl()->assign('xoopartners_rld', $partners_config['xoopartners_rld'] );
 
 $xoops->tpl()->assign('qrcode', $xoops->isActiveModule('qrcode') );
-$xoops->tpl()->assign('comments', $xoops->isActiveModule('comments') );
 
-$xoops->tpl()->assign('moduletitle', $xoops->module->name() );
+if ($plugin = Xoops_Plugin::getPlugin('xoopartners', 'notifications') && $xoops->isUser()) {
+    $xoops->tpl()->assign('xoopartners_not', true );
+}
 ?>

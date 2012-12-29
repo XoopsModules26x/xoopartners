@@ -19,5 +19,12 @@
 
 include dirname(__FILE__) . '/header.php';
 
+// extension
+$admin_page->addConfigBoxLine(array('comments', 'warning'), 'extension');
+$admin_page->addConfigBoxLine(array('pdf', 'warning'), 'extension');
+$admin_page->addConfigBoxLine(array('qrcode', 'warning'), 'extension');
+$admin_page->addConfigBoxLine(array('xoosocialnetwork', 'warning'), 'extension');
+$admin_page->addConfigBoxLine(array('notifications', 'warning'), 'module');
+
 include dirname(__FILE__) . '/footer.php';
 ?>

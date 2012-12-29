@@ -21,9 +21,9 @@ include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.ph
 include dirname(__FILE__) . '/include/functions.php';
 
 $xoopartners_module = Xoopartners::getInstance();
+$partners_config = $xoopartners_module->LoadConfig();
 $categories_handler = $xoopartners_module->CategoriesHandler();
 $partners_handler = $xoopartners_module->PartnersHandler();
-$partners_config = $xoopartners_module->LoadConfig();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();

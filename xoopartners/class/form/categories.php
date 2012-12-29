@@ -29,8 +29,8 @@ class XoopartnersCategoriesForm extends XoopsThemeForm
         $xoops = Xoops::getInstance();
 
         $xoopartners_module = Xoopartners::getInstance();
-        $categories_handler = $xoopartners_module->CategoriesHandler();
         $partners_config = $xoopartners_module->LoadConfig();
+        $categories_handler = $xoopartners_module->CategoriesHandler();
 
         if ($this->xoopsObject->isNew() ) {
             parent::__construct(_AM_XOO_PARTNERS_CATEGORY_ADD, 'form_category', 'categories.php', 'post', true);

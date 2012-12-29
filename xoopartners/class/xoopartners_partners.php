@@ -122,8 +122,8 @@ class Xoopartners_partners extends XoopsObject
         $myts = MyTextSanitizer::getInstance();
 
         $xoopartners_module = Xoopartners::getInstance();
-        $categories_handler = $xoopartners_module->CategoriesHandler();
         $partners_config = $xoopartners_module->LoadConfig();
+        $categories_handler = $xoopartners_module->CategoriesHandler();
 
         $ret = parent::getValues();
         $ret['xoopartners_date_day'] = date('d', $ret['xoopartners_published'] );
@@ -196,6 +196,21 @@ class Xoopartners_partners extends XoopsObject
                     $this->setVar( $k,  $value );
                 }
             }
+        }
+    }
+
+    public function sendNotifications()
+    {
+        $xoops = Xoops::getInstance();
+        if ($xoops->isActiveModule('notifications')) {
+            $notification_handler = Notifications::getInstance()->getNotificationHandler();
+            $tags = array();
+            $tags['MODULE_NAME'] = $xoops->module->getVar('name');
+            $tags['ITEM_NAME'] = $this->getVar('xoopartners_title');
+            $tags['ITEM_URL'] = $xoops->url('/modules/xoopartners/partner.php?partner_id=' . $this->getVar('xoopartners_id'));
+            $tags['ITEM_BODY'] = $this->getVar('xoopartners_description');
+            $tags['DATESUB'] = $this->getVar('xoopartners_published');
+            $notification_handler->triggerEvent('global', 0, 'newcontent', $tags);
         }
     }
 }

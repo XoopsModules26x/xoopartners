@@ -106,8 +106,9 @@
     </div>
 
     <{if !$partners && !$print}>
-        <{includeq file='module:comments|comments.html'}>
+        <{includeq file='module:xoopartners|xoopartners_footer.html'}>
     <{/if}>
+
 <{else}>
     <div class="errorMsg">
         <{$smarty.const._XOO_PARTNERS_NOTFOUND}>
