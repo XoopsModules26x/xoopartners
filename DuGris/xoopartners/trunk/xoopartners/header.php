@@ -45,7 +45,7 @@ $xoops->tpl()->assign('xoopartners_rld', $partners_config['xoopartners_rld'] );
 
 $xoops->tpl()->assign('qrcode', $xoops->isActiveModule('qrcode') );
 
-if ($plugin = Xoops_Plugin::getPlugin('xoopartners', 'notifications') && $xoops->isUser()) {
+if ($plugin = Xoops_Module_Plugin::getPlugin('xoopartners', 'notifications') && $xoops->isUser()) {
     $xoops->tpl()->assign('xoopartners_not', true );
 }
 ?>
