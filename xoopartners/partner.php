@@ -35,7 +35,7 @@ if ( is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartner
     $xoops->theme()->addMeta($type = 'meta', 'description', $partner->getMetaDescription() );
     $xoops->theme()->addMeta($type = 'meta', 'keywords', $partner->getMetaKeywords() );
 
-    if ($plugin = Xoops_Plugin::getPlugin('xoopartners', 'comments')) {
+    if ($plugin = Xoops_Module_Plugin::getPlugin('xoopartners', 'comments')) {
         $xoops->tpl()->assign('xoopartners_com', $xoops->isActiveModule('comments') );
     }
 } else {    $xoops->tpl()->assign('not_found', true);

@@ -17,7 +17,7 @@
  * @version         $Id$
  */
 
-class XoopartnersSystemPlugin extends Xoops_Plugin_Abstract implements SystemPluginInterface
+class XoopartnersSystemPlugin extends Xoops_Module_Plugin_Abstract implements SystemPluginInterface
 {
     public function userPosts($uid)
     {        $partners_module = Xoopartners::getInstance();
