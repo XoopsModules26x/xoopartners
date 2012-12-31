@@ -36,17 +36,18 @@ class XoopartnersXootagsPlugin extends Xoops_Module_Plugin_Abstract implements X
         $xoopartners_module = Xoopartners::getInstance();
         $partners_handler = $xoopartners_module->PartnersHandler();
 
-        $partners = $partners_handler->getObjects($criteria, false, false);
+        $partners = $partners_handler->getObjects($criteria, true, false);
 
         $ret = array();
-        foreach ( $partners as $k =>  $partner ) {
-            $k = $partner['xoopartners_time'] . '-' . $partner['xoopartners_id'] ;
+        $k=0;
+        foreach ( $partners as $partner ) {
             $ret[$k]['itemid']   = $partner['xoopartners_id'];
             $ret[$k]['title']    = $partner['xoopartners_title'];
             $ret[$k]['link']     = 'partner.php?partner_id=' . $partner['xoopartners_id'];
-            $ret[$k]['time']     = $partner['xoopartners_published'];
+            $ret[$k]['time']     = $partner['xoopartners_time'];
             $ret[$k]['uid']      = $partner['xoopartners_uid'];
             $ret[$k]['content']  = $partner['xoopartners_description'];
+            $k++;
         }
         return $ret;
     }

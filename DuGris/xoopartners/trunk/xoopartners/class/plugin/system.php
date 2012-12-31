@@ -44,4 +44,25 @@ class XoopartnersSystemPlugin extends Xoops_Module_Plugin_Abstract implements Sy
         }
         return false;
     }
+
+
+    public function backend($limit=10)
+    {
+        $xoops = Xoops::getInstance();
+
+        $partners_module = Xoopartners::getInstance();
+        $partners_config = $partners_module->LoadConfig();
+        $partners_handler = $partners_module->PartnersHandler();
+
+        $ret = array();
+
+        $partners = $partners_handler->GetPartners(0, 'order', 'asc', 0, $limit);
+        foreach ($partners as $k => $partner) {
+            $ret[$k]['title']   = $partner['xoopartners_title'];
+            $ret[$k]['link']    = $xoops->url('modules/xoopartners/partner.php?partner_id=' . $partner['xoopartners_id']);
+            $ret[$k]['content'] = $partner['xoopartners_description'];
+            $ret[$k]['date']    = $partner['xoopartners_time'];
+        }
+        return $ret;
+    }
 }
