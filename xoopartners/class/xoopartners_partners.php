@@ -21,7 +21,8 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 class Xoopartners_partners extends XoopsObject
 {
-    private $exclude_page = array('index','search','tag','userinfo');
+    private $exclude_page = array('index', 'search', 'tag', 'userinfo',
+                            'partners');
     private $php_self = '';
 
     // constructor
@@ -55,6 +56,12 @@ class Xoopartners_partners extends XoopsObject
 
         // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
+
+        // Module
+        $partners_module = Xoopartners::getInstance();
+        $this->config = $partners_module->LoadConfig();
+        $this->cat_handler = $partners_module->CategoriesHandler();
+        $this->rld_handler = $partners_module->RldHandler();
     }
 
     private function Xoopartners_partners()
@@ -93,6 +100,7 @@ class Xoopartners_partners extends XoopsObject
 //        return preg_replace(array('/&amp;/i'), array('&'), $string);
         return $string;
     }
+
     public function getMetaKeywords( $limit=5 )
     {
         $string = $this->getMetaDescription() . ', ' . $this->getVar('xoopartners_title');
@@ -121,57 +129,57 @@ class Xoopartners_partners extends XoopsObject
         $xoops = Xoops::getInstance();
         $myts = MyTextSanitizer::getInstance();
 
-        $xoopartners_module = Xoopartners::getInstance();
-        $partners_config = $xoopartners_module->LoadConfig();
-        $categories_handler = $xoopartners_module->CategoriesHandler();
-
         $ret = parent::getValues();
-        $ret['xoopartners_date_day'] = date('d', $ret['xoopartners_published'] );
-        $ret['xoopartners_date_month'] = date('m', $ret['xoopartners_published'] );
-        $ret['xoopartners_date_year'] = date('Y', $ret['xoopartners_published'] );
-        $ret['xoopartners_time']      = $ret['xoopartners_published'];
-        $ret['xoopartners_published'] = date(_SHORTDATESTRING, $ret['xoopartners_published']);
+        $ret['xoopartners_date_day'] = date('d', $this->getVar('xoopartners_published') );
+        $ret['xoopartners_date_month'] = date('m', $this->getVar('xoopartners_published') );
+        $ret['xoopartners_date_year'] = date('Y', $this->getVar('xoopartners_published') );
+        $ret['xoopartners_time']      = $this->getVar('xoopartners_published');
+        $ret['xoopartners_published'] = date(_SHORTDATESTRING, $this->getVar('xoopartners_published') );
 
-        $ret['xoopartners_link'] =  XOOPS_URL . '/modules/xoopartners/partner.php?partner_id=' . $ret['xoopartners_id'];
-        if ($ret['xoopartners_image'] != 'blank.gif') {
-            $ret['xoopartners_image_link'] = XOOPS_UPLOAD_URL . '/xoopartners/partners/images/' . $ret['xoopartners_image'];
+        $ret['xoopartners_link'] =  XOOPS_URL . '/modules/xoopartners/partner.php?partner_id=' . $this->getVar('xoopartners_id');
+        if ($this->getVar('xoopartners_image') != 'blank.gif') {
+            $ret['xoopartners_image_link'] = XOOPS_UPLOAD_URL . '/xoopartners/partners/images/' . $this->getVar('xoopartners_image');
         } else {
             $ret['xoopartners_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xoopartners/images/partners.png');
         }
 
-        $ret['xoopartners_uid_name'] = XoopsUser::getUnameFromId($ret['xoopartners_uid'], true);
+        $ret['xoopartners_uid_name'] = XoopsUser::getUnameFromId($this->getVar('xoopartners_uid'), true);
 
-        if ($partners_config['xoopartners_category']['use_categories']) {
-            $ret['xoopartners_categories'] = $categories_handler->getParents($ret['xoopartners_category']);
+        if ($this->config['xoopartners_category']['use_categories']) {
+            $ret['xoopartners_categories'] = $this->cat_handler->getParents($this->getVar('xoopartners_category') );
         }
 
-        if ( in_array( $this->php_self, $this->exclude_page) && strpos($ret['xoopartners_description'], '[breakpage]') !== false ) {
-            $ret['xoopartners_description'] = substr( $ret['xoopartners_description'], 0, strpos($ret['xoopartners_description'], '[breakpage]') );
+        if ( in_array( $this->php_self, $this->exclude_page) && strpos($this->getVar('xoopartners_description'), '[breakpage]') !== false ) {
+            $ret['xoopartners_description'] = substr( $this->getVar('xoopartners_description'), 0, strpos($this->getVar('xoopartners_description'), '[breakpage]') );
             $ret['readmore'] = true;
         } else {
-            $ret['xoopartners_description'] = str_replace('[breakpage]', '', $ret['xoopartners_description']);
-        }
-
-        if ( !in_array( $this->php_self, $this->exclude_page) ) {
-            if ( isset($_SESSION['xoopartners_stat'])) {
-                $xoopartners_module = Xoopartners::getInstance();
-                $rld_handler = $xoopartners_module->RldHandler();
-
-                $ret['xoopartners_vote'] = $rld_handler->getVotes($ret['xoopartners_id']);
-                $ret['xoopartners_yourvote'] = $rld_handler->getbyUser($ret['xoopartners_id']);
-            }
+            $ret['xoopartners_description'] = str_replace('[breakpage]', '', $this->getVar('xoopartners_description') );
         }
 
         // tags
+        static $tags;
         if ( !in_array( $this->php_self, $this->exclude_page) || $this->php_self == 'index' || $this->php_self == 'partner_print' ) {
             if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
-                $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
-                $ret['tags'] = $xootags_handler->getbyItem($ret['xoopartners_id']);
+                $id = $this->getVar('xoopartners_id');
+                if ( !isset($tags[$this->getVar('xoopartners_id')]) ) {
+                    $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                    $tags[$this->getVar('xoopartners_id')] = $xootags_handler->getbyItem($this->getVar('xoopartners_id'));
+                }
+                $ret['tags'] = $tags[$this->getVar('xoopartners_id')];
             }
         }
         return $ret;
     }
 
+    public function getRLD( &$ret )
+    {
+        if ( !in_array( $this->php_self, $this->exclude_page) ) {
+            if ($this->config['xoopartners_rld']['rld_mode'] == 'rate') {
+                $ret['xoopartners_vote'] = $this->rld_handler->getVotes($this->getVar('xoopartners_id'));
+                $ret['xoopartners_yourvote'] = $this->rld_handler->getbyUser($this->getVar('xoopartners_id'));
+            }
+        }
+    }
 
     public function CleanVarsForDB()
     {
@@ -222,6 +230,12 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
     public function __construct($db)
     {
         parent::__construct($db, 'xoopartners', 'Xoopartners_partners', 'xoopartners_id', 'xoopartners_title');
+
+        // Module
+        $partners_module = Xoopartners::getInstance();
+        $this->config = $partners_module->LoadConfig();
+        $this->cat_handler = $partners_module->CategoriesHandler();
+        $this->rld_handler = $partners_module->RldHandler();
     }
 
     public function insert(XoopsObject $object, $force = true)
@@ -239,9 +253,8 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
 
     public function renderAdminList( $category_id = 0, $online = -1 )
     {
-        $partners_config = XooPartnersPreferences::getInstance()->loadConfig();
         $criteria = new CriteriaCompo();
-        if ($partners_config['xoopartners_category']['use_categories']) {
+        if ($this->config['xoopartners_category']['use_categories']) {
             $criteria->add( new Criteria('xoopartners_category', $category_id) ) ;
         }
         if ($online >= 0) {
@@ -250,14 +263,13 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         }
         $criteria->setSort( 'xoopartners_order' );
         $criteria->setOrder( 'asc' );
-        return $this->getObjects($criteria, null, false);
+        return $this->getObjects($criteria, true, false);
     }
 
     public function GetPartners( $category_id = 0, $sort = 'order', $order = 'asc', $start=0, $limit=0 )
     {
-        $partners_config = XooPartnersPreferences::getInstance()->loadConfig();
         $criteria = new CriteriaCompo();
-        if ($partners_config['xoopartners_category']['use_categories'] && $category_id >= 0) {
+        if ($this->config['xoopartners_category']['use_categories'] && $category_id >= 0) {
             $criteria->add( new Criteria('xoopartners_category', $category_id) ) ;
         }
         $criteria->add( new Criteria('xoopartners_accepted', 1) ) ;
@@ -274,7 +286,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         $criteria->setStart( $start );
         $criteria->setLimit( $limit );
 
-        return $this->getObjects($criteria, null, false);
+        return $this->getObjects($criteria, true, false);
     }
 
     public function SetOnline( $partner_id )
@@ -330,10 +342,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
             if (is_object($partner) && count($partner) != 0) {
                 $xoops = Xoops::getInstance();
 
-                $xoopartners_module = Xoopartners::getInstance();
-                $rld_handler = $xoopartners_module->RldHandler();
-
-                if ( $ret = $rld_handler->SetLike_Dislike($partner_id, $like_dislike) ) {
+                if ( $ret = $this->rld_handler->SetLike_Dislike($partner_id, $like_dislike) ) {
                     if ($like_dislike == 0) {
                         $xoopartners_dislike = $partner->getVar('xoopartners_dislike') + 1;
                         $partner->setVar('xoopartners_dislike', $xoopartners_dislike);
@@ -357,10 +366,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
             if (is_object($partner) && count($partner) != 0) {
                 $xoops = Xoops::getInstance();
 
-                $xoopartners_module = Xoopartners::getInstance();
-                $rld_handler = $xoopartners_module->RldHandler();
-
-                if ( $ret = $rld_handler->SetRate($partner_id, $rate) ) {
+                if ( $ret = $this->rld_handler->SetRate($partner_id, $rate) ) {
                     if ( is_array($ret) && count($ret) == 3 ) {
                         $partner->setVar('xoopartners_rates', $ret['average']);
                         $this->insert( $partner );
@@ -378,10 +384,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         $xoops = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig( 'xoopartners' );
 
-        $xoopartners_module = Xoopartners::getInstance();
-        $partners_config = $xoopartners_module->LoadConfig();
-
-        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xoopartners/partners/images', $autoload['mimetypes'], $partners_config['xoopartners_partner']['image_size'], $partners_config['xoopartners_partner']['image_width'], $partners_config['xoopartners_partner']['image_height']);
+        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xoopartners/partners/images', $autoload['mimetypes'], $this->config['xoopartners_partner']['image_size'], $this->config['xoopartners_partner']['image_width'], $this->config['xoopartners_partner']['image_height']);
 
         $ret = array();
         foreach ( $_POST['xoops_upload_file'] as $k => $input_image ) {

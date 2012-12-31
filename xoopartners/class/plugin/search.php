@@ -54,7 +54,7 @@ class XoopartnersSearchPlugin extends Xoops_Module_Plugin_Abstract implements Se
         $xoopartners_module = Xoopartners::getInstance();
         $partners_handler = $xoopartners_module->PartnersHandler();
 
-        $partners = $partners_handler->getObjects($criteria, false, false);
+        $partners = $partners_handler->getObjects($criteria, true, false);
 
         foreach ( $partners as $k => $partner ) {
             $ret[$k]['image']    = 'icons/logo_small.png';
