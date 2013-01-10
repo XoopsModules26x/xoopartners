@@ -3,6 +3,9 @@
 @import url(like_dislike.css);
 @import url(rate.css);
 
+legend img {
+    float:                 right;
+}
 .xoopartnersMsg {
     padding:               1em;
     margin-bottom:         1em;

@@ -41,4 +41,7 @@ define("_XOO_PARTNERS_RATE_YOURVOTE",          "Your vote: ");
 // Like / Dislike
 define("_XOO_PARTNERS_LIKE",                   "Like");
 define("_XOO_PARTNERS_DISLIKE",                "Dislike");
+
+// Others
+define("_XOO_PARTNERS_RSS_FEED",               "RSS feed");
 ?>
