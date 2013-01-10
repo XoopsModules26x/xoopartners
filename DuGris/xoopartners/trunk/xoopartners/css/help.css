@@ -7,15 +7,18 @@ code {
     font-weight:         bold;
     font-size:           1em;
 }
-.system-help {    min-height:          650px;}
+.system-help {
+    min-height:          650px;
+}
 .help {
     height:              100px;
     display:             block;
 }
-.help-item {    margin-bottom:       20px;
-    display:             block;
+.help-item {
+    margin-bottom:       20px;
+    display:             blockj;
 }
-.help-title {    width:               80%;
+.help-title {
     margin-bottom:       10px;
     font-size:           1.2em;
     font-weight:         bold;
@@ -25,7 +28,6 @@ code {
     margin:              0;
     padding:             0;
 }
-
 .help-submenu {
     margin:              10px;
     padding:             10px;
@@ -34,5 +36,6 @@ code {
     position:            absolute;
     right:               50px;
 }
-
-.help-description {    width:               100%;}
+.help-description {
+    width:               100%;
+}

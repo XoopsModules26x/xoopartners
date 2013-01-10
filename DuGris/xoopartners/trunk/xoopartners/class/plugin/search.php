@@ -56,13 +56,15 @@ class XoopartnersSearchPlugin extends Xoops_Module_Plugin_Abstract implements Se
 
         $partners = $partners_handler->getObjects($criteria, true, false);
 
-        foreach ( $partners as $k => $partner ) {
+        $k=0;
+        foreach ( $partners as $partner ) {
             $ret[$k]['image']    = 'icons/logo_small.png';
             $ret[$k]['link']     = 'partner.php?partner_id=' . $partner['xoopartners_id'] . '' . $searchstring;
             $ret[$k]['title']    = $partner['xoopartners_title'];
             $ret[$k]['time']     = $partner['xoopartners_time'];
             $ret[$k]['uid']      = $partner['xoopartners_uid'];
             $ret[$k]['content']  = $partner['xoopartners_description'];
+            $k++;
         }
         return $ret;
     }

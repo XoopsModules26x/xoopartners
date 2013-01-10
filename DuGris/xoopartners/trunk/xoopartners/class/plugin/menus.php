@@ -55,4 +55,3 @@ class XoopartnersMenusPlugin extends Xoops_Module_Plugin_Abstract implements Men
         return $ret;
     }
 }
-

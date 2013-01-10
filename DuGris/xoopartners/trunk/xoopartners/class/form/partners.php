@@ -51,10 +51,10 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         $tab1 = new XoopsFormTab(_XOO_TABFORM_MAIN, 'tabid-1');
 
         // Partner Title
-        $tab1->addElement( new XoopsFormText(_XOO_PARTNERS_TITLE, 'xoopartners_title', 100, 255, $this->xoopsObject->getVar('xoopartners_title')) , true );
+        $tab1->addElement( new XoopsFormText(_XOO_PARTNERS_TITLE, 'xoopartners_title', 12, 255, $this->xoopsObject->getVar('xoopartners_title')) , true );
 
         // Partner Url
-        $tab1->addElement( new XoopsFormUrl(_XOO_PARTNERS_URL, 'xoopartners_url', 100, 255, $this->xoopsObject->getVar('xoopartners_url')) , true );
+        $tab1->addElement( new XoopsFormUrl(_XOO_PARTNERS_URL, 'xoopartners_url', 12, 255, $this->xoopsObject->getVar('xoopartners_url')) , true );
 
         // Category
         if ($partners_config['xoopartners_category']['use_categories']) {
@@ -79,7 +79,7 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         $editor_configs['name'] ='xoopartners_description';
         $editor_configs['value'] = $this->xoopsObject->getVar('xoopartners_description');
         $editor_configs['rows'] = 20;
-        $editor_configs['cols'] = 6;
+        $editor_configs['cols'] = 12;
         $editor_configs['width'] = '100%';
         $editor_configs['height'] = '400px';
         if ($xoops->isAdminSide) {

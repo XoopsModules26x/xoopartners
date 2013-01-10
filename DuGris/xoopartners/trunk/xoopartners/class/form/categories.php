@@ -45,7 +45,7 @@ class XoopartnersCategoriesForm extends XoopsThemeForm
          */
         $tab1 = new XoopsFormTab(_XOO_TABFORM_MAIN, 'tabid-1');
         // Category Title
-        $tab1->addElement( new XoopsFormText(_XOO_PARTNERS_TITLE, 'xoopartners_category_title', 100, 255, $this->xoopsObject->getVar('xoopartners_category_title')) , true );
+        $tab1->addElement( new XoopsFormText(_XOO_PARTNERS_TITLE, 'xoopartners_category_title', 12, 255, $this->xoopsObject->getVar('xoopartners_category_title')) , true );
 
         // Category parent_id
         ob_start();
@@ -55,7 +55,7 @@ class XoopartnersCategoriesForm extends XoopsThemeForm
 
 
         // Category Description
-        $tab1->addElement( new XoopsFormTextArea(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_category_description', $this->xoopsObject->getVar('xoopartners_category_description'), 7, 50));
+        $tab1->addElement( new XoopsFormTextArea(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_category_description', $this->xoopsObject->getVar('xoopartners_category_description'), 7, 12));
 
         // image
         $upload_msg[] = _XOO_PARTNERS_IMAGE_SIZE . ' : ' . $partners_config['xoopartners_category']['image_size'];

@@ -6,9 +6,9 @@ return $config = array(
     'xoopartners_main_mode' => 'list',
 
     'xoopartners_category'  => array(
-        'use_categories'    => false,
+        'use_categories'    => 0,
         'display_mode'      => 'list',
-        'main_menu'         => 1,
+        'main_menu'         => 0,
         'image_size'        => 100000,
         'image_width'       => 100,
         'image_height'      => 100,
