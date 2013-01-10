@@ -1,6 +1,6 @@
-<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/xoocontact/css/help.css}>" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/xoopartners/css/help.css}>" />
 
-<div class="help txtcenter">
+<div class="help span12 txtcenter">
     <div class="help-submenu floatright txtleft">
         <ul>
             <li><a href="#description" title=""><{$smarty.const._HELP_DESCRIPTION_TITLE}></a></li>
@@ -14,17 +14,17 @@
     </div>
 
     <div class="floatleft">
-        <img src="<{$xoops_url}>/modules/<{$module->getVar('dirname')}>/<{$module->getInfo('image')}>" alt="<{$module->getInfo('name')}>" />
+        <img src="<{$xoops_url}>/modules/<{$module->getVar('dirname')}>/<{$module->getInfo('image')}>" alt="<{$module->getVar('name')}>" title="<{$module->getVar('name')}>" />
     </div>
 
-    <div class="help-title floaleft">
-        <h2><{$module->getInfo('name')}></h2>
+    <div class="help-title floatcenter0 span8">
+        <h2><{$module->getVar('name')}></h2>
         <{if $module->getInfo('paypal')}>
             <form class="help-paypal" id="paypal-form" name="_xclick" action="https://www.paypal.com/fr/cgi-bin/webscr" method="post">
                 <input type="hidden" name="cmd" value="_xclick">
                     <{foreachq from=$module->getInfo('paypal') item=value key=key}>
                         <{if is_numeric($value)}>
-                            <input type="hidden" name="<{$key}>" value="<{$value}>">
+                            <input type="hidden" name="<{$key}>" value=<{$value}>>
                         <{else}>
                             <input type="hidden" name="<{$key}>" value="<{$value}>">
                         <{/if}>
@@ -34,6 +34,7 @@
         <{/if}>
     </div>
 </div>
+
 <div class="clear"></div>
 
 <a name="description"></a>
@@ -55,7 +56,7 @@
     </div>
     <{if $module->getInfo('module_website_url')}>
         <div class="spacer marg5">
-            <a href="http://<{$module->getInfo('module_website_url')}>" rel="external" title=""><{$module->getInfo('module_website_name')}></a>
+            <a href="http://<{$module->getInfo('module_website_url')}>" rel="external"><{$module->getInfo('module_website_name')}></a>
         </div>
     <{/if}>
 </div>

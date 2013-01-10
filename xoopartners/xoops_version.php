@@ -20,9 +20,9 @@
 $modversion['name']           = _MI_XOO_PARTNERS_NAME;
 $modversion['description']    = _MI_XOO_PARTNERS_DESC;
 $modversion['version']        = 1.00;
-$modversion['author']         = 'JEN Laurent';
-$modversion['nickname']       = 'DuGris';
-$modversion['credits']        = 'The XOOPS Project';
+$modversion['author']         = 'XooFoo - Laurent JEN';
+$modversion['nickname']       = 'aka DuGris';
+$modversion['credits']        = 'DuGris.XooFoo Project';
 $modversion['license']        = 'GNU GPL 2.0';
 $modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html/';
 $modversion['official']       = 1;

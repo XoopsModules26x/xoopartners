@@ -10,6 +10,7 @@
 	border:             1px solid #eee;
     text-decoration:    none;
     color:              #036CB4;
+    width:              32px;
 }
 
 #pagination a:hover,
@@ -26,5 +27,10 @@
     color:              #fff;
 }
 #pagination .disabled {
-    display:            none;
+    width:              32px;
+	border:             none;
+}
+#pagination .prevnext {
+    width:              70px !important;
+    display:            block;
 }

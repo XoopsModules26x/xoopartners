@@ -65,4 +65,9 @@ class XoopartnersSystemPlugin extends Xoops_Module_Plugin_Abstract implements Sy
         }
         return $ret;
     }
+
+    public function userMenus()
+    {
+        return array();
+    }
 }
