@@ -22,7 +22,8 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
 class Xoopartners_partners extends XoopsObject
 {
     private $exclude_page = array('index', 'search', 'tag', 'userinfo',
-                            'partners');
+                            'partners',
+                            'sitemap.xml');
     private $php_self = '';
 
     // constructor
@@ -171,7 +172,7 @@ class Xoopartners_partners extends XoopsObject
         return $ret;
     }
 
-    public function getRLD( &$ret )
+    public function getRLD( $ret )
     {
         if ( !in_array( $this->php_self, $this->exclude_page) ) {
             if ($this->config['xoopartners_rld']['rld_mode'] == 'rate') {
@@ -179,6 +180,7 @@ class Xoopartners_partners extends XoopsObject
                 $ret['xoopartners_yourvote'] = $this->rld_handler->getbyUser($this->getVar('xoopartners_id'));
             }
         }
+        return $ret;
     }
 
     public function CleanVarsForDB()
@@ -201,7 +203,7 @@ class Xoopartners_partners extends XoopsObject
                     $this->setVar( $k,  stripSlashes($value) );
                 } else {
                     $value = $system->CleanVars($_POST, $k, $v, 'string');
-                    $this->setVar( $k,  $value );
+                    $this->setVar( $k,  stripslashes($value) );
                 }
             }
         }

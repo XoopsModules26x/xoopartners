@@ -25,7 +25,7 @@ CREATE TABLE `xoopartners_categories` (
   `xoopartners_category_title` varchar(100) NOT NULL,
   `xoopartners_category_description` text NOT NULL,
   `xoopartners_category_image` varchar(100) NOT NULL DEFAULT '0',
-  `xoopartners_category_order` tinyint(5) NOT NULL,
+  `xoopartners_category_order` int(5) NOT NULL,
   `xoopartners_category_online` tinyint(1) NOT NULL DEFAULT '1',
   `xoopartners_category_partners` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`xoopartners_category_id`)

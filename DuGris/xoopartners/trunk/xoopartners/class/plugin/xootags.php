@@ -36,7 +36,7 @@ class XoopartnersXootagsPlugin extends Xoops_Module_Plugin_Abstract implements X
         $xoopartners_module = Xoopartners::getInstance();
         $partners_handler = $xoopartners_module->PartnersHandler();
 
-        $partners = $partners_handler->getObjects($criteria, true, false);
+        $partners = $partners_handler->getObjects($criteria, false, false);
 
         $ret = array();
         $k=0;
