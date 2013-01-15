@@ -73,7 +73,7 @@ class Xoopartners_category extends XoopsObject
                     $this->setVar( $k,  $value );
                 } else {
                     $value = $system->CleanVars($_POST, $k, $v, 'string');
-                    $this->setVar( $k,  $value );
+                    $this->setVar( $k,  stripslashes($value) );
                 }
             }
         }

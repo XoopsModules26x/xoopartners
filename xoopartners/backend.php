@@ -20,8 +20,12 @@
  * @version         $Id$
  */
 
-if (file_exists('mainfile.php')) {    include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mainfile.php';
-} else {    include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';}
+if (file_exists('mainfile.php')) {
+    include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+} else {
+    include '../../' . DIRECTORY_SEPARATOR . 'mainfile.php';
+}
+defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
@@ -55,8 +59,11 @@ if (!$tpl->is_cached('module:' . $dirname . '|system_rss.html')) {
 
     $items = array();
 
-    if ($xoops->isModule()) {        $plugin = Xoops_Module_Plugin::getPlugin($dirname);
-        $res = $plugin->backend(10);        if (is_array($res) && count($res)>0) {
+    if ($xoops->isModule()) {
+        /* @var $plugin SystemPluginInterface */
+        $plugin = Xoops_Module_Plugin::getPlugin($dirname, 'system');
+        $res = $plugin->backend(10);
+        if (is_array($res) && count($res)>0) {
             foreach ($res as $item) {
                 $date[] = array('date' => $item['date']);
                 $items[] = array('date' => XoopsLocal::formatTimestamp($item['date'], 'rss'),
@@ -67,7 +74,9 @@ if (!$tpl->is_cached('module:' . $dirname . '|system_rss.html')) {
                                  );
             }
         }
-    } else {        $plugins = Xoops_Module_Plugin::getPlugins('system');
+    } else {
+        $plugins = Xoops_Module_Plugin::getPlugins('system');
+        /* @var $plugin SystemPluginInterface */
         foreach ($plugins as $plugin) {
             $res = $plugin->backend(10);
             if (is_array($res) && count($res)>0) {
