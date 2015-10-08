@@ -17,13 +17,13 @@
  * @version         $Id$
  */
 
-include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
-include dirname(__FILE__) . '/include/functions.php';
+include dirname(dirname(__DIR__)) .  '/mainfile.php';
+include __DIR__ . '/include/functions.php';
 
 $xoopartners_module = Xoopartners::getInstance();
-$partners_config = $xoopartners_module->LoadConfig();
+$partners_config    = $xoopartners_module->LoadConfig();
 $categories_handler = $xoopartners_module->CategoriesHandler();
-$partners_handler = $xoopartners_module->PartnersHandler();
+$partners_handler   = $xoopartners_module->PartnersHandler();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
@@ -31,23 +31,22 @@ $system = System::getInstance();
 $xoops = Xoops::getInstance();
 
 $script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
-$xoops->header('xoopartners_' . $script_name . '.html');
+$xoops->header('xoopartners_' . $script_name . '.tpl');
 
-$xoops->theme()->addStylesheet('modules/xoopartners/css/module.css');
+$xoops->theme()->addStylesheet('modules/xoopartners/assets/css/module.css');
 
-$xoops->tpl()->assign('moduletitle', $xoops->module->name() );
+$xoops->tpl()->assign('moduletitle', $xoops->module->name());
 
-$xoops->tpl()->assign('template', $partners_config['xoopartners_main_mode'] );
-$xoops->tpl()->assign('welcome', $partners_config['xoopartners_welcome'] );
-$xoops->tpl()->assign('xoopartners_category', $partners_config['xoopartners_category'] );
-$xoops->tpl()->assign('xoopartners_partner', $partners_config['xoopartners_partner'] );
-$xoops->tpl()->assign('xoopartners_rld', $partners_config['xoopartners_rld'] );
+$xoops->tpl()->assign('template', $partners_config['xoopartners_main_mode']);
+$xoops->tpl()->assign('welcome', $partners_config['xoopartners_welcome']);
+$xoops->tpl()->assign('xoopartners_category', $partners_config['xoopartners_category']);
+$xoops->tpl()->assign('xoopartners_partner', $partners_config['xoopartners_partner']);
+$xoops->tpl()->assign('xoopartners_rld', $partners_config['xoopartners_rld']);
 
-$xoops->tpl()->assign('qrcode', $xoops->isActiveModule('qrcode') );
+$xoops->tpl()->assign('qrcode', $xoops->isActiveModule('qrcode'));
 
 if ($xoops->isActiveModule('notifications')) {
-    if ($plugin = Xoops_Module_Plugin::getPlugin('xoopartners', 'notifications') && $xoops->isUser()) {
-        $xoops->tpl()->assign('xoopartners_not', true );
+    if ($plugin = \Xoops\Module\Plugin::getPlugin('xoopartners', 'notifications') && $xoops->isUser()) {
+        $xoops->tpl()->assign('xoopartners_not', true);
     }
 }
-?>

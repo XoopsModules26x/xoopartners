@@ -1,0 +1,41 @@
+.like-dislike {
+    font-size: 2em;
+}
+
+#button-container-like, #button-container-unlike {
+    background: -moz-linear-gradient(bottom, #dadada, #fff);
+    background: -webkit-gradient(linear, center bottom, center top, from(#dadada), to(#fff));
+    border: 1px solid #ccc;
+    color: #000;
+    cursor: pointer;
+    height: 2em;
+    width: 70px;
+    font-size: .6em;
+    line-height: 1.5em;
+    float: left;
+}
+
+#button-container-like {
+    border-radius: 3px 0 0 3px;
+}
+
+#button-container-unlike {
+    border-radius: 0 3px 3px 0;
+}
+
+.thumbs-up, .thumbs-down {
+    position: relative;
+    height: 20px;
+    display: block;
+    width: 20px;
+    clear: right;
+    float: left;
+}
+
+.thumbs-up {
+    background: url("../icons/16/like.png") no-repeat scroll 0 0 transparent;
+}
+
+.thumbs-down {
+    background: url("../icons/16/dislike.png") no-repeat scroll 0 0 transparent;
+}

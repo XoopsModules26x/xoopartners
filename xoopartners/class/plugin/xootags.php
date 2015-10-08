@@ -17,38 +17,39 @@
  * @version         $Id$
  */
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class XoopartnersXootagsPlugin extends Xoops_Module_Plugin_Abstract implements XootagsPluginInterface
+class XoopartnersXootagsPlugin extends Xoops\Module\Plugin\PluginAbstract implements XootagsPluginInterface
 {
-    public function Xootags( $items )
+    public function Xootags($items)
     {
         $criteria = new CriteriaCompo();
         $criteria->setSort('xoopartners_order');
         $criteria->setOrder('ASC');
 
-        $criteria->add( new Criteria('xoopartners_online', 1) ) ;
-        $criteria->add( new Criteria('xoopartners_accepted', 1) ) ;
-        $criteria->add( new Criteria('xoopartners_published', 0, '>') ) ;
-        $criteria->add( new Criteria('xoopartners_published', time(), '<=') ) ;
-        $criteria->add( new Criteria('xoopartners_id', '(' . implode(', ', $items) . ')', 'IN') ) ;
+        $criteria->add(new Criteria('xoopartners_online', 1));
+        $criteria->add(new Criteria('xoopartners_accepted', 1));
+        $criteria->add(new Criteria('xoopartners_published', 0, '>'));
+        $criteria->add(new Criteria('xoopartners_published', time(), '<='));
+        $criteria->add(new Criteria('xoopartners_id', '(' . implode(', ', $items) . ')', 'IN'));
 
         $xoopartners_module = Xoopartners::getInstance();
-        $partners_handler = $xoopartners_module->PartnersHandler();
+        $partners_handler   = $xoopartners_module->PartnersHandler();
 
         $partners = $partners_handler->getObjects($criteria, false, false);
 
         $ret = array();
-        $k=0;
-        foreach ( $partners as $partner ) {
-            $ret[$k]['itemid']   = $partner['xoopartners_id'];
-            $ret[$k]['title']    = $partner['xoopartners_title'];
-            $ret[$k]['link']     = 'partner.php?partner_id=' . $partner['xoopartners_id'];
-            $ret[$k]['time']     = $partner['xoopartners_time'];
-            $ret[$k]['uid']      = $partner['xoopartners_uid'];
-            $ret[$k]['content']  = $partner['xoopartners_description'];
-            $k++;
+        $k   = 0;
+        foreach ($partners as $partner) {
+            $ret[$k]['itemid']  = $partner['xoopartners_id'];
+            $ret[$k]['title']   = $partner['xoopartners_title'];
+            $ret[$k]['link']    = 'partner.php?partner_id=' . $partner['xoopartners_id'];
+            $ret[$k]['time']    = $partner['xoopartners_time'];
+            $ret[$k]['uid']     = $partner['xoopartners_uid'];
+            $ret[$k]['content'] = $partner['xoopartners_description'];
+            ++$k;
         }
+
         return $ret;
     }
 }

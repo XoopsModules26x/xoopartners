@@ -17,16 +17,17 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-class XoopartnersPartnersForm extends XoopsThemeForm
+class XoopartnersPartnersForm extends Xoops\Form\ThemeForm
 {
     /**
      * @param null $obj
      */
     public function __construct($obj = null)
-    {        $system = System::getInstance();
-        $category_id = $system->CleanVars($_REQUEST, 'category_id', 0, 'int');
+    {
+        $system      = System::getInstance();
+        $category_id = $system->cleanVars($_REQUEST, 'category_id', 0, 'int');
 
         $this->xoopsObject = $obj;
 
@@ -34,59 +35,63 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         $xoops = Xoops::getInstance();
 
         $xoopartners_module = Xoopartners::getInstance();
-        $partners_config = $xoopartners_module->LoadConfig();
+        $partners_config    = $xoopartners_module->LoadConfig();
 
-        if ($this->xoopsObject->isNew() ) {            $script = ($xoops->isAdminSide) ? 'partners.php' : 'joinpartners.php';
+        if ($this->xoopsObject->isNew()) {
+            $script = ($xoops->isAdminSide) ? 'partners.php' : 'joinpartners.php';
             $title  = ($xoops->isAdminSide) ? _AM_XOO_PARTNERS_ADD : _XOO_PARTNERS_JOIN;
             parent::__construct($title, 'form_partner', $script, 'post', true);
-        } else {            parent::__construct(_AM_XOO_PARTNERS_EDIT . ' : ' . $this->xoopsObject->getVar('xoopartners_title'), 'form_partner', 'partners.php', 'post', true);
+        } else {
+            parent::__construct(_AM_XOO_PARTNERS_EDIT . ' : ' . $this->xoopsObject->getVar('xoopartners_title'), 'form_partner', 'partners.php', 'post', true);
         }
         $this->setExtra('enctype="multipart/form-data"');
 
-        $tabtray = new XoopsFormTabTray('', 'uniqueid');
+        $tabtray = new Xoops\Form\TabTray('', 'uniqueid');
 
         /**
          * Main
          */
-        $tab1 = new XoopsFormTab(_XOO_TABFORM_MAIN, 'tabid-1');
+        $tab1 = new Xoops\Form\Tab(_XOO_TABFORM_MAIN, 'tabid-1');
 
         // Partner Title
-        $tab1->addElement( new XoopsFormText(_XOO_PARTNERS_TITLE, 'xoopartners_title', 12, 255, $this->xoopsObject->getVar('xoopartners_title')) , true );
+        $tab1->addElement(new Xoops\Form\Text(_XOO_PARTNERS_TITLE, 'xoopartners_title', 12, 255, $this->xoopsObject->getVar('xoopartners_title')), true);
 
         // Partner Url
-        $tab1->addElement( new XoopsFormUrl(_XOO_PARTNERS_URL, 'xoopartners_url', 12, 255, $this->xoopsObject->getVar('xoopartners_url')) , true );
+        $tab1->addElement(new Xoops\Form\Url(_XOO_PARTNERS_URL, 'xoopartners_url', 12, 255, $this->xoopsObject->getVar('xoopartners_url')), true);
 
         // Category
         if ($partners_config['xoopartners_category']['use_categories']) {
             ob_start();
-            $categories_handler->makeSelectBox('xoopartners_category', $this->xoopsObject->getVar('xoopartners_category') );
-            $tab1->addElement(new XoopsFormLabel(_XOO_PARTNERS_CATEGORY_TITLE, ob_get_contents()));
+            $categories_handler->makeSelectBox('xoopartners_category', $this->xoopsObject->getVar('xoopartners_category'));
+            $tab1->addElement(new Xoops\Form\Label(_XOO_PARTNERS_CATEGORY_TITLE, ob_get_contents()));
             ob_end_clean();
-        } else {            $this->addElement( new XoopsFormHidden('xoopartners_category', 0) );
+        } else {
+            $this->addElement(new Xoops\Form\Hidden('xoopartners_category', 0));
         }
 
         // submitter
         if ($xoops->isAdminSide) {
             $xoopartners_uid = $this->xoopsObject->isNew() ? $xoops->user->getVar('uid') : $this->xoopsObject->getVar('xoopartners_uid');
-            $tab1->addElement(new XoopsFormSelectUser(_XOO_PARTNERS_AUTHOR, 'xoopartners_uid', true, $xoopartners_uid, 1, false));
+            $tab1->addElement(new Xoops\Form\SelectUser(_XOO_PARTNERS_AUTHOR, 'xoopartners_uid', true, $xoopartners_uid, 1, false));
         } else {
             $xoopartners_uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-            $this->addElement( new XoopsFormHidden('xoopartners_uid', $xoopartners_uid) );
+            $this->addElement(new Xoops\Form\Hidden('xoopartners_uid', $xoopartners_uid));
         }
 
         // Partner Description
-        $editor_configs=array();
-        $editor_configs['name'] ='xoopartners_description';
-        $editor_configs['value'] = $this->xoopsObject->getVar('xoopartners_description');
-        $editor_configs['rows'] = 20;
-        $editor_configs['cols'] = 12;
-        $editor_configs['width'] = '100%';
+        $editor_configs           = array();
+        $editor_configs['name']   = 'xoopartners_description';
+        $editor_configs['value']  = $this->xoopsObject->getVar('xoopartners_description');
+        $editor_configs['rows']   = 20;
+        $editor_configs['cols']   = 12;
+        $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
         if ($xoops->isAdminSide) {
             $editor_configs['editor'] = 'tinymce';
-            $tab1->addElement( new XoopsFormEditor(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $editor_configs), true );
-        } else {            $editor_configs['editor'] = 'dhtmltextarea';
-            $tab1->addElement( new XoopsFormEditor(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $editor_configs), true );
+            $tab1->addElement(new Xoops\Form\Editor(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $editor_configs), true);
+        } else {
+            $editor_configs['editor'] = 'dhtmltextarea';
+            $tab1->addElement(new Xoops\Form\Editor(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_description', $editor_configs), true);
         }
 
         // image
@@ -94,21 +99,26 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         $upload_msg[] = _XOO_PARTNERS_IMAGE_WIDTH . ' : ' . $partners_config['xoopartners_partner']['image_width'];
         $upload_msg[] = _XOO_PARTNERS_IMAGE_HEIGHT . ' : ' . $partners_config['xoopartners_partner']['image_height'];
 
-        $warning_tray = new XoopsFormElementTray($this->message($upload_msg, '') );
-        $image_tray = new XoopsFormElementTray(_XOO_PARTNERS_IMAGE, '' );
+        $warning_tray = new Xoops\Form\ElementTray($this->message($upload_msg, ''));
+        $image_tray   = new Xoops\Form\ElementTray(_XOO_PARTNERS_IMAGE, '');
 
-        $image_box = new XoopsFormFile('', 'xoopartners_image', 5000000);
-        $image_box->setExtra( "size ='70%'") ;
-        $image_tray->addElement( $image_box );
-        $image_tray->addElement( $warning_tray );
+        $image_box = new Xoops\Form\File('', 'xoopartners_image', 5000000);
+        $image_box->setExtra("size ='70%'");
+        $image_tray->addElement($image_box);
+        $image_tray->addElement($warning_tray);
 
-        $image_array = XoopsLists :: getImgListAsArray( $xoops->path('uploads') . '/xoopartners/partners/images' );
-        $image_select = new XoopsFormSelect( '<br />', 'image_list', $this->xoopsObject->getVar('xoopartners_image') );
-        $image_select->addOptionArray( $image_array );
-        $image_select->setExtra( "onchange='showImgSelected(\"select_image\", \"image_list\", \"" . '/xoopartners/partners/images/' . "\", \"\", \"" . $xoops->url('uploads') . "\")'" );
-        $image_tray->addElement( $image_select );
-        $image_tray->addElement( new XoopsFormLabel( '', "<br /><img src='" . $xoops->url('uploads') . '/xoopartners/partners/images/' . $this->xoopsObject->getVar('xoopartners_image') . "' name='select_image' id='select_image' alt='' />" ) );
-        $tab1->addElement( $image_tray );
+        $image_array  = XoopsLists:: getImgListAsArray($xoops->path('uploads') . '/xoopartners/partners/images');
+        $image_select = new Xoops\Form\Select('<br />', 'image_list', $this->xoopsObject->getVar('xoopartners_image'));
+        $image_select->addOptionArray($image_array);
+        $image_select->setExtra("onchange='showImgSelected(\"select_image\", \"image_list\", \"" . '/xoopartners/partners/images/' . "\", \"\", \"" . $xoops->url('uploads') . "\")'");
+        $image_tray->addElement($image_select);
+        $image_tray->addElement(
+            new Xoops\Form\Label(
+                '',
+                "<br /><img src='" . $xoops->url('uploads') . '/xoopartners/partners/images/' . $this->xoopsObject->getVar('xoopartners_image') . "' name='select_image' id='select_image' alt='' />"
+            )
+        );
+        $tab1->addElement($image_tray);
 
         $tabtray->addElement($tab1);
 
@@ -116,63 +126,64 @@ class XoopartnersPartnersForm extends XoopsThemeForm
          * Options
          */
         if ($xoops->isAdminSide) {
-            $tab3 = new XoopsFormTab(_XOO_TABFORM_OPTIONS, 'tabid-3');
+            $tab3 = new Xoops\Form\Tab(_XOO_TABFORM_OPTIONS, 'tabid-3');
             // order
-            $tab3->addElement( new XoopsFormText(_XOO_PARTNERS_ORDER, 'xoopartners_order', 1, 3, $this->xoopsObject->getVar('xoopartners_order')) );
+            $tab3->addElement(new Xoops\Form\Text(_XOO_PARTNERS_ORDER, 'xoopartners_order', 1, 3, $this->xoopsObject->getVar('xoopartners_order')));
             // display
-            $tab3->addElement( new XoopsFormRadioYN(_XOO_PARTNERS_DISPLAY, 'xoopartners_online',  $this->xoopsObject->getVar('xoopartners_online')) );
+            $tab3->addElement(new Xoops\Form\RadioYesNo(_XOO_PARTNERS_DISPLAY, 'xoopartners_online', $this->xoopsObject->getVar('xoopartners_online')));
             // accepted
-            $tab3->addElement( new XoopsFormRadioYN(_XOO_PARTNERS_ACCEPTED_YES, 'xoopartners_accepted',  $this->xoopsObject->getVar('xoopartners_accepted')) );
+            $tab3->addElement(new Xoops\Form\RadioYesNo(_XOO_PARTNERS_ACCEPTED_YES, 'xoopartners_accepted', $this->xoopsObject->getVar('xoopartners_accepted')));
             // Published date
             $published = ($this->xoopsObject->getVar('xoopartners_published') == 0) ? time() : $this->xoopsObject->getVar('xoopartners_published');
-            $tab3->addElement( new XoopsFormDateTime(_XOO_PARTNERS_PUBLISHED, 'xoopartners_published', 2, $published, false) );
+            $tab3->addElement(new Xoops\Form\DateTime(_XOO_PARTNERS_PUBLISHED, 'xoopartners_published', 2, $published, false));
             $tabtray->addElement($tab3);
-        } else {            $this->addElement( new XoopsFormHidden('xoopartners_order', $this->xoopsObject->getVar('xoopartners_order')) );
-            $this->addElement( new XoopsFormHidden('xoopartners_online', $this->xoopsObject->getVar('xoopartners_online')) );
-            $this->addElement( new XoopsFormHidden('xoopartners_accepted', $this->xoopsObject->getVar('xoopartners_accepted')) );
-            $this->addElement( new XoopsFormHidden('xoopartners_published', time() ) );
+        } else {
+            $this->addElement(new Xoops\Form\Hidden('xoopartners_order', $this->xoopsObject->getVar('xoopartners_order')));
+            $this->addElement(new Xoops\Form\Hidden('xoopartners_online', $this->xoopsObject->getVar('xoopartners_online')));
+            $this->addElement(new Xoops\Form\Hidden('xoopartners_accepted', $this->xoopsObject->getVar('xoopartners_accepted')));
+            $this->addElement(new Xoops\Form\Hidden('xoopartners_published', time()));
         }
 
         /**
          * Tags
          */
-        if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
+        if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
             if ($xoops->isAdminSide) {
-                $tags_tray = new XoopsFormTab(_XOO_TABFORM_TAGS, 'tabid-tags');
+                $tags_tray       = new Xoops\Form\Tab(_XOO_TABFORM_TAGS, 'tabid-tags');
                 $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
-                $tagform = $TagForm_handler->TagsForm( 'tags', $this->xoopsObject->getVar('xoopartners_id'));
-                $tags_tray->addElement( $tagform );
+                $tagform         = $TagForm_handler->TagsForm('tags', $this->xoopsObject->getVar('xoopartners_id'));
+                $tags_tray->addElement($tagform);
                 $tabtray->addElement($tags_tray);
             } else {
-                $this->addElement( new XoopsFormHidden('tags', '') );
+                $this->addElement(new Xoops\Form\Hidden('tags', ''));
             }
         }
 
         // hidden
-        $this->addElement( new XoopsFormHidden('xoopartners_id', $this->xoopsObject->getVar('xoopartners_id')) );
-        $this->addElement( new XoopsFormHidden('category_id', $category_id) );
-        $this->addElement( new XoopsFormHidden('xoopartners_rates', $this->xoopsObject->getVar('xoopartners_rates')) );
-        $this->addElement( new XoopsFormHidden('xoopartners_like', $this->xoopsObject->getVar('xoopartners_like')) );
-        $this->addElement( new XoopsFormHidden('xoopartners_dislike', $this->xoopsObject->getVar('xoopartners_dislike')) );
-        $this->addElement( new XoopsFormHidden('xoopartners_comments', $this->xoopsObject->getVar('xoopartners_comments')) );
+        $this->addElement(new Xoops\Form\Hidden('xoopartners_id', $this->xoopsObject->getVar('xoopartners_id')));
+        $this->addElement(new Xoops\Form\Hidden('category_id', $category_id));
+        $this->addElement(new Xoops\Form\Hidden('xoopartners_rates', $this->xoopsObject->getVar('xoopartners_rates')));
+        $this->addElement(new Xoops\Form\Hidden('xoopartners_like', $this->xoopsObject->getVar('xoopartners_like')));
+        $this->addElement(new Xoops\Form\Hidden('xoopartners_dislike', $this->xoopsObject->getVar('xoopartners_dislike')));
+        $this->addElement(new Xoops\Form\Hidden('xoopartners_comments', $this->xoopsObject->getVar('xoopartners_comments')));
 
         $this->addElement($tabtray);
 
         /**
          * Buttons
          */
-        $button_tray = new XoopsFormElementTray('', '');
-        $button_tray->addElement(new XoopsFormHidden('op', 'save'));
+        $button_tray = new Xoops\Form\ElementTray('', '');
+        $button_tray->addElement(new Xoops\Form\Hidden('op', 'save'));
 
-        $button = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
+        $button = new Xoops\Form\Button('', 'submit', _SUBMIT, 'submit');
         $button->setClass('btn btn-success');
         $button_tray->addElement($button);
 
-        $button_2 = new XoopsFormButton('', 'reset', _RESET, 'reset');
+        $button_2 = new Xoops\Form\Button('', 'reset', _RESET, 'reset');
         $button_2->setClass('btn btn-warning');
         $button_tray->addElement($button_2);
 
-        $button_3 = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
+        $button_3 = new Xoops\Form\Button('', 'cancel', _CANCEL, 'button');
         $button_3->setExtra("onclick='javascript:history.go(-1);'");
         $button_3->setClass('btn btn-danger');
         $button_tray->addElement($button_3);
@@ -180,19 +191,19 @@ class XoopartnersPartnersForm extends XoopsThemeForm
         $this->addElement($button_tray);
     }
 
-    public function message($msg, $title = '', $class='errorMsg' )
+    public function message($msg, $title = '', $class = 'errorMsg')
     {
         $ret = "<div class='" . $class . "'>";
-        if ( $title != '' ) {
+        if ($title != '') {
             $ret .= "<strong>" . $title . "</strong>";
         }
-        if ( is_array( $msg ) || is_object( $msg ) ) {
+        if (is_array($msg) || is_object($msg)) {
             $ret .= implode('<br />', $msg);
         } else {
             $ret .= $msg;
         }
         $ret .= "</div>";
+
         return $ret;
     }
 }
-?>

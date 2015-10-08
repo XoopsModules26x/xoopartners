@@ -17,21 +17,22 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . '/header.php';
+include __DIR__ . '/header.php';
 
-switch ($op) {    case 'save':
-    if (!$xoops->security()->check()) {
-        $xoops->redirect('preferences.php', 3, implode('<br />', $xoops->security()->getErrors()));
-    }
+switch ($op) {
+    case 'save':
+        if (!$xoops->security()->check()) {
+            $xoops->redirect('preferences.php', 3, implode('<br />', $xoops->security()->getErrors()));
+        }
 
-    // Write configuration file
-    $object = new XooPartnersPreferences();
-    $object->writeConfig( $object->Prepare2Save() );
-    $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
-    break;
-    default:
-    $form = $xoopartners_module->getForm($partners_config, 'preferences');
-    $form->display();
+        // Write configuration file
+        $object = new XooPartnersPreferences();
+        $object->writeConfig($object->Prepare2Save());
+        $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
+        break;
+
+    default:
+        $form = $xoopartners_module->getForm($partners_config, 'preferences');
+        $form->display();
 }
-include dirname(__FILE__) . '/footer.php';
-?>
+include __DIR__ . '/footer.php';

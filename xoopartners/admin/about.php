@@ -17,9 +17,8 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . '/header.php';
+include __DIR__ . '/header.php';
 
 $admin_page->displayAbout();
 
-include dirname(__FILE__) . '/footer.php';
-?>
+include __DIR__ . '/footer.php';

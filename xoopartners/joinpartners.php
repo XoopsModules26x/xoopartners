@@ -17,65 +17,64 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ .  '/header.php';
 
 $op = '';
-if ( isset( $_POST ) ){
-    foreach ( $_POST as $k => $v )  {
+if (isset($_POST)) {
+    foreach ($_POST as $k => $v) {
         ${$k} = $v;
     }
 }
-if ( isset( $_GET ) ){
-    foreach ( $_GET as $k => $v )  {
+if (isset($_GET)) {
+    foreach ($_GET as $k => $v) {
         ${$k} = $v;
     }
 }
 
 switch ($op) {
     case 'save':
-    if ( !$xoops->security()->check() ) {
-        $xoops->redirect('index.php', 5, implode(',', $xoops->security()->getErrors()));
-    }
+        if (!$xoops->security()->check()) {
+            $xoops->redirect('index.php', 5, implode(',', $xoops->security()->getErrors()));
+        }
 
-    $xoopartners_id = $system->CleanVars($_POST, 'xoopartners_id', 0, 'int');
-    if( isset($xoopartners_id) && $xoopartners_id > 0 ){
-        $partner = $partners_handler->get($xoopartners_id);
-    } else {
-        $partner = $partners_handler->create();
-    }
+        $xoopartners_id = $system->cleanVars($_POST, 'xoopartners_id', 0, 'int');
+        if (isset($xoopartners_id) && $xoopartners_id > 0) {
+            $partner = $partners_handler->get($xoopartners_id);
+        } else {
+            $partner = $partners_handler->create();
+        }
 
-    $partner->CleanVarsForDB();
+        $partner->cleanVarsForDB();
 
-    // uploads images
-    $myts = MyTextSanitizer::getInstance();
-    $upload_images = $partners_handler->upload_images( $partner->getVar('xoopartners_title') );
+        // uploads images
+        $myts          = MyTextSanitizer::getInstance();
+        $upload_images = $partners_handler->upload_images($partner->getVar('xoopartners_title'));
 
-    if ( is_array( $upload_images ) && count( $upload_images) != 0 ) {
-        foreach ($upload_images as $k => $reponse ) {
-            if ( $reponse['error'] == true ) {
-                $errors[] = $reponse['message'];
-            } else {
-                $partner->setVar( $k, $reponse['filename'] );
+        if (is_array($upload_images) && count($upload_images) != 0) {
+            foreach ($upload_images as $k => $reponse) {
+                if ($reponse['error'] == true) {
+                    $errors[] = $reponse['message'];
+                } else {
+                    $partner->setVar($k, $reponse['filename']);
+                }
             }
+        } else {
+            $partner->setVar('xoopartners_image', $myts->htmlspecialchars($_POST['image_list']));
         }
-    } else {
-        $partner->setVar('xoopartners_image', $myts->htmlspecialchars( $_POST['image_list'] ) );
-    }
 
-    if ($partner_id = $partners_handler->insert($partner)) {
-        $msg = _XOO_PARTNERS_SAVED;
-        if ( isset($errors) && count($errors) != 0) {
-            $msg .= '<br />' . implode('<br />', $errors);;
+        if ($partner_id = $partners_handler->insert($partner)) {
+            $msg = _XOO_PARTNERS_SAVED;
+            if (isset($errors) && count($errors) != 0) {
+                $msg .= '<br />' . implode('<br />', $errors);;
+            }
+            $xoops->redirect('index.php', 5, $msg);
         }
-        $xoops->redirect('index.php', 5, $msg);
-    }
-    break;
+        break;
 
     default:
-    $partner = $partners_handler->create();
-    $form = $xoopartners_module->getForm($partner, 'partners');
-    $form->display();
-    break;
+        $partner = $partners_handler->create();
+        $form    = $xoopartners_module->getForm($partner, 'partners');
+        $form->display();
+        break;
 }
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
-?>
+include __DIR__ .  '/footer.php';

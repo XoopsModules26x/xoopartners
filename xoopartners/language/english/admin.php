@@ -18,25 +18,24 @@
  */
 
 // Categories
-define("_AM_XOO_PARTNERS_CATEGORY_ADD",        "Add category");
-define("_AM_XOO_PARTNERS_CATEGORY_EDIT",       "Edit category");
-define("_AM_XOO_PARTNERS_CATEGORY_DEL",        "Delete category");
+define('_AM_XOO_PARTNERS_CATEGORY_ADD', 'Add category');
+define('_AM_XOO_PARTNERS_CATEGORY_EDIT', 'Edit category');
+define('_AM_XOO_PARTNERS_CATEGORY_DEL', 'Delete category');
 
-define("_AM_XOO_PARTNERS_CATEGORY_SAVED",      "Category was saved");
+define('_AM_XOO_PARTNERS_CATEGORY_SAVED', 'Category was saved');
 
-define("_AM_XOO_PARTNERS_CATEGORY_DELETED",    "The category has been deleted");
-define("_AM_XOO_PARTNERS_CATEGORY_DELETE_CFM", "Are you sure to delete this category ?");
+define('_AM_XOO_PARTNERS_CATEGORY_DELETED', 'The category has been deleted');
+define('_AM_XOO_PARTNERS_CATEGORY_DELETE_CFM', 'Are you sure to delete this category ?');
 
 // Partners
-define("_AM_XOO_PARTNERS_ADD",        "Add partner");
-define("_AM_XOO_PARTNERS_EDIT",       "Edit partner");
-define("_AM_XOO_PARTNERS_DEL",        "Delete partner");
+define('_AM_XOO_PARTNERS_ADD', 'Add partner');
+define('_AM_XOO_PARTNERS_EDIT', 'Edit partner');
+define('_AM_XOO_PARTNERS_DEL', 'Delete partner');
 
-define("_AM_XOO_PARTNERS_SAVED",      "Partner was saved");
+define('_AM_XOO_PARTNERS_SAVED', 'Partner was saved');
 
-define("_AM_XOO_PARTNERS_DELETED",    "The partner has been deleted");
-define("_AM_XOO_PARTNERS_DELETE_CFM", "Are you sure to delete this partner ?");
+define('_AM_XOO_PARTNERS_DELETED', 'The partner has been deleted');
+define('_AM_XOO_PARTNERS_DELETE_CFM', 'Are you sure to delete this partner ?');
 
 // Common
-define("_AM_XOO_PARTNERS_ACTION",              "Action");
-?>
+define('_AM_XOO_PARTNERS_ACTION', 'Action');

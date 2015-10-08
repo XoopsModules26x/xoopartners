@@ -17,9 +17,9 @@
  * @version         $Id$
  */
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class XoopartnersNotificationsPlugin extends Xoops_Module_Plugin_Abstract implements NotificationsPluginInterface
+class XoopartnersNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract implements NotificationsPluginInterface
 {
     /**
      * @param string $category
@@ -29,24 +29,27 @@ class XoopartnersNotificationsPlugin extends Xoops_Module_Plugin_Abstract implem
      */
     public function item($category, $item_id)
     {
-        $xoops = Xoops::getInstance();
-        $item = array();
-        $item_id = (int) $item_id;
+        $xoops   = Xoops::getInstance();
+        $item    = array();
+        $item_id = (int)$item_id;
 
         if ($category == 'global') {
             $item['name'] = '';
-            $item['url'] = '';
+            $item['url']  = '';
+
             return $item;
         }
 
         if ($category == 'item') {
-            $sql = 'SELECT xoopartners_title FROM ' . $xoops->db()->prefix('xoopartners') . ' WHERE xoopartners_id = ' . $item_id;
-            $result = $xoops->db()->query($sql); // TODO: error check
+            $sql          = 'SELECT xoopartners_title FROM ' . $xoops->db()->prefix('xoopartners') . ' WHERE xoopartners_id = ' . $item_id;
+            $result       = $xoops->db()->query($sql); // TODO: error check
             $result_array = $xoops->db()->fetchArray($result);
             $item['name'] = $result_array['xoopartners_title'];
-            $item['url'] = 'partner.php';
+            $item['url']  = 'partner.php';
+
             return $item;
         }
+
         return $item;
     }
 
@@ -55,18 +58,19 @@ class XoopartnersNotificationsPlugin extends Xoops_Module_Plugin_Abstract implem
      */
     public function categories()
     {
-        $ret = array();
-        $ret[1]['name'] = 'global';
-        $ret[1]['title'] = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL;
-        $ret[1]['description'] = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL_DSC;
+        $ret                      = array();
+        $ret[1]['name']           = 'global';
+        $ret[1]['title']          = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL;
+        $ret[1]['description']    = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL_DSC;
         $ret[1]['subscribe_from'] = array('index.php');
 
-        $ret[2]['name'] = 'item';
-        $ret[2]['title'] = _MI_XOO_PARTNERS_NOTIFICATION_ITEM;
-        $ret[2]['description'] = _MI_XOO_PARTNERS_NOTIFICATION_ITEM_DSC;
+        $ret[2]['name']           = 'item';
+        $ret[2]['title']          = _MI_XOO_PARTNERS_NOTIFICATION_ITEM;
+        $ret[2]['description']    = _MI_XOO_PARTNERS_NOTIFICATION_ITEM_DSC;
         $ret[2]['subscribe_from'] = array('partner.php');
-        $ret[2]['item_name'] = 'partner_id';
+        $ret[2]['item_name']      = 'partner_id';
         $ret[2]['allow_bookmark'] = 1;
+
         return $ret;
     }
 
@@ -75,16 +79,18 @@ class XoopartnersNotificationsPlugin extends Xoops_Module_Plugin_Abstract implem
      */
     public function events()
     {
-        $ret = array();
-        $ret[1]['name'] = 'newcontent';
-        $ret[1]['category'] = 'global';
-        $ret[1]['title'] = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL_NEWCONTENT;
-        $ret[1]['caption'] = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL_NEWCONTENT_CAP;
-        $ret[1]['description'] = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL_NEWCONTENT_DSC;
+        $ret                     = array();
+        $ret[1]['name']          = 'newcontent';
+        $ret[1]['category']      = 'global';
+        $ret[1]['title']         = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL_NEWCONTENT;
+        $ret[1]['caption']       = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL_NEWCONTENT_CAP;
+        $ret[1]['description']   = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL_NEWCONTENT_DSC;
         $ret[1]['mail_template'] = 'global_newcontent';
-        $ret[1]['mail_subject'] = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL_NEWCONTENT_SBJ;
+        $ret[1]['mail_subject']  = _MI_XOO_PARTNERS_NOTIFICATION_GLOBAL_NEWCONTENT_SBJ;
+
         return $ret;
     }
+
     /**
      * @param string $category
      * @param int    $item_id

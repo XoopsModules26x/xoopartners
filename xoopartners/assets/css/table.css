@@ -1,0 +1,33 @@
+table.outer {
+    width: 100%;
+    margin-bottom: 18px;
+    padding: 1px;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    border-collapse: separate;
+    *border-collapse: collapse;
+    /* IE7, collapse table to remove spacing */
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+table.outer th, table.outer td {
+    padding: 8px 8px 6px;
+    line-height: 18px;
+    /*
+    text-align:              left;
+    */
+}
+
+table.outer td {
+    vertical-align: top;
+}
+
+table tr.odd {
+    background-color: #eee;
+}
+
+table tr.even {
+    background-color: #fafafa;
+}

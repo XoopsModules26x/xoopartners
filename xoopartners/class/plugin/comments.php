@@ -17,23 +17,24 @@
  * @version         $Id$
  */
 
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
-
-class XoopartnersCommentsPlugin extends Xoops_Module_Plugin_Abstract implements CommentsPluginInterface
+class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements CommentsPluginInterface
 {
     /**
      * @return string
      */
     public function itemName()
-    {        return 'partner_id';
+    {
+        return 'partner_id';
     }
 
     /**
      * @return string
      */
     public function pageName()
-    {        return 'partner.php';
+    {
+        return 'partner.php';
     }
 
     /**
@@ -69,8 +70,8 @@ class XoopartnersCommentsPlugin extends Xoops_Module_Plugin_Abstract implements 
      */
     public function update($xoopartners_id, $total_num)
     {
-        $db = Xoops::getInstance()->db();
-        $sql = 'UPDATE ' . $db->prefix('xoopartners') . ' SET xoopartners_comments = ' . intval($total_num) . ' WHERE xoopartners_id = ' . intval($xoopartners_id);
+        $db  = Xoops::getInstance()->db();
+        $sql = 'UPDATE ' . $db->prefix('xoopartners') . ' SET xoopartners_comments = ' . (int)($total_num) . ' WHERE xoopartners_id = ' . (int)($xoopartners_id);
         $db->query($sql);
     }
 
@@ -88,17 +89,18 @@ class XoopartnersCommentsPlugin extends Xoops_Module_Plugin_Abstract implements 
      * @return array
      */
     public function itemInfo($xoopartners_id)
-    {        $ret = array();
+    {
+        $ret = array();
 
-        $partners_module = Xoopartners::getInstance();
+        $partners_module  = Xoopartners::getInstance();
         $partners_handler = $partners_module->PartnersHandler();
-        $page = $page = $partners_handler->get($xoopartners_id);
+        $page             = $page = $partners_handler->get($xoopartners_id);
 
         $ret['text']      = $page->getVar('xoopartners_description');
         $ret['title']     = $page->getVar('xoopartners_title');
         $ret['uid']       = $page->getVar('xoopartners_uid');
         $ret['timestamp'] = $page->getVar('xoopartners_published');
+
         return $ret;
     }
 }
-

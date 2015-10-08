@@ -17,23 +17,23 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ .  '/header.php';
 
 $xoops->disableErrorReporting();
 
-$partner_id = $system->CleanVars($_REQUEST, 'partner_id', 0, 'int');
-$partner = $partners_handler->get($partner_id);
+$partner_id = $system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
+$partner    = $partners_handler->get($partner_id);
 
-if ( is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted') ) {
+if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted')) {
     $time = time();
-    if ( !isset($_SESSION['xoopartner_visit' . $partner_id]) || $_SESSION['xoopartner_visit' . $partner_id] < $time ) {
+    if (!isset($_SESSION['xoopartner_visit' . $partner_id]) || $_SESSION['xoopartner_visit' . $partner_id] < $time) {
         $_SESSION['xoopartner_visit' . $partner_id] = $time + 3600;
-        $partners_handler->SetVisit( $partner );
+        $partners_handler->SetVisit($partner);
     }
 
-    echo "<html><head><meta http-equiv='Refresh' content='0; URL=" . $partner->getVar("xoopartners_url")."'></head><body></body></html>";
+    echo "<html><head><meta http-equiv='Refresh' content='0; URL=" . $partner->getVar("xoopartners_url") . "'></head><body></body></html>";
     exit();
-} else {    $xoops->tpl()->assign('not_found', true);
+} else {
+    $xoops->tpl()->assign('not_found', true);
 }
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
-?>
+include __DIR__ .  '/footer.php';
