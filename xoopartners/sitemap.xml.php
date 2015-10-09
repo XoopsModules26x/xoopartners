@@ -18,7 +18,7 @@
  */
 
 if (file_exists('mainfile.php')) {
-    include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+    include __DIR__ . '/mainfile.php';
 } else {
     include '../../mainfile.php';
 }
@@ -30,50 +30,60 @@ if (function_exists('mb_http_output')) {
 }
 header('Content-Type:text/xml; charset=utf-8');
 
-$dirname = $xoops->isModule() ? $xoops->module->getVar('dirname'): 'system';
-$tpl = new XoopsTpl();
+$dirname = $xoops->isModule() ? $xoops->module->getVar('dirname') : 'system';
+$tpl     = new XoopsTpl();
 //$tpl->caching = 2;
 //$tpl->cache_lifetime = 3600;
-//if (!$tpl->is_cached('module:xoositemap|xoositemap_xml.html')) {
-    if ($xoops->isModule()) {        $plugin = Xoops_Module_Plugin::getPlugin($dirname, 'xoositemap');
-        $res = $plugin->Xoositemap_xml(true);
-        if (is_array($res)) {            $time = isset($res['time']) ? $res['time'] : time();
-            $mod_time[] = array('time' => $time);
-            $modules[] = array('time' => $time,
-                               'dirname' => $res['dirname'],
-                               'date' => gmdate('Y-m-d\TH:i:s\Z', $time),
-                               );
-            if (count($res['items']) > 0) {                foreach ($res['items'] as $item) {                    $times[] = array('time' => $item['time']);
-                    $items[] = array('time' => $item['time'],
-                                     'date' => gmdate('Y-m-d\TH:i:s\Z', $item['time']),
-                                     'link' => $item['url'],
-                                     );
-                }
+//if (!$tpl->is_cached('module:xoositemap/xoositemap_xml.html')) {
+
+if ($xoops->isModule()) {
+    $plugin = \Xoops\Module\Plugin::getPlugin($dirname, 'xoositemap');
+    $res    = $plugin->Xoositemap_xml(true);
+    if (is_array($res)) {
+        $time       = isset($res['time']) ? $res['time'] : time();
+        $mod_time[] = array('time' => $time);
+        $modules[]  = array(
+            'time'    => $time,
+            'dirname' => $res['dirname'],
+            'date'    => gmdate('Y-m-d\TH:i:s\Z', $time));
+        if (count($res['items']) > 0) {
+            foreach ($res['items'] as $item) {
+                $times[] = array('time' => $item['time']);
+                $items[] = array(
+                    'time' => $item['time'],
+                    'date' => gmdate('Y-m-d\TH:i:s\Z', $item['time']),
+                    'link' => $item['url']);
             }
         }
-    } else {        $plugins = Xoops_Module_Plugin::getPlugins('xoositemap');
-        foreach ($plugins as $plugin) {            $res = $plugin->Xoositemap_xml(true);
-            if (is_array($res)) {                $time = isset($res['time']) ? $res['time'] : time();
-                $mod_time[] = array('time' => $time);
-                $modules[] = array('time' => $time,
-                                   'dirname' => $res['dirname'],
-                                   'date' => gmdate('Y-m-d\TH:i:s\Z', $time),
-                                  );
-                if (count($res['items']) > 0) {                    foreach ($res['items'] as $item) {                        $times[] = array('time' => $item['time']);
-                        $items[] = array('time' => $item['time'],
-                                         'date' => gmdate('Y-m-d\TH:i:s\Z', $item['time']),
-                                         'link' => $item['url'],
-                                         );
-                    }
+    }
+} else {
+    $plugins = \Xoops\Module\Plugin::getPlugins('xoositemap');
+    foreach ($plugins as $plugin) {
+        $res = $plugin->Xoositemap_xml(true);
+        if (is_array($res)) {
+            $time       = isset($res['time']) ? $res['time'] : time();
+            $mod_time[] = array('time' => $time);
+            $modules[]  = array(
+                'time'    => $time,
+                'dirname' => $res['dirname'],
+                'date'    => gmdate('Y-m-d\TH:i:s\Z', $time));
+            if (count($res['items']) > 0) {
+                foreach ($res['items'] as $item) {
+                    $times[] = array('time' => $item['time']);
+                    $items[] = array(
+                        'time' => $item['time'],
+                        'date' => gmdate('Y-m-d\TH:i:s\Z', $item['time']),
+                        'link' => $item['url']);
                 }
             }
         }
     }
+}
 
-    array_multisort($times, SORT_DESC, $items);
-    array_multisort($mod_time, SORT_DESC, $modules);
-    $tpl->assign('items', $items);
-    $tpl->assign('modules', $modules);
-    $tpl->assign('modification', gmdate( 'Y-m-d\TH:i:s\Z' ));
+array_multisort($times, SORT_DESC, $items);
+array_multisort($mod_time, SORT_DESC, $modules);
+$tpl->assign('items', $items);
+$tpl->assign('modules', $modules);
+$tpl->assign('modification', gmdate('Y-m-d\TH:i:s\Z'));
 //}
-$tpl->display('module:xoositemap|xoositemap_xml.html');
+$tpl->display('module:xoositemap/xoositemap_xml.tpl');

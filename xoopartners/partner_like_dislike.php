@@ -17,26 +17,29 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . '/header.php';
 
 $xoops->disableErrorReporting();
 
 $ret['error'] = 1;
 
-if ( $xoops->security()->check() ) {    $partner_id = $system->CleanVars($_REQUEST, 'partner_id', 0, 'int');
-    $option = $system->CleanVars($_REQUEST, 'option', 2, 'int');
+if ($xoops->security()->check()) {
+    $partner_id = $system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
+    $option     = $system->cleanVars($_REQUEST, 'option', 2, 'int');
 
     $time = time();
-    if ( !isset($_SESSION['xoopartners_like' . $partner_id]) || $_SESSION['xoopartners_like' . $partner_id] < $time ) {
+    if (!isset($_SESSION['xoopartners_like' . $partner_id]) || $_SESSION['xoopartners_like' . $partner_id] < $time) {
         $_SESSION['xoopartners_like' . $partner_id] = $time + 3600;
 
         $xoopartners_module = Xoopartners::getInstance();
-        $partners_handler = $xoopartners_module->PartnersHandler();
+        $partnersHandler   = $xoopartners_module->partnersHandler();
 
-        $ret = $partners_handler->SetLike_Dislike( $partner_id, $option );
-        if ( is_array($ret) && count($ret) > 1) {            $ret['error'] = 0;
-        } else {            $ret['error'] = 1;        }
+        $ret = $partnersHandler->setLikeDislike($partner_id, $option);
+        if (is_array($ret) && count($ret) > 1) {
+            $ret['error'] = 0;
+        } else {
+            $ret['error'] = 1;
+        }
     }
 }
-echo json_encode($ret)
-?>
+echo json_encode($ret);

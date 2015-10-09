@@ -17,24 +17,24 @@
  * @version         $Id$
  */
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 $op = '';
-if ( isset( $_POST ) ){
-    foreach ( $_POST as $k => $v )  {
+if (isset($_POST)) {
+    foreach ($_POST as $k => $v) {
         ${$k} = $v;
     }
 }
-if ( isset( $_GET ) ){
-    foreach ( $_GET as $k => $v )  {
+if (isset($_GET)) {
+    foreach ($_GET as $k => $v) {
         ${$k} = $v;
     }
 }
 
 $xoopartners_module = Xoopartners::getInstance();
-$partners_config = $xoopartners_module->LoadConfig();
-$categories_handler = $xoopartners_module->CategoriesHandler();
-$partners_handler = $xoopartners_module->PartnersHandler();
+$partners_config    = $xoopartners_module->loadConfig();
+$categoriesHandler = $xoopartners_module->categoriesHandler();
+$partnersHandler   = $xoopartners_module->partnersHandler();
 
 $script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
 
@@ -42,13 +42,16 @@ XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
-if ($script_name != 'about') {    $xoops->header('xoopartners_' . $script_name . '.html');} else {    $xoops->header();}
-$xoops->theme()->addStylesheet('modules/xoopartners/css/moduladmin.css');
-
-$admin_page = new XoopsModuleAdmin();
-if ($script_name != 'about' && $script_name != 'index') {
-    $admin_page->renderNavigation( basename($_SERVER['SCRIPT_NAME']) );
-} elseif ($script_name != 'index') {
-    $admin_page->displayNavigation( basename($_SERVER['SCRIPT_NAME']) );
+if ($script_name !== 'about') {
+    $xoops->header('xoopartners_' . $script_name . '.tpl');
+} else {
+    $xoops->header();
 }
-?>
+$xoops->theme()->addStylesheet('modules/xoopartners/assets/css/moduladmin.css');
+
+$admin_page = new \Xoops\Module\Admin();
+if ($script_name !== 'about' && $script_name !== 'index') {
+    $admin_page->renderNavigation(basename($_SERVER['SCRIPT_NAME']));
+} elseif ($script_name !== 'index') {
+    $admin_page->displayNavigation(basename($_SERVER['SCRIPT_NAME']));
+}

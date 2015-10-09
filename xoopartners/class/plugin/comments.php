@@ -17,23 +17,27 @@
  * @version         $Id$
  */
 
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
-
-class XoopartnersCommentsPlugin extends Xoops_Module_Plugin_Abstract implements CommentsPluginInterface
+/**
+ * Class XoopartnersCommentsPlugin
+ */
+class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements CommentsPluginInterface
 {
     /**
      * @return string
      */
     public function itemName()
-    {        return 'partner_id';
+    {
+        return 'partner_id';
     }
 
     /**
      * @return string
      */
     public function pageName()
-    {        return 'partner.php';
+    {
+        return 'partner.php';
     }
 
     /**
@@ -62,15 +66,15 @@ class XoopartnersCommentsPlugin extends Xoops_Module_Plugin_Abstract implements 
     /**
      * This method will be executed whenever the total number of 'active' comments for an item is changed.
      *
-     * @param int $item_id   The unique ID of an item
+     * @param int $xoopartners_id
      * @param int $total_num The total number of active comments
      *
-     * @return void
+     * @internal param int $item_id The unique ID of an item
      */
     public function update($xoopartners_id, $total_num)
     {
-        $db = Xoops::getInstance()->db();
-        $sql = 'UPDATE ' . $db->prefix('xoopartners') . ' SET xoopartners_comments = ' . intval($total_num) . ' WHERE xoopartners_id = ' . intval($xoopartners_id);
+        $db  = Xoops::getInstance()->db();
+        $sql = 'UPDATE ' . $db->prefix('xoopartners') . ' SET xoopartners_comments = ' . (int)($total_num) . ' WHERE xoopartners_id = ' . (int)($xoopartners_id);
         $db->query($sql);
     }
 
@@ -83,22 +87,24 @@ class XoopartnersCommentsPlugin extends Xoops_Module_Plugin_Abstract implements 
      *      'timestamp' => time(); //Date of the article in unix format
      *      'uid' => Id of the article author
      *
-     * @param int $item_id The unique ID of an item
-     *
+     * @param int $xoopartners_id
      * @return array
+     * @internal param int $item_id The unique ID of an item
+     *
      */
     public function itemInfo($xoopartners_id)
-    {        $ret = array();
+    {
+        $ret = array();
 
-        $partners_module = Xoopartners::getInstance();
-        $partners_handler = $partners_module->PartnersHandler();
-        $page = $page = $partners_handler->get($xoopartners_id);
+        $partners_module  = Xoopartners::getInstance();
+        $partnersHandler = $partners_module->partnersHandler();
+        $page             = $page = $partnersHandler->get($xoopartners_id);
 
         $ret['text']      = $page->getVar('xoopartners_description');
         $ret['title']     = $page->getVar('xoopartners_title');
         $ret['uid']       = $page->getVar('xoopartners_uid');
         $ret['timestamp'] = $page->getVar('xoopartners_published');
+
         return $ret;
     }
 }
-

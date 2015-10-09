@@ -18,35 +18,34 @@
  */
 
 // Categories
-define("_XOO_PARTNERS_CATEGORY_TITLE",         "Category");
-define("_XOO_PARTNERS_CATEGORY_PARENT_ID",     "Parent category");
-define("_XOO_PARTNERS_CATEGORY_NONE",          "No category");
-define("_XOO_PARTNERS_CATEGORY_NONE_DESC",     "No category");
+define('_XOO_PARTNERS_CATEGORY_TITLE', 'Category');
+define('_XOO_PARTNERS_CATEGORY_PARENT_ID', 'Parent category');
+define('_XOO_PARTNERS_CATEGORY_NONE', 'No category');
+define('_XOO_PARTNERS_CATEGORY_NONE_DESC', 'No category');
 
 // Partners
-define("_XOO_PARTNERS_URL",                    "Url");
+define('_XOO_PARTNERS_URL', 'Url');
 
 // Common
-define("_XOO_PARTNERS_TITLE",                  "Title");
-define("_XOO_PARTNERS_DESCRIPTION",            "Description");
-define("_XOO_PARTNERS_AUTHOR",                 "Author");
-define("_XOO_PARTNERS_SHOW_HIDE",              "Show / Hide");
-define("_XOO_PARTNERS_IMAGE",                  "Image");
-define("_XOO_PARTNERS_DISPLAY",                "Display").
-define("_XOO_PARTNERS_ORDER",                  "Order");
-define("_XOO_PARTNERS_ACCEPTED",               "Accepted");
-define("_XOO_PARTNERS_ACCEPTED_YES",           "Accept this partnership");
-define("_XOO_PARTNERS_ACCEPTED_NO",            "Not accept this partnership");
-define("_XOO_PARTNERS_PUBLISHED",              "Publication date");
+define('_XOO_PARTNERS_TITLE', 'Title');
+define('_XOO_PARTNERS_DESCRIPTION', 'Description');
+define('_XOO_PARTNERS_AUTHOR', 'Author');
+define('_XOO_PARTNERS_SHOW_HIDE', 'Show / Hide');
+define('_XOO_PARTNERS_IMAGE', 'Image');
+define('_XOO_PARTNERS_DISPLAY', 'Display');
+define('_XOO_PARTNERS_ORDER', 'Order');
+define('_XOO_PARTNERS_ACCEPTED', 'Accepted');
+define('_XOO_PARTNERS_ACCEPTED_YES', 'Accept this partnership');
+define('_XOO_PARTNERS_ACCEPTED_NO', 'Not accept this partnership');
+define('_XOO_PARTNERS_PUBLISHED', 'Publication date');
 
 // Common images
-define("_XOO_PARTNERS_IMAGE_SIZE",             "Maximum size of image files (K0)");
-define("_XOO_PARTNERS_IMAGE_WIDTH",            "Maximum width of images (px)");
-define("_XOO_PARTNERS_IMAGE_HEIGHT",           "Maximum height of images (px)");
+define('_XOO_PARTNERS_IMAGE_SIZE', 'Maximum size of image files (KB)');
+define('_XOO_PARTNERS_IMAGE_WIDTH', 'Maximum width of images (px)');
+define('_XOO_PARTNERS_IMAGE_HEIGHT', 'Maximum height of images (px)');
 
 // Tab Form
-define("_XOO_TABFORM_MAIN",                    "Index");
-define("_XOO_TABFORM_METAS",                   "Metas");
-define("_XOO_TABFORM_OPTIONS",                 "Options");
-define("_XOO_TABFORM_TAGS",                    "Tags");
-?>
+define('_XOO_TABFORM_MAIN', 'Index');
+define('_XOO_TABFORM_METAS', 'Metas');
+define('_XOO_TABFORM_OPTIONS', 'Options');
+define('_XOO_TABFORM_TAGS', 'Tags');

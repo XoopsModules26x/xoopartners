@@ -17,27 +17,28 @@
  * @version         $Id$
  */
 
-$modversion['name']           = _MI_XOO_PARTNERS_NAME;
-$modversion['description']    = _MI_XOO_PARTNERS_DESC;
-$modversion['version']        = 1.00;
-$modversion['author']         = 'XooFoo - Laurent JEN';
-$modversion['nickname']       = 'aka DuGris';
-$modversion['credits']        = 'DuGris.XooFoo Project';
-$modversion['license']        = 'GNU GPL 2.0';
-$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['official']       = 1;
-$modversion['help']           = 'page=help';
-$modversion['image']          = 'images/xoopartners_logo.png';
-$modversion['dirname']        = 'xoopartners';
+$modversion                = array();
+$modversion['dirname']     = basename(__DIR__);
+$modversion['name']        = _MI_XOO_PARTNERS_NAME;
+$modversion['description'] = _MI_XOO_PARTNERS_DESC;
+$modversion['version']     = 1.01;
+$modversion['author']      = 'XooFoo - Laurent JEN';
+$modversion['nickname']    = 'aka DuGris';
+$modversion['credits']     = 'DuGris.XooFoo Project';
+$modversion['license']     = 'GNU GPL 2.0';
+$modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['official']    = 1;
+$modversion['help']        = 'page=help';
+$modversion['image']       = 'assets/images/logo.png';
 
 // about
-$modversion['release_date']        = '2012/11/01';
-$modversion['module_website_url']  = 'dugris.xoofoo.org';
-$modversion['module_website_name'] = 'XooFoo.org - Laurent JEN';
-$modversion['module_status']       = 'alpha';
-$modversion['min_php']             = '5.2';
+$modversion['release_date']        = '2015/10/01';
+$modversion['module_website_url']  = 'xoops.org';
+$modversion['module_website_name'] = 'XOOPS Project';
+$modversion['module_status']       = 'Alpha 1';
+$modversion['min_php']             = '5.5.0';
 $modversion['min_xoops']           = '2.6.0';
-$modversion['min_db']              = array('mysql'=>'5.0.7', 'mysqli'=>'5.0.7');
+$modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
 
 // paypal
 $modversion['paypal']                  = array();
@@ -55,12 +56,12 @@ $modversion['adminindex'] = 'admin/index.php';
 $modversion['adminmenu']  = 'admin/menu.php';
 
 // Manage extension
-$modversion['extension'] = 0;
+$modversion['extension']          = 0;
 $modversion['extension_module'][] = '';
 
 // Scripts to run upon installation or update
-$modversion['onInstall'] = 'install/install.php';
-$modversion['onUpdate']  = 'install/update.php';
+$modversion['onInstall']   = 'install/oninstall.php';
+$modversion['onUpdate']    = 'install/onupdate.php';
 $modversion['onUninstall'] = '';
 
 // JQuery
@@ -70,20 +71,20 @@ $modversion['jquery'] = 1;
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 
 // Tables created by sql file (without prefix!)
-$modversion['tables'][1] = 'xoopartners';
-$modversion['tables'][2] = 'xoopartners_categories';
-$modversion['tables'][3] = 'xoopartners_rld';
+//$modversion['tables'][1] = 'xoopartners';
+//$modversion['tables'][2] = 'xoopartners_categories';
+//$modversion['tables'][3] = 'xoopartners_rld';
+$modversion['schema'] = 'sql/schema.yml';
 
 // blocks
-$i = 0;
-$modversion['blocks'][$i]['file']           = 'xoopartners_blocks.php';
-$modversion['blocks'][$i]['name']           = _MI_XOO_XOOPARTNERS_BLOCK_NAME;
-$modversion['blocks'][$i]['description']    = '';
-$modversion['blocks'][$i]['show_func']      = 'xoopartners_show';
-$modversion['blocks'][$i]['edit_func']      = 'xoopartners_edit';
-$modversion['blocks'][$i]['options']        = 'list|published|desc|10';
-$modversion['blocks'][$i]['template']       = 'xoopartners_block.html';
+$i                                       = 0;
+$modversion['blocks'][$i]['file']        = 'xoopartners_blocks.php';
+$modversion['blocks'][$i]['name']        = _MI_XOO_XOOPARTNERS_BLOCK_NAME;
+$modversion['blocks'][$i]['description'] = '';
+$modversion['blocks'][$i]['show_func']   = 'xoopartners_show';
+$modversion['blocks'][$i]['edit_func']   = 'xoopartners_edit';
+$modversion['blocks'][$i]['options']     = 'list|published|desc|10';
+$modversion['blocks'][$i]['template']    = 'xoopartners_block.tpl';
 
 // Menu
 $modversion['hasMain'] = 1;
-?>

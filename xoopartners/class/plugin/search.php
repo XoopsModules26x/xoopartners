@@ -17,55 +17,67 @@
  * @version         $Id$
  */
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class XoopartnersSearchPlugin extends Xoops_Module_Plugin_Abstract implements SearchPluginInterface
+/**
+ * Class XoopartnersSearchPlugin
+ */
+class XoopartnersSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements SearchPluginInterface
 {
+    /**
+     * @param string[] $queries
+     * @param string   $andor
+     * @param int      $limit
+     * @param int      $start
+     * @param type     $uid
+     * @return array
+     */
     public function search($queries, $andor, $limit, $start, $uid)
     {
         $searchstring = '';
-        $ret = array();
+        $ret          = array();
 
         $criteria = new CriteriaCompo();
 
-    	$criteria->setLimit($limit);
-	    $criteria->setStart($start);
-    	$criteria->setSort('xoopartners_order');
-	    $criteria->setOrder('ASC');
+        $criteria->setLimit($limit);
+        $criteria->setStart($start);
+        $criteria->setSort('xoopartners_order');
+        $criteria->setOrder('ASC');
 
-        $criteria->add( new Criteria('xoopartners_online', 1) ) ;
-        $criteria->add( new Criteria('xoopartners_accepted', 1) ) ;
-        $criteria->add( new Criteria('xoopartners_published', 0, '>') ) ;
-        $criteria->add( new Criteria('xoopartners_published', time(), '<=') ) ;
+        $criteria->add(new Criteria('xoopartners_online', 1));
+        $criteria->add(new Criteria('xoopartners_accepted', 1));
+        $criteria->add(new Criteria('xoopartners_published', 0, '>'));
+        $criteria->add(new Criteria('xoopartners_published', time(), '<='));
 
-    	if ( is_array($queries) && $count = count($queries) ) {
+        if (is_array($queries) && $count = count($queries)) {
             foreach ($queries as $k => $v) {
                 $criteria_content = new CriteriaCompo();
-                $criteria_content->add( new Criteria('xoopartners_title', '%' . $v . '%', 'LIKE'), 'OR' ) ;
-                $criteria_content->add( new Criteria('xoopartners_description', '%' . $v . '%', 'LIKE'), 'OR' ) ;
-                $criteria->add( $criteria_content, $andor);
+                $criteria_content->add(new Criteria('xoopartners_title', '%' . $v . '%', 'LIKE'), 'OR');
+                $criteria_content->add(new Criteria('xoopartners_description', '%' . $v . '%', 'LIKE'), 'OR');
+                $criteria->add($criteria_content, $andor);
             }
         }
 
-    	if ( $uid != 0 ) {
-            $criteria->add( new Criteria('xoopartners_uid', $uid) ) ;
-    	}
+        if ($uid != 0) {
+            $criteria->add(new Criteria('xoopartners_uid', $uid));
+        }
 
         $xoopartners_module = Xoopartners::getInstance();
-        $partners_handler = $xoopartners_module->PartnersHandler();
+        $partnersHandler   = $xoopartners_module->partnersHandler();
 
-        $partners = $partners_handler->getObjects($criteria, true, false);
+        $partners = $partnersHandler->getObjects($criteria, true, false);
 
-        $k=0;
-        foreach ( $partners as $partner ) {
-            $ret[$k]['image']    = 'icons/logo_small.png';
-            $ret[$k]['link']     = 'partner.php?partner_id=' . $partner['xoopartners_id'] . '' . $searchstring;
-            $ret[$k]['title']    = $partner['xoopartners_title'];
-            $ret[$k]['time']     = $partner['xoopartners_time'];
-            $ret[$k]['uid']      = $partner['xoopartners_uid'];
-            $ret[$k]['content']  = $partner['xoopartners_description'];
-            $k++;
+        $k = 0;
+        foreach ($partners as $partner) {
+            $ret[$k]['image']   = 'assets/icons/logo_small.png';
+            $ret[$k]['link']    = 'partner.php?partner_id=' . $partner['xoopartners_id'] . '' . $searchstring;
+            $ret[$k]['title']   = $partner['xoopartners_title'];
+            $ret[$k]['time']    = $partner['xoopartners_time'];
+            $ret[$k]['uid']     = $partner['xoopartners_uid'];
+            $ret[$k]['content'] = $partner['xoopartners_description'];
+            ++$k;
         }
+
         return $ret;
     }
 }

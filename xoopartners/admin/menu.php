@@ -17,48 +17,50 @@
  * @version         $Id$
  */
 
-$module = Xoops::getInstance()->getHandlerModule()->getBydirname('xoopartners');
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+
+$module = Xoops::getInstance()->getHandlerModule()->getByDirname('xoopartners');
 
 $xoopartners_module = Xoopartners::getInstance();
-$partners_config = $xoopartners_module->LoadConfig();
+$partners_config    = $xoopartners_module->LoadConfig();
 
-$i = 0;
-$adminmenu[$i]['title']   = _MI_XOO_PARTNERS_INDEX;
-$adminmenu[$i]['link']    = 'admin/index.php';
-$adminmenu[$i]['icon']    = 'home.png';
+$i                      = 0;
+$adminmenu[$i]['title'] = _MI_XOO_PARTNERS_INDEX;
+$adminmenu[$i]['link']  = 'admin/index.php';
+$adminmenu[$i]['icon']  = 'home.png';
 
-if (Xoops::getInstance()->isadmin()) {
-    $i++;
+if (Xoops::getInstance()->isAdmin()) {
+    ++$i;
     $adminmenu[$i]['title'] = _MI_XOO_PARTNERS_PREFERENCES;
     $adminmenu[$i]['link']  = 'admin/preferences.php';
     $adminmenu[$i]['icon']  = 'administration.png';
 
-    $i++;
+    ++$i;
     $adminmenu[$i]['title'] = _MI_XOO_PARTNERS_MODCONFIG;
     $adminmenu[$i]['link']  = '../system/admin.php?fct=preferences&op=showmod&mod=' . $module->getVar('mid');
     $adminmenu[$i]['icon']  = 'configs.png';
 }
 
-if ($partners_config['xoopartners_category']['use_categories']) {    $i++;
+if ($partners_config['xoopartners_category']['use_categories']) {
+    ++$i;
     $adminmenu[$i]['title'] = _MI_XOO_PARTNERS_CATEGORIES;
     $adminmenu[$i]['link']  = 'admin/categories.php';
     $adminmenu[$i]['icon']  = 'category.png';
 }
 
-$i++;
+++$i;
 $adminmenu[$i]['title'] = _MI_XOO_PARTNERS_PARTNERS;
 $adminmenu[$i]['link']  = 'admin/partners.php';
 $adminmenu[$i]['icon']  = 'partners.png';
 
 if (Xoops::getInstance()->isActiveModule('comments')) {
-    $i++;
+    ++$i;
     $adminmenu[$i]['title'] = _MI_COMMENTS_NAME;
     $adminmenu[$i]['link']  = '../comments/admin/main.php?module=' . $module->getVar('mid');
     $adminmenu[$i]['icon']  = 'comments.png';
 }
 
-$i++;
-$adminmenu[$i]['title']   = _MI_XOO_PARTNERS_ABOUT;
-$adminmenu[$i]['link']    = 'admin/about.php';
-$adminmenu[$i]['icon']    = 'about.png';
-?>
+++$i;
+$adminmenu[$i]['title'] = _MI_XOO_PARTNERS_ABOUT;
+$adminmenu[$i]['link']  = 'admin/about.php';
+$adminmenu[$i]['icon']  = 'about.png';
