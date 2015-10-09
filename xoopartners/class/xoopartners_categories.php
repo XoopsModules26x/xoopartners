@@ -47,7 +47,7 @@ class Xoopartners_category extends XoopsObject
         $ret                              = parent::getValues();
         $ret['xoopartners_category_link'] = XOOPS_URL . '/modules/xoopartners/index.php?category_id=' . $ret['xoopartners_category_id'];
         if ($ret['xoopartners_category_image'] != 'blank.gif') {
-            $ret['xoopartners_category_image_link'] = XOOPS_UPLOAD_URL . '/xoopartners/categories/images/' . $ret['xoopartners_category_image'];
+            $ret['xoopartners_category_image_link'] = $xoops_upload_url . '/xoopartners/categories/images/' . $ret['xoopartners_category_image'];
         } else {
             $ret['xoopartners_category_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xoopartners/assets/images/categories.png');
         }
@@ -55,7 +55,7 @@ class Xoopartners_category extends XoopsObject
         return $ret;
     }
 
-    public function CleanVarsForDB()
+    public function cleanVarsForDB()
     {
         $system = System::getInstance();
         foreach ($this->getValues() as $k => $v) {
@@ -102,7 +102,7 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return $categories;
     }
 
-    public function GetCategories($category_parent_id = 0, $main = true, $sub = true, $empty = false)
+    public function getCategories($category_parent_id = 0, $main = true, $sub = true, $empty = false)
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('xoopartners_category_parent_id', $category_parent_id));
@@ -151,7 +151,7 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return $ret;
     }
 
-    public function SetOnline($category_id)
+    public function setOnline($category_id)
     {
         if ($category_id != 0) {
             $category = $this->get($category_id);
@@ -168,7 +168,7 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return false;
     }
 
-    public function Addpartner($category_id)
+    public function addPartner($category_id)
     {
         if ($category_id != 0) {
             $category = $this->get($category_id);
@@ -180,7 +180,7 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         }
     }
 
-    public function Delpartner($category_id)
+    public function delPartner($category_id)
     {
         if ($category_id != 0) {
             $category = $this->get($category_id);
@@ -192,7 +192,7 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         }
     }
 
-    public function upload_images($image_name)
+    public function uploadImages($image_name)
     {
         $xoops              = Xoops::getInstance();
         $autoload           = XoopsLoad::loadConfig('xoopartners');
@@ -227,7 +227,7 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return $ret;
     }
 
-    public function CleanImage($filename)
+    public function cleanImage($filename)
     {
         $path_parts = pathinfo($filename);
         $string     = $path_parts['filename'];

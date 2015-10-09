@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Xoopartners module
  *
@@ -18,18 +19,27 @@
  */
 class XooPaginate
 {
-    private $prev = false;
-    private $next = false;
+    private $prev  = false;
+    private $next  = false;
     private $first = false;
-    private $last = false;
+    private $last  = false;
 
+    /**
+     * XooPaginate constructor.
+     * @param        $total_items
+     * @param        $items_perpage
+     * @param        $current_start
+     * @param string $start_name
+     * @param string $extra_arg
+     * @param int    $offset
+     */
     public function __construct($total_items, $items_perpage, $current_start, $start_name = 'start', $extra_arg = '', $offset = 1)
     {
         $this->total   = (int)($total_items);
         $this->perpage = (int)($items_perpage);
         $this->current = (int)($current_start);
         $this->extra   = $extra_arg;
-        if ($extra_arg != '' && (substr($extra_arg, -5) != '&amp;' || substr($extra_arg, -1) != '&')) {
+        if ($extra_arg != '' && (substr($extra_arg, -5) !== '&amp;' || substr($extra_arg, -1) !== '&')) {
             $this->extra = '&amp;' . $extra_arg;
         }
         $this->url    = $_SERVER['PHP_SELF'] . '?' . trim($start_name) . '=';
@@ -38,6 +48,10 @@ class XooPaginate
         $this->render();
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function getValue($key)
     {
         return $this->$key;
@@ -48,6 +62,9 @@ class XooPaginate
         echo $this->render();
     }
 
+    /**
+     * @return string
+     */
     private function render()
     {
         $xoops = Xoops::getInstance();

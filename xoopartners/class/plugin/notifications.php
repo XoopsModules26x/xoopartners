@@ -19,6 +19,9 @@
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
+/**
+ * Class XoopartnersNotificationsPlugin
+ */
 class XoopartnersNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract implements NotificationsPluginInterface
 {
     /**
@@ -33,14 +36,14 @@ class XoopartnersNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract 
         $item    = array();
         $item_id = (int)$item_id;
 
-        if ($category == 'global') {
+        if ($category === 'global') {
             $item['name'] = '';
             $item['url']  = '';
 
             return $item;
         }
 
-        if ($category == 'item') {
+        if ($category === 'item') {
             $sql          = 'SELECT xoopartners_title FROM ' . $xoops->db()->prefix('xoopartners') . ' WHERE xoopartners_id = ' . $item_id;
             $result       = $xoops->db()->query($sql); // TODO: error check
             $result_array = $xoops->db()->fetchArray($result);

@@ -31,7 +31,6 @@ $modversion['official']    = 1;
 $modversion['help']        = 'page=help';
 $modversion['image']       = 'assets/images/logo.png';
 
-
 // about
 $modversion['release_date']        = '2015/10/01';
 $modversion['module_website_url']  = 'xoops.org';

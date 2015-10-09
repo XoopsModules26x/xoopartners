@@ -11,11 +11,17 @@
 <{if !$not_found}>
     <div class="item">
         <div class="itemHead">
+            <{*<{if $qrcode}>*}>
+                <{*<div class="itemQRcode">*}>
+                    <{*<a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><img src="<{xoAppUrl 'modules/xoopartners/qrcode.php'}>?url=<{$partner.xoopartners_link}>" alt="<{$partner.xoopartners_link}>"></a>*}>
+                <{*</div>*}>
+            <{*<{/if}>*}>
             <{if $qrcode}>
                 <div class="itemQRcode">
-                    <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><img src="<{xoAppUrl modules/xoopartners/qrcode.php}>?url=<{$partner.xoopartners_link}>" alt="<{$partner.xoopartners_link}>"></a>
+                    <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"> <{$partner.qrcode_image_link}> </a>
                 </div>
             <{/if}>
+
 
             <div class="floatleft">
                 <{if $partner.xoopartners_image != "blank.gif"}>
@@ -28,14 +34,14 @@
                         <{if $partners}>
                             <a href="<{$partner.xoopartners_link}>" title="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}></a>
                         <{else}>
-                            <a rel="external" href="visitpartner.php?partner_id=<{$partner.xoopartners_id}>" title="<{$partner.xoopartners_title}>"><img src="<{xoImgUrl modules/xoopartners/assets/icons/16/weblink.png}>" alt="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}>
+                            <a rel="external" href="visitpartner.php?partner_id=<{$partner.xoopartners_id}>" title="<{$partner.xoopartners_title}>"><img src="<{xoImgUrl 'modules/xoopartners/assets/icons/16/weblink.png'}>" alt="<{$partner.xoopartners_title}>"><{$partner.xoopartners_title}>
                             </a>
                         <{/if}>
                     </div>
 
                     <div class="itemInfo">
                         <div class="itemPoster">
-                            <{$smarty.const._XOO_PARTNERS_AUTHOR}> : <a href="<{xoAppUrl userinfo.php}>?uid=<{$partner.xoopartners_uid}>" title="<{$partner.xoopartners_uid_name}>">
+                            <{$smarty.const._XOO_PARTNERS_AUTHOR}> : <a href="<{xoAppUrl 'userinfo.php'}>?uid=<{$partner.xoopartners_uid}>" title="<{$partner.xoopartners_uid_name}>">
                                 <{$partner.xoopartners_uid_name}>
                             </a>
                         </div>

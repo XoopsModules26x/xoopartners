@@ -17,7 +17,7 @@
  * @version         $Id$
  */
 
-include __DIR__ .  '/header.php';
+include __DIR__ . '/header.php';
 
 $op = '';
 if (isset($_POST)) {
@@ -39,16 +39,16 @@ switch ($op) {
 
         $xoopartners_id = $system->cleanVars($_POST, 'xoopartners_id', 0, 'int');
         if (isset($xoopartners_id) && $xoopartners_id > 0) {
-            $partner = $partners_handler->get($xoopartners_id);
+            $partner = $partnersHandler->get($xoopartners_id);
         } else {
-            $partner = $partners_handler->create();
+            $partner = $partnersHandler->create();
         }
 
         $partner->cleanVarsForDB();
 
         // uploads images
         $myts          = MyTextSanitizer::getInstance();
-        $upload_images = $partners_handler->upload_images($partner->getVar('xoopartners_title'));
+        $upload_images = $partnersHandler->uploadImages($partner->getVar('xoopartners_title'));
 
         if (is_array($upload_images) && count($upload_images) != 0) {
             foreach ($upload_images as $k => $reponse) {
@@ -59,22 +59,22 @@ switch ($op) {
                 }
             }
         } else {
-            $partner->setVar('xoopartners_image', $myts->htmlspecialchars($_POST['image_list']));
+            $partner->setVar('xoopartners_image', $myts->htmlSpecialChars($_POST['image_list']));
         }
 
-        if ($partner_id = $partners_handler->insert($partner)) {
+        if ($partner_id = $partnersHandler->insert($partner)) {
             $msg = _XOO_PARTNERS_SAVED;
             if (isset($errors) && count($errors) != 0) {
-                $msg .= '<br />' . implode('<br />', $errors);;
+                $msg .= '<br />' . implode('<br />', $errors);
             }
             $xoops->redirect('index.php', 5, $msg);
         }
         break;
 
     default:
-        $partner = $partners_handler->create();
+        $partner = $partnersHandler->create();
         $form    = $xoopartners_module->getForm($partner, 'partners');
         $form->display();
         break;
 }
-include __DIR__ .  '/footer.php';
+include __DIR__ . '/footer.php';

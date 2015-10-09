@@ -17,7 +17,7 @@
  * @version         $Id$
  */
 
-include __DIR__ .  '/header.php';
+include __DIR__ . '/header.php';
 
 $start = $system->cleanVars($_REQUEST, 'start', 0, 'int');
 
@@ -27,30 +27,27 @@ $criteria->add(new Criteria('xoopartners_published', time(), '<='));
 
 if ($partners_config['xoopartners_category']['use_categories']) {
     $category_id = $system->cleanVars($_REQUEST, 'category_id', 0, 'int');
-    $categories  = $categories_handler->GetCategories();
-    $partners    = $partners_handler->GetPartners($category_id, 'order', 'asc', $start, $partners_config['xoopartners_partner']['limit_main']);
+    $categories  = $categoriesHandler->getCategories();
+    $partners    = $partnersHandler->getPartners($category_id, 'order', 'asc', $start, $partners_config['xoopartners_partner']['limit_main']);
     $xoops->tpl()->assign('category_id', $category_id);
     $xoops->tpl()->assign('categories', $categories);
     $xoops->tpl()->assign('partners', $partners);
 
     $criteria->add(new Criteria('xoopartners_category', $category_id));
-    $partners_count = $partners_handler->getCount($criteria);
+    $partners_count = $partnersHandler->getCount($criteria);
     $extra          = 'category_id=' . $category_id;
 
-    if ($partners_config['xoopartners_category']['display_mode'] == 'select') {
-        $xoops->tpl()->assign(
-            'category_header',
-            '<div class="txtcenter"><select name="category_id" onchange=\'window.location.href="index.php?category_id="+this.options[this.selectedIndex].value\'>'
-        );
+    if ($partners_config['xoopartners_category']['display_mode'] === 'select') {
+        $xoops->tpl()->assign('category_header', '<div class="txtcenter"><select name="category_id" onchange=\'window.location.href="index.php?category_id="+this.options[this.selectedIndex].value\'>');
         $xoops->tpl()->assign('category_footer', '</select></div>');
-    } elseif ($partners_config['xoopartners_category']['display_mode'] == 'table') {
+    } elseif ($partners_config['xoopartners_category']['display_mode'] === 'table') {
         $xoops->tpl()->assign('category_header', '<table class="outer">');
         $xoops->tpl()->assign('category_footer', '</table>');
     }
 } else {
-    $partners = $partners_handler->GetPartners(0, 'order', 'asc', $start, $partners_config['xoopartners_partner']['limit_main']);
+    $partners = $partnersHandler->getPartners(0, 'order', 'asc', $start, $partners_config['xoopartners_partner']['limit_main']);
     $xoops->tpl()->assign('partners', $partners);
-    $partners_count = $partners_handler->getCount($criteria);
+    $partners_count = $partnersHandler->getCount($criteria);
     $extra          = '';
 }
 
@@ -74,4 +71,4 @@ $xoops->theme()->addMeta($type = 'meta', 'keywords', getMetaKeywords($descriptio
 // Page navigation
 $paginate = new Xoopaginate($partners_count, $partners_config['xoopartners_partner']['limit_main'], $start, 'start', $extra);
 
-include __DIR__ .  '/footer.php';
+include __DIR__ . '/footer.php';

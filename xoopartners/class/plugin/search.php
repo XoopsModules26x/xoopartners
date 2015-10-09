@@ -19,8 +19,19 @@
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
+/**
+ * Class XoopartnersSearchPlugin
+ */
 class XoopartnersSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements SearchPluginInterface
 {
+    /**
+     * @param string[] $queries
+     * @param string   $andor
+     * @param int      $limit
+     * @param int      $start
+     * @param type     $uid
+     * @return array
+     */
     public function search($queries, $andor, $limit, $start, $uid)
     {
         $searchstring = '';
@@ -52,9 +63,9 @@ class XoopartnersSearchPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
         }
 
         $xoopartners_module = Xoopartners::getInstance();
-        $partners_handler   = $xoopartners_module->PartnersHandler();
+        $partnersHandler   = $xoopartners_module->partnersHandler();
 
-        $partners = $partners_handler->getObjects($criteria, true, false);
+        $partners = $partnersHandler->getObjects($criteria, true, false);
 
         $k = 0;
         foreach ($partners as $partner) {

@@ -27,7 +27,7 @@ switch ($op) {
 
         // Write configuration file
         $object = new XooPartnersPreferences();
-        $object->writeConfig($object->Prepare2Save());
+        $object->writeConfig($object->prepare2Save());
         $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
         break;
 

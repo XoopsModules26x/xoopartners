@@ -19,28 +19,32 @@
  */
 class XoopartnersSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements SystemPluginInterface
 {
+    /**
+     * @param int $uid
+     * @return mixed
+     */
     public function userPosts($uid)
     {
         $partners_module  = Xoopartners::getInstance();
-        $partners_handler = $partners_module->PartnersHandler();
+        $partnersHandler = $partners_module->partnersHandler();
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('xoopartners_online', 1));
         $criteria->add(new Criteria('xoopartners_published', time(), '<='));
         $criteria->add(new Criteria('xoopartners_uid', $uid));
 
-        return $partners_handler->getCount($criteria);
+        return $partnersHandler->getCount($criteria);
     }
 
     public function waiting()
     {
         $partners_module  = Xoopartners::getInstance();
-        $partners_handler = $partners_module->PartnersHandler();
+        $partnersHandler = $partners_module->partnersHandler();
         $criteria         = new CriteriaCompo(new Criteria('xoopartners_online', 0));
         $criteria->add(new Criteria('xoopartners_accepted', 0), 'OR');
-        if ($count = $partners_handler->getCount($criteria)) {
+        if ($count = $partnersHandler->getCount($criteria)) {
             $ret['count'] = $count;
-            $ret['name']  = Xoops::getInstance()->getHandlerModule()->getBydirname('xoopartners')->getVar('name');
+            $ret['name']  = Xoops::getInstance()->getHandlerModule()->getByDirname('xoopartners')->getVar('name');
             $ret['link']  = Xoops::getInstance()->url('modules/xoopartners/admin/partners.php?online=0');
 
             return $ret;
@@ -49,17 +53,21 @@ class XoopartnersSystemPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
         return false;
     }
 
+    /**
+     * @param int $limit
+     * @return array
+     */
     public function backend($limit = 10)
     {
         $xoops = Xoops::getInstance();
 
         $partners_module  = Xoopartners::getInstance();
         $partners_config  = $partners_module->LoadConfig();
-        $partners_handler = $partners_module->PartnersHandler();
+        $partnersHandler = $partners_module->partnersHandler();
 
         $ret = array();
 
-        $partners = $partners_handler->GetPartners(0, 'order', 'asc', 0, $limit);
+        $partners = $partnersHandler->GetPartners(0, 'order', 'asc', 0, $limit);
         foreach ($partners as $k => $partner) {
             $ret[$k]['title']   = $partner['xoopartners_title'];
             $ret[$k]['link']    = $xoops->url('modules/xoopartners/partner.php?partner_id=' . $partner['xoopartners_id']);
@@ -70,6 +78,9 @@ class XoopartnersSystemPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
         return $ret;
     }
 
+    /**
+     * @return array
+     */
     public function userMenus()
     {
         return array();

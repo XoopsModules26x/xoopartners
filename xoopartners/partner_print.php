@@ -17,13 +17,13 @@
  * @version         $Id$
  */
 
-include dirname(dirname(__DIR__)) .  '/mainfile.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/include/functions.php';
 
 $xoopartners_module = Xoopartners::getInstance();
 $partners_config    = $xoopartners_module->LoadConfig();
-$categories_handler = $xoopartners_module->CategoriesHandler();
-$partners_handler   = $xoopartners_module->PartnersHandler();
+$categoriesHandler = $xoopartners_module->categoriesHandler();
+$partnersHandler   = $xoopartners_module->partnersHandler();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
@@ -32,7 +32,7 @@ $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
 $partner_id = $system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
-$partner    = $partners_handler->get($partner_id);
+$partner    = $partnersHandler->get($partner_id);
 
 $output = $system->cleanVars($_REQUEST, 'output', 'print', 'string');
 
@@ -53,7 +53,7 @@ if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners
     $tpl->assign('xoops_pagetitle', $partner->getVar('xoopartners_title') . ' - ' . $xoops->module->getVar('name'));
     $tpl->assign('xoops_slogan', htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES));
 
-    if ($xoops->isActiveModule('pdf') && $output == 'pdf') {
+    if ($xoops->isActiveModule('pdf') && $output === 'pdf') {
         /*
                 $content = $tpl->fetch('module:xoopartners/xoopartners_partner_pdf.html');
                 $pdf = new Pdf('P', 'A4', _LANGCODE, true, _CHARSET, array(10, 10, 10, 10));

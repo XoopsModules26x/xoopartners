@@ -19,14 +19,41 @@
 
 use Xoops\Core\PreloadItem;
 
+/**
+ * Class XoopartnersPreload
+ */
+
+/**
+ * Class XoopartnersPreload
+ */
+
+/**
+ * Class XoopartnersPreload
+ */
+
+/**
+ * Class XoopartnersPreload
+ */
 class XoopartnersPreload extends PreloadItem
 {
+    /**
+     * @param $args
+     */
+    /**
+     * @param $args
+     */
+    /**
+     * @param $args
+     */
+    /**
+     * @param $args
+     */
     public static function eventCoreIncludeCommonEnd($args)
     {
         $path = dirname(__DIR__);
         XoopsLoad::addMap(
             array(
-                'xoopartners' => $path . '/class/helper.php',
+                'xoopartners' => $path . '/class/helper.php'
             )
         );
     }

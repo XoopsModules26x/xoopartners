@@ -19,6 +19,9 @@
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
+/**
+ * Class XoopartnersCommentsPlugin
+ */
 class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements CommentsPluginInterface
 {
     /**
@@ -63,10 +66,10 @@ class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
     /**
      * This method will be executed whenever the total number of 'active' comments for an item is changed.
      *
-     * @param int $item_id   The unique ID of an item
+     * @param int $xoopartners_id
      * @param int $total_num The total number of active comments
      *
-     * @return void
+     * @internal param int $item_id The unique ID of an item
      */
     public function update($xoopartners_id, $total_num)
     {
@@ -84,17 +87,18 @@ class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
      *      'timestamp' => time(); //Date of the article in unix format
      *      'uid' => Id of the article author
      *
-     * @param int $item_id The unique ID of an item
-     *
+     * @param int $xoopartners_id
      * @return array
+     * @internal param int $item_id The unique ID of an item
+     *
      */
     public function itemInfo($xoopartners_id)
     {
         $ret = array();
 
         $partners_module  = Xoopartners::getInstance();
-        $partners_handler = $partners_module->PartnersHandler();
-        $page             = $page = $partners_handler->get($xoopartners_id);
+        $partnersHandler = $partners_module->partnersHandler();
+        $page             = $page = $partnersHandler->get($xoopartners_id);
 
         $ret['text']      = $page->getVar('xoopartners_description');
         $ret['title']     = $page->getVar('xoopartners_title');

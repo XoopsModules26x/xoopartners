@@ -9,18 +9,18 @@
     <meta name="generator" content="XOOPS"/>
 
     <!-- Xoops style sheet -->
-    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoAppUrl xoops.css}>"/>
-    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoAppUrl media/xoops/css/icons.css}>"/>
-    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoImgUrl media/bootstrap/css/bootstrap.css}>"/>
-    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoImgUrl media/bootstrap/css/xoops.bootstrap.css}>"/>
+    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoAppUrl 'xoops.css'}>"/>
+    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoAppUrl 'media/xoops/css/icons.css'}>"/>
+    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoImgUrl 'media/bootstrap/css/bootstrap.css'}>"/>
+    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoImgUrl 'media/bootstrap/css/xoops.bootstrap.css'}>"/>
 
     <!-- Theme style sheet -->
-    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoImgUrl css/style.css}>"/>
+    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoImgUrl 'css/style.css'}>"/>
     <!-- Module style sheet -->
-    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoImgUrl modules/xoopartners/assets/css/module.css}>"/>
+    <link rel="stylesheet" type="text/css" media="screen,print" href="<{xoImgUrl 'modules/xoopartners/assets/css/module.css'}>"/>
 
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="<{xoImgUrl styleIE8.css}>" type="text/css"/>
+    <link rel="stylesheet" href="<{xoImgUrl 'styleIE8.css'}>" type="text/css"/>
     <![endif]-->
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->

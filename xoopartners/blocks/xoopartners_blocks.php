@@ -19,6 +19,10 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function xoopartners_show($options)
 {
     $xoops = Xoops::getInstance();
@@ -27,11 +31,11 @@ function xoopartners_show($options)
 
     $xoopartners_module = Xoopartners::getInstance();
     $partners_config    = $xoopartners_module->LoadConfig();
-    $partners_handler   = $xoopartners_module->PartnersHandler();
+    $partnersHandler   = $xoopartners_module->partnersHandler();
 
     $block['template']            = $options[0];
     $options[3]                   = isset($options[3]) ? $options[3] : -1;
-    $block['partners']            = $partners_handler->GetPartners($options[3], $options[1], $options[2], 0, $options[3]);
+    $block['partners']            = $partnersHandler->GetPartners($options[3], $options[1], $options[2], 0, $options[3]);
     $block['xoopartners_partner'] = $partners_config['xoopartners_partner'];
 
     $xoops->tpl()->assign('xoopartners_category', $partners_config['xoopartners_category']);
@@ -52,7 +56,7 @@ function xoopartners_edit($options)
 
     $xoopartners_module = Xoopartners::getInstance();
     $partners_config    = $xoopartners_module->LoadConfig();
-    $categories_handler = $xoopartners_module->CategoriesHandler();
+    $categoriesHandler = $xoopartners_module->categoriesHandler();
 
     $sort_mode = new Xoops\Form\Select(_MB_XOO_PARTNERS_SORT . ' : ', 'options[1]', $options[1]);
     $sort_mode->addOption('id', _MB_XOO_PARTNERS_SORT_ID);
@@ -60,8 +64,8 @@ function xoopartners_edit($options)
     $sort_mode->addOption('published', _MB_XOO_PARTNERS_SORT_RECENTS);
     $sort_mode->addOption('hits', _MB_XOO_PARTNERS_SORT_HITS);
 
-    if ($partners_config['xoopartners_rld']['rld_mode'] != 'none') {
-        if ($partners_config['xoopartners_rld']['rld_mode'] == 'rate') {
+    if ($partners_config['xoopartners_rld']['rld_mode'] !== 'none') {
+        if ($partners_config['xoopartners_rld']['rld_mode'] === 'rate') {
             $sort_mode->addOption('rates', _MB_XOO_PARTNERS_SORT_RATES);
         } else {
             $sort_mode->addOption('like', _MB_XOO_PARTNERS_SORT_LIKE);
@@ -78,7 +82,7 @@ function xoopartners_edit($options)
 
     if ($partners_config['xoopartners_category']['use_categories']) {
         ob_start();
-        $categories_handler->makeSelectBox('options[3]', $options[3]);
+        $categoriesHandler->makeSelectBox('options[3]', $options[3]);
         $block_form->addElement(new Xoops\Form\Label(_MB_XOO_PARTNERS_CATEGORY_TITLE, ob_get_contents()));
         ob_end_clean();
     }

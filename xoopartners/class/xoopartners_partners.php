@@ -20,6 +20,7 @@
 use Xoops\Core\Database\Connection;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
+use Xoops\Core\Kernel\Handlers\XoopsUser;
 
 class Xoopartners_partners extends XoopsObject
 {
@@ -69,13 +70,8 @@ class Xoopartners_partners extends XoopsObject
         // Module
         $partners_module   = Xoopartners::getInstance();
         $this->config      = $partners_module->LoadConfig();
-        $this->cat_handler = $partners_module->CategoriesHandler();
-        $this->rld_handler = $partners_module->RldHandler();
-    }
-
-    private function Xoopartners_partners()
-    {
-        $this->__construct();
+        $this->cat_handler = $partners_module->categoriesHandler();
+        $this->rld_handler = $partners_module->rldHandler();
     }
 
     public function setVisit()
@@ -89,13 +85,13 @@ class Xoopartners_partners extends XoopsObject
     public function setPost($addpost = true)
     {
         $xoops          = Xoops::getinstance();
-        $member_handler = $xoops->getHandlerMember();
-        $poster         = $member_handler->getUser($this->getVar('xoopartners_uid'));
+        $memberHandler = $xoops->getHandlerMember();
+        $poster         = $memberHandler->getUser($this->getVar('xoopartners_uid'));
         if ($poster instanceof XoopsUser) {
             if ($addpost) {
-                $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
+                $memberHandler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
             } else {
-                $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') - 1);
+                $memberHandler->updateUserByField($poster, 'posts', $poster->getVar('posts') - 1);
             }
         }
     }
@@ -139,20 +135,26 @@ class Xoopartners_partners extends XoopsObject
     {
         $xoops = Xoops::getInstance();
         $myts  = MyTextSanitizer::getInstance();
+        $xoops_upload_path = \XoopsBaseConfig::get('uploads-path');
+        $xoops_upload_url = \XoopsBaseConfig::get('uploads-url');
 
         $ret                           = parent::getValues();
         $ret['xoopartners_date_day']   = date('d', $this->getVar('xoopartners_published'));
         $ret['xoopartners_date_month'] = date('m', $this->getVar('xoopartners_published'));
         $ret['xoopartners_date_year']  = date('Y', $this->getVar('xoopartners_published'));
         $ret['xoopartners_time']       = $this->getVar('xoopartners_published');
-        $ret['xoopartners_published']  = date(_SHORTDATESTRING, $this->getVar('xoopartners_published'));
+        $ret['xoopartners_published']  = date(\XoopsLocale::getFormatShortDate(), $this->getVar('xoopartners_published'));
 
         $ret['xoopartners_link'] = XOOPS_URL . '/modules/xoopartners/partner.php?partner_id=' . $this->getVar('xoopartners_id');
         if ($this->getVar('xoopartners_image') != 'blank.gif') {
-            $ret['xoopartners_image_link'] = XOOPS_UPLOAD_URL . '/xoopartners/partners/images/' . $this->getVar('xoopartners_image');
+            $ret['xoopartners_image_link'] = $xoops_upload_url . '/xoopartners/partners/images/' . $this->getVar('xoopartners_image');
         } else {
             $ret['xoopartners_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xoopartners/assets/images/partners.png');
         }
+
+        //mb -------------------------
+        $ret['qrcode_image_link'] = $xoops->service('qrcode')->getImgTag($ret['xoopartners_link'], array('alt' => 'QR code', 'title'=>'Xoops.org'))->getValue();
+        //mb -------------------------
 
         $ret['xoopartners_uid_name'] = XoopsUser::getUnameFromId($this->getVar('xoopartners_uid'), true);
 
@@ -173,8 +175,8 @@ class Xoopartners_partners extends XoopsObject
             if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
                 $id = $this->getVar('xoopartners_id');
                 if (!isset($tags[$this->getVar('xoopartners_id')])) {
-                    $xootags_handler                       = $xoops->getModuleHandler('xootags_tags', 'xootags');
-                    $tags[$this->getVar('xoopartners_id')] = $xootags_handler->getbyItem($this->getVar('xoopartners_id'));
+                    $xootagsHandler                       = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                    $tags[$this->getVar('xoopartners_id')] = $xootagsHandler->getbyItem($this->getVar('xoopartners_id'));
                 }
                 $ret['tags'] = $tags[$this->getVar('xoopartners_id')];
             }
@@ -195,7 +197,7 @@ class Xoopartners_partners extends XoopsObject
         return $ret;
     }
 
-    public function CleanVarsForDB()
+    public function cleanVarsForDB()
     {
         $myts   = MyTextSanitizer::getInstance();
         $system = System::getInstance();
@@ -225,14 +227,14 @@ class Xoopartners_partners extends XoopsObject
     {
         $xoops = Xoops::getInstance();
         if ($xoops->isActiveModule('notifications')) {
-            $notification_handler = Notifications::getInstance()->getNotificationHandler();
+            $notificationHandler = Notifications::getInstance()->getNotificationHandler();
             $tags                 = array();
             $tags['MODULE_NAME']  = $xoops->module->getVar('name');
             $tags['ITEM_NAME']    = $this->getVar('xoopartners_title');
             $tags['ITEM_URL']     = $xoops->url('/modules/xoopartners/partner.php?partner_id=' . $this->getVar('xoopartners_id'));
             $tags['ITEM_BODY']    = $this->getVar('xoopartners_description');
             $tags['DATESUB']      = $this->getVar('xoopartners_published');
-            $notification_handler->triggerEvent('global', 0, 'newcontent', $tags);
+            $notificationHandler->triggerEvent('global', 0, 'newcontent', $tags);
         }
     }
 }
@@ -247,9 +249,9 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
 
         // Module
         $partners_module   = Xoopartners::getInstance();
-        $this->config      = $partners_module->LoadConfig();
-        $this->cat_handler = $partners_module->CategoriesHandler();
-        $this->rld_handler = $partners_module->RldHandler();
+        $this->config      = $partners_module->loadConfig();
+        $this->cat_handler = $partners_module->categoriesHandler();
+        $this->rld_handler = $partners_module->rldHandler();
     }
 
     public function insert(XoopsObject $object, $force = true)
@@ -282,7 +284,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return $this->getObjects($criteria, true, false);
     }
 
-    public function GetPartners($category_id = 0, $sort = 'order', $order = 'asc', $start = 0, $limit = 0)
+    public function getPartners($category_id = 0, $sort = 'order', $order = 'asc', $start = 0, $limit = 0)
     {
         $criteria = new CriteriaCompo();
         if ($this->config['xoopartners_category']['use_categories'] && $category_id >= 0) {
@@ -305,7 +307,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return $this->getObjects($criteria, true, false);
     }
 
-    public function SetOnline($partner_id)
+    public function setOnline($partner_id)
     {
         if ($partner_id != 0) {
             $partner = $this->get($partner_id);
@@ -322,7 +324,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return false;
     }
 
-    public function SetAccept($partner_id)
+    public function setAccept($partner_id)
     {
         if ($partner_id != 0) {
             $partner = $this->get($partner_id);
@@ -339,7 +341,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return false;
     }
 
-    public function SetRead($partnerObj)
+    public function setRead($partnerObj)
     {
         $read = $partnerObj->getVar('xoopartners_hits') + 1;
         $partnerObj->setVar('xoopartners_hits', $read);
@@ -348,7 +350,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return true;
     }
 
-    public function SetVisit($partnerObj)
+    public function setVisit($partnerObj)
     {
         $read = $partnerObj->getVar('xoopartners_visit') + 1;
         $partnerObj->setVar('xoopartners_visit', $read);
@@ -357,14 +359,14 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return true;
     }
 
-    public function SetLike_Dislike($partner_id, $like_dislike)
+    public function setLikeDislike($partner_id, $like_dislike)
     {
         if ($partner_id != 0) {
             $partner = $this->get($partner_id);
             if (is_object($partner) && count($partner) != 0) {
                 $xoops = Xoops::getInstance();
 
-                if ($ret = $this->rld_handler->SetLike_Dislike($partner_id, $like_dislike)) {
+                if ($ret = $this->rld_handler->setLikeDislike($partner_id, $like_dislike)) {
                     if ($like_dislike == 0) {
                         $xoopartners_dislike = $partner->getVar('xoopartners_dislike') + 1;
                         $partner->setVar('xoopartners_dislike', $xoopartners_dislike);
@@ -384,7 +386,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return false;
     }
 
-    public function SetRate($partner_id, $rate)
+    public function setRate($partner_id, $rate)
     {
         if ($partner_id != 0) {
             $partner = $this->get($partner_id);
@@ -407,7 +409,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return false;
     }
 
-    public function upload_images($image_name)
+    public function uploadImages($image_name)
     {
         $xoops    = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig('xoopartners');
@@ -440,7 +442,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return $ret;
     }
 
-    public function CleanImage($filename)
+    public function cleanImage($filename)
     {
         $path_parts = pathinfo($filename);
         $string     = $path_parts['filename'];

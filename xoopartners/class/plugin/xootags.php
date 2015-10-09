@@ -19,9 +19,16 @@
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
+/**
+ * Class XoopartnersXootagsPlugin
+ */
 class XoopartnersXootagsPlugin extends Xoops\Module\Plugin\PluginAbstract implements XootagsPluginInterface
 {
-    public function Xootags($items)
+    /**
+     * @param $items
+     * @return array
+     */
+    public function xootags($items)
     {
         $criteria = new CriteriaCompo();
         $criteria->setSort('xoopartners_order');
@@ -33,10 +40,10 @@ class XoopartnersXootagsPlugin extends Xoops\Module\Plugin\PluginAbstract implem
         $criteria->add(new Criteria('xoopartners_published', time(), '<='));
         $criteria->add(new Criteria('xoopartners_id', '(' . implode(', ', $items) . ')', 'IN'));
 
-        $xoopartners_module = Xoopartners::getInstance();
-        $partners_handler   = $xoopartners_module->PartnersHandler();
+        $xoopartnersModule = Xoopartners::getInstance();
+        $partnersHandler   = $xoopartnersModule->partnersHandler();
 
-        $partners = $partners_handler->getObjects($criteria, false, false);
+        $partners = $partnersHandler->getObjects($criteria, false, false);
 
         $ret = array();
         $k   = 0;

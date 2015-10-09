@@ -1,5 +1,5 @@
-<script type="text/javascript" src="<{xoImgUrl media/jquery/ui/jquery.ui.js}>"></script>
-<link rel="stylesheet" href="<{xoImgUrl media/jquery/ui/base/ui.all.css}>" type="text/css" media="screen"/>
+<script type="text/javascript" src="<{xoImgUrl 'media/jquery/ui/jquery.ui.js'}>"></script>
+<link rel="stylesheet" href="<{xoImgUrl 'media/jquery/ui/base/ui.all.css'}>" type="text/css" media="screen"/>
 
 <{if $xoopartners_com || $xoopartners_not}>
     <script type="text/javascript">
@@ -24,13 +24,13 @@
 
         <{if $xoopartners_com}>
             <div id="comments">
-                <{include file='module:comments|comments.tpl'}>
+                <{include file='module:comments/comments.tpl'}>
             </div>
         <{/if}>
 
         <{if $xoopartners_not}>
             <div id="notifications">
-                <{include file='module:notifications|select.tpl'}>
+                <{include file='module:notifications/select.tpl'}>
             </div>
         <{/if}>
     </div>

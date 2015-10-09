@@ -19,6 +19,9 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+/**
+ * Class XoopartnersCategoriesForm
+ */
 class XoopartnersCategoriesForm extends Xoops\Form\ThemeForm
 {
     /**
@@ -31,7 +34,7 @@ class XoopartnersCategoriesForm extends Xoops\Form\ThemeForm
 
         $xoopartners_module = Xoopartners::getInstance();
         $partners_config    = $xoopartners_module->LoadConfig();
-        $categories_handler = $xoopartners_module->CategoriesHandler();
+        $categoriesHandler = $xoopartners_module->categoriesHandler();
 
         if ($this->xoopsObject->isNew()) {
             parent::__construct(_AM_XOO_PARTNERS_CATEGORY_ADD, 'form_category', 'categories.php', 'post', true);
@@ -51,7 +54,7 @@ class XoopartnersCategoriesForm extends Xoops\Form\ThemeForm
 
         // Category parent_id
         ob_start();
-        $categories_handler->makeSelectBox('xoopartners_category_parent_id', $this->xoopsObject->getVar('xoopartners_category_parent_id'));
+        $categoriesHandler->makeSelectBox('xoopartners_category_parent_id', $this->xoopsObject->getVar('xoopartners_category_parent_id'));
         $tab1->addElement(new Xoops\Form\Label(_XOO_PARTNERS_CATEGORY_PARENT_ID, ob_get_contents()));
         ob_end_clean();
 
@@ -105,15 +108,15 @@ class XoopartnersCategoriesForm extends Xoops\Form\ThemeForm
         $button_tray = new Xoops\Form\ElementTray('', '');
         $button_tray->addElement(new Xoops\Form\Hidden('op', 'save'));
 
-        $button = new Xoops\Form\Button('', 'submit', _SUBMIT, 'submit');
+        $button = new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit');
         $button->setClass('btn btn-success');
         $button_tray->addElement($button);
 
-        $button_2 = new Xoops\Form\Button('', 'reset', _RESET, 'reset');
+        $button_2 = new Xoops\Form\Button('', 'reset', XoopsLocale::A_RESET, 'reset');
         $button_2->setClass('btn btn-warning');
         $button_tray->addElement($button_2);
 
-        $button_3 = new Xoops\Form\Button('', 'cancel', _CANCEL, 'button');
+        $button_3 = new Xoops\Form\Button('', 'cancel', XoopsLocale::A_CANCEL, 'button');
         $button_3->setExtra("onclick='javascript:history.go(-1);'");
         $button_3->setClass('btn btn-danger');
         $button_tray->addElement($button_3);
@@ -121,18 +124,24 @@ class XoopartnersCategoriesForm extends Xoops\Form\ThemeForm
         $this->addElement($button_tray);
     }
 
+    /**
+     * @param        $msg
+     * @param string $title
+     * @param string $class
+     * @return string
+     */
     public function message($msg, $title = '', $class = 'errorMsg')
     {
         $ret = "<div class='" . $class . "'>";
         if ($title != '') {
-            $ret .= "<strong>" . $title . "</strong>";
+            $ret .= '<strong>' . $title . '</strong>';
         }
         if (is_array($msg) || is_object($msg)) {
             $ret .= implode('<br />', $msg);
         } else {
             $ret .= $msg;
         }
-        $ret .= "</div>";
+        $ret .= '</div>';
 
         return $ret;
     }

@@ -17,13 +17,13 @@
  * @version         $Id$
  */
 
-include dirname(dirname(__DIR__)) .  '/mainfile.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/include/functions.php';
 
 $xoopartners_module = Xoopartners::getInstance();
-$partners_config    = $xoopartners_module->LoadConfig();
-$categories_handler = $xoopartners_module->CategoriesHandler();
-$partners_handler   = $xoopartners_module->PartnersHandler();
+$partners_config    = $xoopartners_module->loadConfig();
+$categoriesHandler = $xoopartners_module->categoriesHandler();
+$partnersHandler   = $xoopartners_module->partnersHandler();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();

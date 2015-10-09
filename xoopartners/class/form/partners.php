@@ -31,7 +31,7 @@ class XoopartnersPartnersForm extends Xoops\Form\ThemeForm
 
         $this->xoopsObject = $obj;
 
-        global $partners_handler, $categories_handler;
+        global $partnersHandler, $categoriesHandler;
         $xoops = Xoops::getInstance();
 
         $xoopartners_module = Xoopartners::getInstance();
@@ -62,7 +62,7 @@ class XoopartnersPartnersForm extends Xoops\Form\ThemeForm
         // Category
         if ($partners_config['xoopartners_category']['use_categories']) {
             ob_start();
-            $categories_handler->makeSelectBox('xoopartners_category', $this->xoopsObject->getVar('xoopartners_category'));
+            $categoriesHandler->makeSelectBox('xoopartners_category', $this->xoopsObject->getVar('xoopartners_category'));
             $tab1->addElement(new Xoops\Form\Label(_XOO_PARTNERS_CATEGORY_TITLE, ob_get_contents()));
             ob_end_clean();
         } else {
@@ -150,8 +150,8 @@ class XoopartnersPartnersForm extends Xoops\Form\ThemeForm
         if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
             if ($xoops->isAdminSide) {
                 $tags_tray       = new Xoops\Form\Tab(_XOO_TABFORM_TAGS, 'tabid-tags');
-                $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
-                $tagform         = $TagForm_handler->TagsForm('tags', $this->xoopsObject->getVar('xoopartners_id'));
+                $TagFormHandler = $xoops->getModuleForm(0, 'tags', 'xootags');
+                $tagform         = $TagFormHandler->TagsForm('tags', $this->xoopsObject->getVar('xoopartners_id'));
                 $tags_tray->addElement($tagform);
                 $tabtray->addElement($tags_tray);
             } else {
@@ -175,15 +175,15 @@ class XoopartnersPartnersForm extends Xoops\Form\ThemeForm
         $button_tray = new Xoops\Form\ElementTray('', '');
         $button_tray->addElement(new Xoops\Form\Hidden('op', 'save'));
 
-        $button = new Xoops\Form\Button('', 'submit', _SUBMIT, 'submit');
+        $button = new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit');
         $button->setClass('btn btn-success');
         $button_tray->addElement($button);
 
-        $button_2 = new Xoops\Form\Button('', 'reset', _RESET, 'reset');
+        $button_2 = new Xoops\Form\Button('', 'reset', XoopsLocale::A_RESET, 'reset');
         $button_2->setClass('btn btn-warning');
         $button_tray->addElement($button_2);
 
-        $button_3 = new Xoops\Form\Button('', 'cancel', _CANCEL, 'button');
+        $button_3 = new Xoops\Form\Button('', 'cancel', XoopsLocale::A_CANCEL, 'button');
         $button_3->setExtra("onclick='javascript:history.go(-1);'");
         $button_3->setClass('btn btn-danger');
         $button_tray->addElement($button_3);

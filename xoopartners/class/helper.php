@@ -33,24 +33,36 @@ class Xoopartners extends Xoops\Module\Helper\HelperAbstract
         XoopsLoad::load('xoopaginate', $this->_dirname);
     }
 
-    public function LoadConfig()
+    /**
+     * @return mixed
+     */
+    public function loadConfig()
     {
         XoopsLoad::load('xoopreferences', $this->_dirname);
 
         return XooPartnersPreferences::getInstance()->getConfig();
     }
 
-    public function CategoriesHandler()
+    /**
+     * @return \Xoops\Module\Helper\XoopsObjectHandler
+     */
+    public function categoriesHandler()
     {
         return $this->getHandler('xoopartners_categories');
     }
 
-    public function PartnersHandler()
+    /**
+     * @return \Xoops\Module\Helper\XoopsObjectHandler
+     */
+    public function partnersHandler()
     {
         return $this->getHandler('xoopartners_partners');
     }
 
-    public function RldHandler()
+    /**
+     * @return \Xoops\Module\Helper\XoopsObjectHandler
+     */
+    public function rldHandler()
     {
         return $this->getHandler('xoopartners_rld');
     }

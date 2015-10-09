@@ -17,7 +17,7 @@
  * @version         $Id$
  */
 
-include __DIR__ .  '/header.php';
+include __DIR__ . '/header.php';
 
 $xoops->disableErrorReporting();
 
@@ -32,9 +32,9 @@ if ($xoops->security()->check()) {
         $_SESSION['xoopartners_like' . $partner_id] = $time + 3600;
 
         $xoopartners_module = Xoopartners::getInstance();
-        $partners_handler   = $xoopartners_module->PartnersHandler();
+        $partnersHandler   = $xoopartners_module->partnersHandler();
 
-        $ret = $partners_handler->SetLike_Dislike($partner_id, $option);
+        $ret = $partnersHandler->setLikeDislike($partner_id, $option);
         if (is_array($ret) && count($ret) > 1) {
             $ret['error'] = 0;
         } else {
@@ -42,4 +42,4 @@ if ($xoops->security()->check()) {
         }
     }
 }
-echo json_encode($ret)
+echo json_encode($ret);

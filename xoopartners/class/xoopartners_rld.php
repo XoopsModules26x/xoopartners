@@ -118,7 +118,7 @@ class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
         return 0;
     }
 
-    public function SetLike_Dislike($partner_id, $like_dislike)
+    public function setLikeDislike($partner_id, $like_dislike)
     {
         $xoops   = Xoops::getInstance();
         $uid     = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;

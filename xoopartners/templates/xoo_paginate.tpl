@@ -1,5 +1,5 @@
-<{if $xoopages}>
-    <link rel="stylesheet" href="<{xoImgUrl modules/xoopartners/assets/css/xoopaginate.css}>" type="text/css" media="screen"/>
+<{if isset($xoopages)}>
+    <link rel="stylesheet" href="<{xoImgUrl 'modules/xoopartners/assets/css/xoopaginate.css'}>" type="text/css" media="screen"/>
     <div id="pagination">
         <div class="floatleft prevnext">
             <{if $xoopaginate->getValue('first') != false}>
@@ -31,11 +31,11 @@
 
         <div>
             <{foreach from=$xoopages item=xoopage name=foo}>
-            <{if $xoopage.link != false}>
-                <a <{if $xoopaginate->getValue('current') == $xoopage.value}>class="current" <{/if}>href="<{$xoopage.link}>" title="<{$xoopage.text}>"><{$xoopage.text}></a>
-            <{else}>
-                <span>...</span>
-            <{/if}>
+                <{if $xoopage.link != false}>
+                    <a <{if $xoopaginate->getValue('current') == $xoopage.value}>class="current" <{/if}>href="<{$xoopage.link}>" title="<{$xoopage.text}>"><{$xoopage.text}></a>
+                <{else}>
+                    <span>...</span>
+                <{/if}>
             <{/foreach}>
         </div>
     </div>

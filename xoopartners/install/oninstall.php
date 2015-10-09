@@ -19,6 +19,9 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+/**
+ * @return bool
+ */
 function xoops_module_install_xoopartners()
 {
     $xoops     = Xoops::getInstance();
@@ -42,6 +45,11 @@ function xoops_module_install_xoopartners()
     return true;
 }
 
+/**
+ * @param              $pathname
+ * @param mixed|string $pathout
+ * @return bool
+ */
 function xoopartners_mkdirs($pathname, $pathout = XOOPS_ROOT_PATH)
 {
     $xoops    = Xoops::getInstance();
@@ -67,6 +75,12 @@ function xoopartners_mkdirs($pathname, $pathout = XOOPS_ROOT_PATH)
     return true;
 }
 
+/**
+ * @param $folder_in
+ * @param $source_file
+ * @param $folder_out
+ * @return bool
+ */
 function xoopartners_copyfile($folder_in, $source_file, $folder_out)
 {
     if (!is_dir($folder_out)) {

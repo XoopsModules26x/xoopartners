@@ -20,5 +20,5 @@
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return array(
-    'mimetypes' => array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'),
+    'mimetypes' => array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png')
 );

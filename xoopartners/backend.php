@@ -21,9 +21,9 @@
  */
 
 if (file_exists('mainfile.php')) {
-    include __DIR__ .  '/mainfile.php';
+    include __DIR__ . '/mainfile.php';
 } else {
-    include '../../' .  '/mainfile.php';
+    include '../../' . '/mainfile.php';
 }
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -39,11 +39,11 @@ $dirname             = $xoops->isModule() ? $xoops->module->getVar('dirname') : 
 $tpl                 = new XoopsTpl();
 $tpl->caching        = 2;
 $tpl->cache_lifetime = 3600;
-if (!$tpl->is_cached('module:' . $dirname . '|system_rss.tpl')) {
-    $tpl->assign('channel_title', XoopsLocal::convert_encoding(htmlspecialchars($xoops->getConfig('sitename'), ENT_QUOTES)));
+if (!$tpl->isCached('module:' . $dirname . '/system_rss.tpl')) {
+    $tpl->assign('channel_title', XoopsLocale::convert_encoding(htmlspecialchars($xoops->getConfig('sitename'), ENT_QUOTES)));
     $tpl->assign('channel_link', XOOPS_URL . '/');
-    $tpl->assign('channel_desc', XoopsLocal::convert_encoding(htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES)));
-    $tpl->assign('channel_lastbuild', XoopsLocal::formatTimestamp(time(), 'rss'));
+    $tpl->assign('channel_desc', XoopsLocale::convert_encoding(htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES)));
+    $tpl->assign('channel_lastbuild', XoopsLocale::formatTimestamp(time(), 'rss'));
     $tpl->assign('channel_webmaster', $xoops->checkEmail($xoops->getConfig('adminmail'), true));
     $tpl->assign('channel_editor', $xoops->checkEmail($xoops->getConfig('adminmail'), true));
     $tpl->assign('channel_category', 'News');
@@ -67,12 +67,11 @@ if (!$tpl->is_cached('module:' . $dirname . '|system_rss.tpl')) {
             foreach ($res as $item) {
                 $date[]  = array('date' => $item['date']);
                 $items[] = array(
-                    'date'    => XoopsLocal::formatTimestamp($item['date'], 'rss'),
-                    'title'   => XoopsLocal::convert_encoding(htmlspecialchars($item['title'])),
-                    'content' => XoopsLocal::convert_encoding(htmlspecialchars($item['content'])),
+                    'date'    => XoopsLocale::formatTimestamp($item['date'], 'rss'),
+                    'title'   => XoopsLocale::convert_encoding(htmlspecialchars($item['title'])),
+                    'content' => XoopsLocale::convert_encoding(htmlspecialchars($item['content'])),
                     'link'    => $item['link'],
-                    'guid'    => $item['link'],
-                );
+                    'guid'    => $item['link']);
             }
         }
     } else {
@@ -84,12 +83,11 @@ if (!$tpl->is_cached('module:' . $dirname . '|system_rss.tpl')) {
                 foreach ($res as $item) {
                     $date[]  = array('date' => $item['date']);
                     $items[] = array(
-                        'date'    => XoopsLocal::formatTimestamp($item['date'], 'rss'),
-                        'title'   => XoopsLocal::convert_encoding(htmlspecialchars($item['title'])),
-                        'content' => XoopsLocal::convert_encoding(htmlspecialchars($item['content'])),
+                        'date'    => XoopsLocale::formatTimestamp($item['date'], 'rss'),
+                        'title'   => XoopsLocale::convert_encoding(htmlspecialchars($item['title'])),
+                        'content' => XoopsLocale::convert_encoding(htmlspecialchars($item['content'])),
                         'link'    => $item['link'],
-                        'guid'    => $item['link'],
-                    );
+                        'guid'    => $item['link']);
                 }
             }
         }
@@ -98,4 +96,4 @@ if (!$tpl->is_cached('module:' . $dirname . '|system_rss.tpl')) {
     $tpl->assign('items', $items);
 
 }
-$tpl->display('module:' . $dirname . '|system_rss.tpl');
+$tpl->display('module:' . $dirname . '/system_rss.tpl');

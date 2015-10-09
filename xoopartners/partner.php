@@ -17,17 +17,17 @@
  * @version         $Id$
  */
 
-include __DIR__ .  '/header.php';
+include __DIR__ . '/header.php';
 $_SESSION['xoopartners_stat'] = true;
 
 $partner_id = $system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
-$partner    = $partners_handler->get($partner_id);
+$partner    = $partnersHandler->get($partner_id);
 
 if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted')) {
     $time = time();
     if (!isset($_SESSION['xoopartner_view' . $partner_id]) || $_SESSION['xoopartner_view' . $partner_id] < $time) {
         $_SESSION['xoopartner_view' . $partner_id] = $time + 3600;
-        $partners_handler->SetRead($partner);
+        $partnersHandler->SetRead($partner);
     }
 
     $content = $partner->getValues();
@@ -44,4 +44,4 @@ if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners
 } else {
     $xoops->tpl()->assign('not_found', true);
 }
-include __DIR__ .  '/footer.php';
+include __DIR__ . '/footer.php';
