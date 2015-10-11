@@ -22,7 +22,10 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 
-class Xoopartners_partners extends XoopsObject
+/**
+ * Class XoopartnersPartners
+ */
+class XoopartnersPartners extends XoopsObject
 {
     private $exclude_page
         = array(
@@ -36,10 +39,13 @@ class Xoopartners_partners extends XoopsObject
     private $php_self = '';
 
     // constructor
+    /**
+     * XoopartnersPartners constructor.
+     */
     public function __construct()
     {
-        $xoops          = Xoops::getinstance();
-        $this->php_self = basename($xoops->getenv('PHP_SELF'), '.php');
+        $xoops          = Xoops::getInstance();
+        $this->php_self = basename($xoops->getEnv('PHP_SELF'), '.php');
 
         $this->initVar('xoopartners_id', XOBJ_DTYPE_INT, 0, true, 11);
         $this->initVar('xoopartners_category', XOBJ_DTYPE_INT, 0, false, 11);
@@ -68,12 +74,15 @@ class Xoopartners_partners extends XoopsObject
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
 
         // Module
-        $partners_module   = Xoopartners::getInstance();
-        $this->config      = $partners_module->LoadConfig();
-        $this->cat_handler = $partners_module->categoriesHandler();
-        $this->rld_handler = $partners_module->rldHandler();
+        $partnersModule   = Xoopartners::getInstance();
+        $this->config      = $partnersModule->loadConfig();
+        $this->catHandler = $partnersModule->getCategoriesHandler();
+        $this->rldHandler = $partnersModule->getRldHandler();
     }
 
+    /**
+     * @return bool
+     */
     public function setVisit()
     {
         $visit = $this->getVar('xoopartners_visit') + 1;
@@ -82,9 +91,12 @@ class Xoopartners_partners extends XoopsObject
         return true;
     }
 
+    /**
+     * @param bool|true $addpost
+     */
     public function setPost($addpost = true)
     {
-        $xoops          = Xoops::getinstance();
+        $xoops          = Xoops::getInstance();
         $memberHandler = $xoops->getHandlerMember();
         $poster         = $memberHandler->getUser($this->getVar('xoopartners_uid'));
         if ($poster instanceof XoopsUser) {
@@ -96,6 +108,9 @@ class Xoopartners_partners extends XoopsObject
         }
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getMetaDescription()
     {
         $myts   = MyTextSanitizer::getInstance();
@@ -107,12 +122,16 @@ class Xoopartners_partners extends XoopsObject
         return $string;
     }
 
+    /**
+     * @param int $limit
+     * @return string
+     */
     public function getMetaKeywords($limit = 5)
     {
         $string = $this->getMetaDescription() . ', ' . $this->getVar('xoopartners_title');
 
         $string          = html_entity_decode($string, ENT_QUOTES);
-        $search_pattern  = array("\t", "\r\n", "\r", "\n", ",", ".", "'", ";", ":", ")", "(", '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '_', '\\', '*', 'pagebreak', 'page');
+        $search_pattern  = array("\t", "\r\n", "\r", "\n", ',', '.', "'", ';', ':', ')', '(', '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '_', '\\', '*', 'pagebreak', 'page');
         $replace_pattern = array(' ', ' ', ' ', ' ', ' ', ' ', ' ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
         $string          = str_replace($search_pattern, $replace_pattern, $string);
 
@@ -123,7 +142,7 @@ class Xoopartners_partners extends XoopsObject
 
         $tmpkeywords = array_unique($tmpkeywords);
         foreach ($tmpkeywords as $keyword) {
-            if (strlen(trim($keyword)) >= $limit && !is_numeric($keyword)) {
+            if (!is_numeric($keyword) && strlen(trim($keyword)) >= $limit) {
                 $keywords[] = htmlentities(trim($keyword));
             }
         }
@@ -131,6 +150,12 @@ class Xoopartners_partners extends XoopsObject
         return implode(', ', $keywords);
     }
 
+    /**
+     * @param null $keys
+     * @param null $format
+     * @param null $maxDepth
+     * @return array
+     */
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {
         $xoops = Xoops::getInstance();
@@ -145,11 +170,11 @@ class Xoopartners_partners extends XoopsObject
         $ret['xoopartners_time']       = $this->getVar('xoopartners_published');
         $ret['xoopartners_published']  = date(\XoopsLocale::getFormatShortDate(), $this->getVar('xoopartners_published'));
 
-        $ret['xoopartners_link'] = XOOPS_URL . '/modules/xoopartners/partner.php?partner_id=' . $this->getVar('xoopartners_id');
-        if ($this->getVar('xoopartners_image') != 'blank.gif') {
+        $ret['xoopartners_link'] = \XoopsBaseConfig::get('url')  . '/modules/xoopartners/partner.php?partner_id=' . $this->getVar('xoopartners_id');
+        if ($this->getVar('xoopartners_image') !== 'blank.gif') {
             $ret['xoopartners_image_link'] = $xoops_upload_url . '/xoopartners/partners/images/' . $this->getVar('xoopartners_image');
         } else {
-            $ret['xoopartners_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xoopartners/assets/images/partners.png');
+            $ret['xoopartners_image_link'] = \XoopsBaseConfig::get('url')  . '/' . $xoops->theme()->resourcePath('/modules/xoopartners/assets/images/partners.png');
         }
 
         //mb -------------------------
@@ -159,7 +184,7 @@ class Xoopartners_partners extends XoopsObject
         $ret['xoopartners_uid_name'] = XoopsUser::getUnameFromId($this->getVar('xoopartners_uid'), true);
 
         if ($this->config['xoopartners_category']['use_categories']) {
-            $ret['xoopartners_categories'] = $this->cat_handler->getParents($this->getVar('xoopartners_category'));
+            $ret['xoopartners_categories'] = $this->catHandler->getParents($this->getVar('xoopartners_category'));
         }
 
         if (in_array($this->php_self, $this->exclude_page) && strpos($this->getVar('xoopartners_description'), '[breakpage]') !== false) {
@@ -171,11 +196,11 @@ class Xoopartners_partners extends XoopsObject
 
         // tags
         static $tags;
-        if (!in_array($this->php_self, $this->exclude_page) || $this->php_self == 'index' || $this->php_self == 'partner_print') {
+        if ($this->php_self === 'index' || $this->php_self === 'partner_print' || !in_array($this->php_self, $this->exclude_page)) {
             if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
                 $id = $this->getVar('xoopartners_id');
                 if (!isset($tags[$this->getVar('xoopartners_id')])) {
-                    $xootagsHandler                       = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                    $xootagsHandler                       = $xoops->getModuleHandler('tags', 'xootags');
                     $tags[$this->getVar('xoopartners_id')] = $xootagsHandler->getbyItem($this->getVar('xoopartners_id'));
                 }
                 $ret['tags'] = $tags[$this->getVar('xoopartners_id')];
@@ -185,12 +210,16 @@ class Xoopartners_partners extends XoopsObject
         return $ret;
     }
 
+    /**
+     * @param $ret
+     * @return mixed
+     */
     public function getRLD($ret)
     {
         if (!in_array($this->php_self, $this->exclude_page)) {
-            if ($this->config['xoopartners_rld']['rld_mode'] == 'rate') {
-                $ret['xoopartners_vote']     = $this->rld_handler->getVotes($this->getVar('xoopartners_id'));
-                $ret['xoopartners_yourvote'] = $this->rld_handler->getbyUser($this->getVar('xoopartners_id'));
+            if ($this->config['xoopartners_rld']['rld_mode'] === 'rate') {
+                $ret['xoopartners_vote']     = $this->rldHandler->getVotes($this->getVar('xoopartners_id'));
+                $ret['xoopartners_yourvote'] = $this->rldHandler->getbyUser($this->getVar('xoopartners_id'));
             }
         }
 
@@ -202,7 +231,7 @@ class Xoopartners_partners extends XoopsObject
         $myts   = MyTextSanitizer::getInstance();
         $system = System::getInstance();
         foreach (parent::getValues() as $k => $v) {
-            if ($k != 'dohtml') {
+            if ($k !== 'dohtml') {
                 if ($this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
                     $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
                     $this->setVar($k, isset($_POST[$k]) ? $value : $v);
@@ -214,7 +243,7 @@ class Xoopartners_partners extends XoopsObject
                     $this->setVar($k, $value);
                 } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_TXTAREA) {
                     $value = $system->cleanVars($_POST, $k, $v, 'string');
-                    $this->setVar($k, stripSlashes($value));
+                    $this->setVar($k, stripslashes($value));
                 } else {
                     $value = $system->cleanVars($_POST, $k, $v, 'string');
                     $this->setVar($k, stripslashes($value));
@@ -239,24 +268,36 @@ class Xoopartners_partners extends XoopsObject
     }
 }
 
-class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandler
+/**
+ * Class XoopartnersXoopartnersPartnersHandler
+ */
+class XoopartnersPartnersHandler extends XoopsPersistableObjectHandler
 {
-    private $_published;
+    private $published;
 
+    /**
+     * XoopartnersXoopartnersPartnersHandler constructor.
+     * @param Connection|null $db
+     */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'xoopartners', 'Xoopartners_partners', 'xoopartners_id', 'xoopartners_title');
+        parent::__construct($db, 'xoopartners', 'XoopartnersPartners', 'xoopartners_id', 'xoopartners_title');
 
         // Module
-        $partners_module   = Xoopartners::getInstance();
-        $this->config      = $partners_module->loadConfig();
-        $this->cat_handler = $partners_module->categoriesHandler();
-        $this->rld_handler = $partners_module->rldHandler();
+        $partnersModule   = Xoopartners::getInstance();
+        $this->config      = $partnersModule->loadConfig();
+        $this->catHandler = $partnersModule->getCategoriesHandler();
+        $this->rldHandler = $partnersModule->getRldHandler();
     }
 
+    /**
+     * @param XoopsObject $object
+     * @param bool|true   $force
+     * @return bool|mixed
+     */
     public function insert(XoopsObject $object, $force = true)
     {
-        $xoops = Xoops::getinstance();
+        $xoops = Xoops::getInstance();
         if (parent::insert($object, $force)) {
             if ($object->isNew()) {
                 return $xoops->db()->getInsertId();
@@ -268,6 +309,11 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return false;
     }
 
+    /**
+     * @param int $category_id
+     * @param int $online
+     * @return array
+     */
     public function renderAdminList($category_id = 0, $online = -1)
     {
         $criteria = new CriteriaCompo();
@@ -284,10 +330,18 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return $this->getObjects($criteria, true, false);
     }
 
+    /**
+     * @param int    $category_id
+     * @param string $sort
+     * @param string $order
+     * @param int    $start
+     * @param int    $limit
+     * @return array
+     */
     public function getPartners($category_id = 0, $sort = 'order', $order = 'asc', $start = 0, $limit = 0)
     {
         $criteria = new CriteriaCompo();
-        if ($this->config['xoopartners_category']['use_categories'] && $category_id >= 0) {
+        if ($category_id >= 0 && $this->config['xoopartners_category']['use_categories']) {
             $criteria->add(new Criteria('xoopartners_category', $category_id));
         }
         $criteria->add(new Criteria('xoopartners_accepted', 1));
@@ -295,7 +349,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         $criteria->add(new Criteria('xoopartners_published', 0, '>'));
         $criteria->add(new Criteria('xoopartners_published', time(), '<='));
 
-        if ($sort == 'random') {
+        if ($sort === 'random') {
             $criteria->setSort('rand()');
         } else {
             $criteria->setSort('xoopartners_' . $sort);
@@ -307,6 +361,10 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return $this->getObjects($criteria, true, false);
     }
 
+    /**
+     * @param $partner_id
+     * @return bool
+     */
     public function setOnline($partner_id)
     {
         if ($partner_id != 0) {
@@ -324,6 +382,10 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return false;
     }
 
+    /**
+     * @param $partner_id
+     * @return bool
+     */
     public function setAccept($partner_id)
     {
         if ($partner_id != 0) {
@@ -341,6 +403,10 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return false;
     }
 
+    /**
+     * @param $partnerObj
+     * @return bool
+     */
     public function setRead($partnerObj)
     {
         $read = $partnerObj->getVar('xoopartners_hits') + 1;
@@ -350,6 +416,10 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return true;
     }
 
+    /**
+     * @param $partnerObj
+     * @return bool
+     */
     public function setVisit($partnerObj)
     {
         $read = $partnerObj->getVar('xoopartners_visit') + 1;
@@ -359,6 +429,11 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return true;
     }
 
+    /**
+     * @param $partner_id
+     * @param $like_dislike
+     * @return array|bool
+     */
     public function setLikeDislike($partner_id, $like_dislike)
     {
         if ($partner_id != 0) {
@@ -366,7 +441,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
             if (is_object($partner) && count($partner) != 0) {
                 $xoops = Xoops::getInstance();
 
-                if ($ret = $this->rld_handler->setLikeDislike($partner_id, $like_dislike)) {
+                if ($ret = $this->rldHandler->setLikeDislike($partner_id, $like_dislike)) {
                     if ($like_dislike == 0) {
                         $xoopartners_dislike = $partner->getVar('xoopartners_dislike') + 1;
                         $partner->setVar('xoopartners_dislike', $xoopartners_dislike);
@@ -386,6 +461,11 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return false;
     }
 
+    /**
+     * @param $partner_id
+     * @param $rate
+     * @return bool
+     */
     public function setRate($partner_id, $rate)
     {
         if ($partner_id != 0) {
@@ -393,7 +473,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
             if (is_object($partner) && count($partner) != 0) {
                 $xoops = Xoops::getInstance();
 
-                if ($ret = $this->rld_handler->SetRate($partner_id, $rate)) {
+                if ($ret = $this->rldHandler->setRate($partner_id, $rate)) {
                     if (is_array($ret) && count($ret) == 3) {
                         $partner->setVar('xoopartners_rates', $ret['average']);
                         $this->insert($partner);
@@ -409,6 +489,10 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return false;
     }
 
+    /**
+     * @param $image_name
+     * @return array
+     */
     public function uploadImages($image_name)
     {
         $xoops    = Xoops::getInstance();
@@ -426,7 +510,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         foreach ($_POST['xoops_upload_file'] as $k => $input_image) {
             if ($_FILES[$input_image]['tmp_name'] != '' || is_readable($_FILES[$input_image]['tmp_name'])) {
                 $path_parts = pathinfo($_FILES[$input_image]['name']);
-                $uploader->setTargetFileName($this->CleanImage(strtolower($image_name . '.' . $path_parts['extension'])));
+                $uploader->setTargetFileName($this->cleanImage(strtolower($image_name . '.' . $path_parts['extension'])));
                 if ($uploader->fetchMedia($_POST['xoops_upload_file'][$k])) {
                     if ($uploader->upload()) {
                         $ret[$input_image] = array('filename' => $uploader->getSavedFileName(), 'error' => false, 'message' => '');
@@ -442,6 +526,10 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         return $ret;
     }
 
+    /**
+     * @param $filename
+     * @return string
+     */
     public function cleanImage($filename)
     {
         $path_parts = pathinfo($filename);
@@ -455,7 +543,7 @@ class XoopartnersXoopartners_partnersHandler extends XoopsPersistableObjectHandl
         $string = htmlentities($string, ENT_NOQUOTES, _CHARSET);
         $string = preg_replace("~\&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring)\;~", "$1", $string);
         $string = preg_replace("~\&([A-za-z]{2})(?:lig)\;~", "$1", $string); // pour les ligatures e.g. "&oelig;"
-        $string = preg_replace("~\&[^;]+\;~", "", $string); // supprime les autres caract�res
+        $string = preg_replace("~\&[^;]+\;~", '', $string); // supprime les autres caract�res
 
         $string = str_replace(md5('xoopartners'), '_', $string);
 

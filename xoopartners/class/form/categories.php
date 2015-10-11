@@ -17,24 +17,22 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-
 /**
  * Class XoopartnersCategoriesForm
  */
 class XoopartnersCategoriesForm extends Xoops\Form\ThemeForm
 {
     /**
-     * @param null $obj
+     * @param XoopartnersCategories|XoopsObject|null $obj
      */
-    public function __construct($obj = null)
+    public function __construct(XoopartnersCategories $obj = null)
     {
         $this->xoopsObject = $obj;
         $xoops             = Xoops::getInstance();
 
-        $xoopartners_module = Xoopartners::getInstance();
-        $partners_config    = $xoopartners_module->LoadConfig();
-        $categoriesHandler = $xoopartners_module->categoriesHandler();
+        $xoopartnersModule = Xoopartners::getInstance();
+        $partnersConfig    = $xoopartnersModule->loadConfig();
+        $categoriesHandler = $xoopartnersModule->getCategoriesHandler();
 
         if ($this->xoopsObject->isNew()) {
             parent::__construct(_AM_XOO_PARTNERS_CATEGORY_ADD, 'form_category', 'categories.php', 'post', true);
@@ -43,7 +41,7 @@ class XoopartnersCategoriesForm extends Xoops\Form\ThemeForm
         }
         $this->setExtra('enctype="multipart/form-data"');
 
-        $tabtray = new Xoops\Form\TabTray('', 'uniqueid');
+        $tabTray = new Xoops\Form\TabTray('', 'uniqueid');
 
         /**
          * Main
@@ -62,9 +60,9 @@ class XoopartnersCategoriesForm extends Xoops\Form\ThemeForm
         $tab1->addElement(new Xoops\Form\TextArea(_XOO_PARTNERS_DESCRIPTION, 'xoopartners_category_description', $this->xoopsObject->getVar('xoopartners_category_description'), 7, 12));
 
         // image
-        $upload_msg[] = _XOO_PARTNERS_IMAGE_SIZE . ' : ' . $partners_config['xoopartners_category']['image_size'];
-        $upload_msg[] = _XOO_PARTNERS_IMAGE_WIDTH . ' : ' . $partners_config['xoopartners_category']['image_width'];
-        $upload_msg[] = _XOO_PARTNERS_IMAGE_HEIGHT . ' : ' . $partners_config['xoopartners_category']['image_height'];
+        $upload_msg[] = _XOO_PARTNERS_IMAGE_SIZE . ' : ' . $partnersConfig['xoopartners_category']['image_size'];
+        $upload_msg[] = _XOO_PARTNERS_IMAGE_WIDTH . ' : ' . $partnersConfig['xoopartners_category']['image_width'];
+        $upload_msg[] = _XOO_PARTNERS_IMAGE_HEIGHT . ' : ' . $partnersConfig['xoopartners_category']['image_height'];
 
         $warning_tray = new Xoops\Form\ElementTray($this->message($upload_msg, ''));
         $image_tray   = new Xoops\Form\ElementTray(_XOO_PARTNERS_IMAGE, '');
@@ -94,34 +92,34 @@ class XoopartnersCategoriesForm extends Xoops\Form\ThemeForm
         // display
         $tab1->addElement(new Xoops\Form\RadioYesNo(_XOO_PARTNERS_DISPLAY, 'xoopartners_category_online', $this->xoopsObject->getVar('xoopartners_category_online')));
 
-        $tabtray->addElement($tab1);
+        $tabTray->addElement($tab1);
 
         // hidden
         $this->addElement(new Xoops\Form\Hidden('xoopartners_category_id', $this->xoopsObject->getVar('xoopartners_category_id')));
         $this->addElement(new Xoops\Form\Hidden('xoopartners_category_partners', $this->xoopsObject->getVar('xoopartners_category_partners')));
 
-        $this->addElement($tabtray);
+        $this->addElement($tabTray);
 
         /**
          * Buttons
          */
-        $button_tray = new Xoops\Form\ElementTray('', '');
-        $button_tray->addElement(new Xoops\Form\Hidden('op', 'save'));
+        $buttonTray = new Xoops\Form\ElementTray('', '');
+        $buttonTray->addElement(new Xoops\Form\Hidden('op', 'save'));
 
-        $button = new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit');
-        $button->setClass('btn btn-success');
-        $button_tray->addElement($button);
+        $buttonSubmit = new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit');
+        $buttonSubmit->setClass('btn btn-success');
+        $buttonTray->addElement($buttonSubmit);
 
-        $button_2 = new Xoops\Form\Button('', 'reset', XoopsLocale::A_RESET, 'reset');
-        $button_2->setClass('btn btn-warning');
-        $button_tray->addElement($button_2);
+        $buttonReset = new Xoops\Form\Button('', 'reset', XoopsLocale::A_RESET, 'reset');
+        $buttonReset->setClass('btn btn-warning');
+        $buttonTray->addElement($buttonReset);
 
-        $button_3 = new Xoops\Form\Button('', 'cancel', XoopsLocale::A_CANCEL, 'button');
-        $button_3->setExtra("onclick='javascript:history.go(-1);'");
-        $button_3->setClass('btn btn-danger');
-        $button_tray->addElement($button_3);
+        $buttonCancel = new Xoops\Form\Button('', 'cancel', XoopsLocale::A_CANCEL, 'button');
+        $buttonCancel->setExtra("onclick='javascript:history.go(-1);'");
+        $buttonCancel->setClass('btn btn-danger');
+        $buttonTray->addElement($buttonCancel);
 
-        $this->addElement($button_tray);
+        $this->addElement($buttonTray);
     }
 
     /**

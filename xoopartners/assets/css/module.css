@@ -26,7 +26,8 @@ legend img {
     margin-bottom: 1em;
     padding-bottom: .5em;
     border-bottom: 1px solid #eee;
-    font-size: 19.5em;
+    font-size: 1.219em;
+    font-weight: bold;
     text-align: center;
 }
 
@@ -58,8 +59,7 @@ legend img {
 
 /*========  Icons ======== */
 [class^="xoopartners-ico-"], [class*=" xoopartners-ico-"] {
-    background-position: 0 0;
-    background-repeat: no-repeat;
+    background: no-repeat 0 0;
     background-size: 16px 16px;
     display: inline-block;
     margin-right: 0.5em;
@@ -70,8 +70,7 @@ legend img {
 }
 
 [class^="xoopartners-image-"], [class*=" xoopartners-image-"] {
-    background-position: 0 0;
-    background-repeat: no-repeat;
+    background: no-repeat 0 0;
     display: block;
     vertical-align: text-top;
 }

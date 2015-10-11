@@ -17,14 +17,12 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-
 /**
  * Class XoopartnersPreferencesForm
  */
 class XoopartnersPreferencesForm extends Xoops\Form\ThemeForm
 {
-    private $_colors
+    private $colors
         = array(
             'Aqua'    => '#00FFFF',
             'Black'   => '#000000',
@@ -44,10 +42,11 @@ class XoopartnersPreferencesForm extends Xoops\Form\ThemeForm
             'Yellow'  => '#FFFF00'
         );
 
-    private $_config = array();
+    private $config = array();
 
     /**
-     * @param null $obj
+     * @param string $config
+     * @internal param null $obj
      */
     public function __construct($config)
     {
@@ -56,7 +55,7 @@ class XoopartnersPreferencesForm extends Xoops\Form\ThemeForm
         parent::__construct('', 'form_preferences', 'preferences.php', 'post', true);
         $this->setExtra('enctype="multipart/form-data"');
 
-        $tabtray = new Xoops\Form\TabTray('', 'uniqueid');
+        $tabTray = new Xoops\Form\TabTray('', 'uniqueid');
 
         /**
          * Main page
@@ -65,7 +64,7 @@ class XoopartnersPreferencesForm extends Xoops\Form\ThemeForm
         $tab1 = new Xoops\Form\Tab(_XOO_CONFIG_MAINPAGE, 'tabid-1');
         $tab1->addElement(new Xoops\Form\TextArea(_XOO_CONFIG_WELCOME, 'xoopartners_welcome', $xoopartners_welcome, 12, 12));
 
-        $tabtray->addElement($tab1);
+        $tabTray->addElement($tab1);
 
         /**
          * Categories
@@ -93,7 +92,7 @@ class XoopartnersPreferencesForm extends Xoops\Form\ThemeForm
         // image_height
         $tab2->addElement(new Xoops\Form\Text(_XOO_PARTNERS_IMAGE_HEIGHT, 'xoopartners_category[image_height]', 1, 10, $xoopartners_category['image_height']));
 
-        $tabtray->addElement($tab2);
+        $tabTray->addElement($tab2);
 
         /**
          * Partners
@@ -118,7 +117,7 @@ class XoopartnersPreferencesForm extends Xoops\Form\ThemeForm
         // image_height
         $tab3->addElement(new Xoops\Form\Text(_XOO_PARTNERS_IMAGE_HEIGHT, 'xoopartners_partner[image_height]', 1, 10, $xoopartners_partner['image_height']));
 
-        $tabtray->addElement($tab3);
+        $tabTray->addElement($tab3);
 
         /**
          * Rate / Like - Dislike
@@ -139,29 +138,29 @@ class XoopartnersPreferencesForm extends Xoops\Form\ThemeForm
 
         $rld->addElement($rate_scale);
 
-        $tabtray->addElement($rld);
+        $tabTray->addElement($rld);
 
-        $this->addElement($tabtray);
+        $this->addElement($tabTray);
 
         /**
          * Buttons
          */
-        $button_tray = new Xoops\Form\ElementTray('', '');
-        $button_tray->addElement(new Xoops\Form\Hidden('op', 'save'));
+        $buttonTray = new Xoops\Form\ElementTray('', '');
+        $buttonTray->addElement(new Xoops\Form\Hidden('op', 'save'));
 
-        $button = new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit');
-        $button->setClass('btn btn-success');
-        $button_tray->addElement($button);
+        $buttonSubmit = new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit');
+        $buttonSubmit->setClass('btn btn-success');
+        $buttonTray->addElement($buttonSubmit);
 
-        $button_2 = new Xoops\Form\Button('', 'reset', XoopsLocale::A_RESET, 'reset');
-        $button_2->setClass('btn btn-warning');
-        $button_tray->addElement($button_2);
+        $buttonReset = new Xoops\Form\Button('', 'reset', XoopsLocale::A_RESET, 'reset');
+        $buttonReset->setClass('btn btn-warning');
+        $buttonTray->addElement($buttonReset);
 
-        $button_3 = new Xoops\Form\Button('', 'cancel', XoopsLocale::A_CANCEL, 'button');
-        $button_3->setExtra("onclick='javascript:history.go(-1);'");
-        $button_3->setClass('btn btn-danger');
-        $button_tray->addElement($button_3);
+        $buttonCancel = new Xoops\Form\Button('', 'cancel', XoopsLocale::A_CANCEL, 'button');
+        $buttonCancel->setExtra("onclick='javascript:history.go(-1);'");
+        $buttonCancel->setClass('btn btn-danger');
+        $buttonTray->addElement($buttonCancel);
 
-        $this->addElement($button_tray);
+        $this->addElement($buttonTray);
     }
 }

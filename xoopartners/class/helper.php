@@ -46,24 +46,24 @@ class Xoopartners extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return \Xoops\Module\Helper\XoopsObjectHandler
      */
-    public function categoriesHandler()
+    public function getCategoriesHandler()
     {
-        return $this->getHandler('xoopartners_categories');
+        return $this->getHandler('Categories');
     }
 
     /**
      * @return \Xoops\Module\Helper\XoopsObjectHandler
      */
-    public function partnersHandler()
+    public function getPartnersHandler()
     {
-        return $this->getHandler('xoopartners_partners');
+        return $this->getHandler('Partners');
     }
 
     /**
      * @return \Xoops\Module\Helper\XoopsObjectHandler
      */
-    public function rldHandler()
+    public function getRldHandler()
     {
-        return $this->getHandler('xoopartners_rld');
+        return $this->getHandler('Rld');
     }
 }

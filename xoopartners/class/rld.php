@@ -21,9 +21,15 @@ use Xoops\Core\Database\Connection;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
-class XooPartners_rld extends XoopsObject
+/**
+ * Class XooPartnersRld
+ */
+class XoopartnersRld extends XoopsObject
 {
     // constructor
+    /**
+     * XooPartnersRld constructor.
+     */
     public function __construct()
     {
         $this->initVar('xoopartners_rld_id', XOBJ_DTYPE_INT, 0, true, 5);
@@ -36,6 +42,9 @@ class XooPartners_rld extends XoopsObject
         $this->initVar('xoopartners_rld_dislike', XOBJ_DTYPE_INT, 0, true, 1);
     }
 
+    /**
+     * @return mixed
+     */
     public static function getInstance()
     {
         static $instance;
@@ -47,11 +56,11 @@ class XooPartners_rld extends XoopsObject
         return $instance;
     }
 
-    public function CleanVarsForDB()
+    public function cleanVarsForDB()
     {
         $system = System::getInstance();
         foreach (parent::getValues() as $k => $v) {
-            if ($k != 'dohtml') {
+            if ($k !== 'dohtml') {
                 if ($this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
                     $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
                     $this->setVar($k, isset($_POST[$k]) ? $value : $v);
@@ -70,13 +79,23 @@ class XooPartners_rld extends XoopsObject
     }
 }
 
-class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
+/**
+ * Class XoopartnersXooPartnersRldHandler
+ */
+class XoopartnersRldHandler extends XoopsPersistableObjectHandler
 {
+    /**
+     * XoopartnersXooPartnersRldHandler constructor.
+     * @param Connection|null $db
+     */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'xoopartners_rld', 'XooPartners_rld', 'xoopartners_rld_id', 'xoopartners_rld_partner');
+        parent::__construct($db, 'xoopartners_rld', 'XoopartnersRld', 'xoopartners_rld_id', 'xoopartners_rld_partner');
     }
 
+    /**
+     * @return mixed
+     */
     public static function getInstance()
     {
         static $instance;
@@ -88,6 +107,10 @@ class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
         return $instance;
     }
 
+    /**
+     * @param $partner_id
+     * @return int
+     */
     public function getVotes($partner_id)
     {
         $criteria = new CriteriaCompo();
@@ -97,11 +120,15 @@ class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
         return parent::getCount($criteria);
     }
 
+    /**
+     * @param $partner_id
+     * @return int
+     */
     public function getbyUser($partner_id)
     {
         $xoops = Xoops::getInstance();
         $uid   = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip    = $xoops->getenv('REMOTE_ADDR');
+        $ip    = $xoops->getEnv('REMOTE_ADDR');
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('xoopartners_rld_partner', $partner_id));
@@ -118,11 +145,16 @@ class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
         return 0;
     }
 
+    /**
+     * @param $partner_id
+     * @param $like_dislike
+     * @return bool
+     */
     public function setLikeDislike($partner_id, $like_dislike)
     {
         $xoops   = Xoops::getInstance();
         $uid     = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip      = $xoops->getenv('REMOTE_ADDR');
+        $ip      = $xoops->getEnv('REMOTE_ADDR');
         $like    = ($like_dislike == 1) ? 1 : 0;
         $dislike = ($like_dislike == 0) ? 1 : 0;
 
@@ -151,11 +183,16 @@ class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
         return false;
     }
 
-    public function SetRate($partner_id, $vote)
+    /**
+     * @param $partner_id
+     * @param $vote
+     * @return array|bool
+     */
+    public function setRate($partner_id, $vote)
     {
         $xoops = Xoops::getInstance();
         $uid   = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip    = $xoops->getenv('REMOTE_ADDR');
+        $ip    = $xoops->getEnv('REMOTE_ADDR');
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('xoopartners_rld_partner', $partner_id));
@@ -182,6 +219,11 @@ class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
         return false;
     }
 
+    /**
+     * @param $partner_id
+     * @param $vote
+     * @return array
+     */
     private function getAverage($partner_id, $vote)
     {
         $criteria = new CriteriaCompo();
@@ -192,7 +234,7 @@ class XoopartnersXooPartners_rldHandler extends XoopsPersistableObjectHandler
         $rates  = 0;
         $voters = 0;
         foreach ($res as $k => $v) {
-            $rates = $rates + $v['xoopartners_rld_rates'];
+            $rates += $v['xoopartners_rld_rates'];
             ++$voters;
         }
 

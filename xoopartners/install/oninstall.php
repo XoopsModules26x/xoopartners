@@ -17,8 +17,6 @@
  * @version         $Id: install.php 1388 2012-12-29 00:23:08Z DuGris $
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-
 /**
  * @return bool
  */
@@ -53,7 +51,7 @@ function xoops_module_install_xoopartners()
 function xoopartners_mkdirs($pathname, $pathout = XOOPS_ROOT_PATH)
 {
     $xoops    = Xoops::getInstance();
-    $pathname = substr($pathname, strlen(XOOPS_ROOT_PATH));
+    $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path')));
     $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
 
     $dest  = $pathout;

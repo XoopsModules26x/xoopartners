@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 
 $op = '';
@@ -37,7 +39,8 @@ switch ($op) {
             $xoops->redirect('index.php', 5, implode(',', $xoops->security()->getErrors()));
         }
 
-        $xoopartners_id = $system->cleanVars($_POST, 'xoopartners_id', 0, 'int');
+//        $xoopartners_id = $system->cleanVars($_POST, 'xoopartners_id', 0, 'int'); //mb
+        $xoopartners_id = Request::getInt('xoopartners_id', 0, 'POST');
         if (isset($xoopartners_id) && $xoopartners_id > 0) {
             $partner = $partnersHandler->get($xoopartners_id);
         } else {
@@ -48,18 +51,19 @@ switch ($op) {
 
         // uploads images
         $myts          = MyTextSanitizer::getInstance();
-        $upload_images = $partnersHandler->uploadImages($partner->getVar('xoopartners_title'));
+        $uploadImages = $partnersHandler->uploadImages($partner->getVar('xoopartners_title'));
 
-        if (is_array($upload_images) && count($upload_images) != 0) {
-            foreach ($upload_images as $k => $reponse) {
-                if ($reponse['error'] == true) {
-                    $errors[] = $reponse['message'];
+        if (is_array($uploadImages) && count($uploadImages) != 0) {
+            foreach ($uploadImages as $k => $response) {
+                if ($response['error'] == true) {
+                    $errors[] = $response['message'];
                 } else {
-                    $partner->setVar($k, $reponse['filename']);
+                    $partner->setVar($k, $response['filename']);
                 }
             }
         } else {
-            $partner->setVar('xoopartners_image', $myts->htmlSpecialChars($_POST['image_list']));
+//            $partner->setVar('xoopartners_image', $myts->htmlSpecialChars($_POST['image_list']));
+            $partner->setVar('xoopartners_image', $myts->htmlSpecialChars(Request::getString('image_list', '', 'POST')));
         }
 
         if ($partner_id = $partnersHandler->insert($partner)) {
@@ -73,7 +77,7 @@ switch ($op) {
 
     default:
         $partner = $partnersHandler->create();
-        $form    = $xoopartners_module->getForm($partner, 'partners');
+        $form    = $xoopartnersModule->getForm($partner, 'partners');
         $form->display();
         break;
 }

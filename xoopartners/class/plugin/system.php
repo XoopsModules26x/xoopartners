@@ -25,8 +25,8 @@ class XoopartnersSystemPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
      */
     public function userPosts($uid)
     {
-        $partners_module  = Xoopartners::getInstance();
-        $partnersHandler = $partners_module->partnersHandler();
+        $partnersModule  = Xoopartners::getInstance();
+        $partnersHandler = $partnersModule->partnersHandler();
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('xoopartners_online', 1));
@@ -36,10 +36,13 @@ class XoopartnersSystemPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
         return $partnersHandler->getCount($criteria);
     }
 
+    /**
+     * @return bool
+     */
     public function waiting()
     {
-        $partners_module  = Xoopartners::getInstance();
-        $partnersHandler = $partners_module->partnersHandler();
+        $partnersModule  = Xoopartners::getInstance();
+        $partnersHandler = $partnersModule->partnersHandler();
         $criteria         = new CriteriaCompo(new Criteria('xoopartners_online', 0));
         $criteria->add(new Criteria('xoopartners_accepted', 0), 'OR');
         if ($count = $partnersHandler->getCount($criteria)) {
@@ -61,13 +64,13 @@ class XoopartnersSystemPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
     {
         $xoops = Xoops::getInstance();
 
-        $partners_module  = Xoopartners::getInstance();
-        $partners_config  = $partners_module->LoadConfig();
-        $partnersHandler = $partners_module->partnersHandler();
+        $partnersModule  = Xoopartners::getInstance();
+        $partnersConfig  = $partnersModule->loadConfig();
+        $partnersHandler = $partnersModule->partnersHandler();
 
         $ret = array();
 
-        $partners = $partnersHandler->GetPartners(0, 'order', 'asc', 0, $limit);
+        $partners = $partnersHandler->getPartners(0, 'order', 'asc', 0, $limit);
         foreach ($partners as $k => $partner) {
             $ret[$k]['title']   = $partner['xoopartners_title'];
             $ret[$k]['link']    = $xoops->url('modules/xoopartners/partner.php?partner_id=' . $partner['xoopartners_id']);

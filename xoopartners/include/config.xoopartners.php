@@ -1,5 +1,4 @@
 <?php
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = array(
     'xoopartners_welcome'   => '',

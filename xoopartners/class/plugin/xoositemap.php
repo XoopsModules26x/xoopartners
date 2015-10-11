@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
 /**
  * Class XoopartnersXoositemapPlugin
  */
@@ -30,19 +28,19 @@ class XoopartnersXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract imp
      */
     public function xoositemap($subcategories)
     {
-        $xoopartners_module = Xoopartners::getInstance();
-        $partners_config    = $xoopartners_module->loadConfig();
-        $categoriesHandler = $xoopartners_module->categoriesHandler();
-        $partnersHandler   = $xoopartners_module->partnersHandler();
+        $xoopartnersModule = Xoopartners::getInstance();
+        $partnersConfig    = $xoopartnersModule->loadConfig();
+        $categoriesHandler = $xoopartnersModule->getCategoriesHandler();
+        $partnersHandler   = $xoopartnersModule->getPartnersHandler();
 
         $sitemap = array();
-        if ($subcategories && $partners_config['xoopartners_category']['use_categories']) {
+        if ($subcategories && $partnersConfig['xoopartners_category']['use_categories']) {
             $categories = $categoriesHandler->getCategories();
             foreach ($categories as $c => $category) {
                 $sitemap[$c]['id'] = $c;
                 $sitemap[$c]       = $this->xoopartners_getCategory($category);
             }
-        } elseif (!$subcategories || ($subcategories && !$partners_config['xoopartners_category']['use_categories'])) {
+        } elseif (!$subcategories || ($subcategories && !$partnersConfig['xoopartners_category']['use_categories'])) {
             $partners = $partnersHandler->getPartners(0, 'published', 'desc');
 
             foreach ($partners as $p => $partner) {
@@ -65,8 +63,8 @@ class XoopartnersXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract imp
      */
     public function xoopartners_getCategory($category)
     {
-        $xoopartners_module = Xoopartners::getInstance();
-        $partnersHandler   = $xoopartners_module->partnersHandler();
+        $xoopartnersModule = Xoopartners::getInstance();
+        $partnersHandler   = $xoopartnersModule->getPartnersHandler();
 
         $ret      = array();
         $partners = $partnersHandler->getPartners($category['xoopartners_category_id'], 'published', 'desc');
@@ -102,10 +100,10 @@ class XoopartnersXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract imp
      */
     public function xoositemap_xml($subcategories)
     {
-        $xoopartners_module = Xoopartners::getInstance();
-        $partners_config    = $xoopartners_module->loadConfig();
-        $categoriesHandler = $xoopartners_module->categoriesHandler();
-        $partnersHandler   = $xoopartners_module->partnersHandler();
+        $xoopartnersModule = Xoopartners::getInstance();
+        $partnersConfig    = $xoopartnersModule->loadConfig();
+        $categoriesHandler = $xoopartnersModule->getCategoriesHandler();
+        $partnersHandler   = $xoopartnersModule->getPartnersHandler();
 
         $sitemap = array();
         $time    = 0;
@@ -119,7 +117,7 @@ class XoopartnersXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract imp
             }
         }
 
-        if ($subcategories && $partners_config['xoopartners_category']['use_categories']) {
+        if ($subcategories && $partnersConfig['xoopartners_category']['use_categories']) {
             $criteria = new CriteriaCompo();
             $criteria->add(new Criteria('xoopartners_category_online', 1));
             $criteria->setSort('xoopartners_category_order');

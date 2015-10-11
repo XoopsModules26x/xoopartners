@@ -14,10 +14,8 @@
 }
 
 .stats {
-    background-image: url("../icons/16/stats.png");
     background-size: 16px 18px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
+    background: url("../icons/16/stats.png") no-repeat 0 0;
     position: relative;
     height: 20px;
     display: block;
@@ -64,8 +62,7 @@
 }
 
 .stars {
-    background-image: url('../icons/16/star_d.png');
-    background-repeat: no-repeat;
+    background: url('../icons/16/star_d.png') no-repeat;
     background-size: 16px 16px;
     height: 16px;
     width: 16px;

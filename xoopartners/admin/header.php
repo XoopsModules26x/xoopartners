@@ -31,10 +31,12 @@ if (isset($_GET)) {
     }
 }
 
-$xoopartners_module = Xoopartners::getInstance();
-$partners_config    = $xoopartners_module->loadConfig();
-$categoriesHandler = $xoopartners_module->categoriesHandler();
-$partnersHandler   = $xoopartners_module->partnersHandler();
+
+
+$xoopartnersModule = Xoopartners::getInstance();
+$partnersConfig    = $xoopartnersModule->loadConfig();
+$categoriesHandler = $xoopartnersModule->getCategoriesHandler();
+$partnersHandler   = $xoopartnersModule->getPartnersHandler();
 
 $script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
 

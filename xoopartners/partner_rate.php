@@ -31,8 +31,8 @@ if ($xoops->security()->check()) {
     if (!isset($_SESSION['xoopartners_rates' . $partner_id]) || $_SESSION['xoopartners_rates' . $partner_id] < $time) {
         $_SESSION['xoopartners_rates' . $partner_id] = $time + 3600;
 
-        $xoopartners_module = Xoopartners::getInstance();
-        $partnersHandler   = $xoopartners_module->partnersHandler();
+        $xoopartnersModule = Xoopartners::getInstance();
+        $partnersHandler   = $xoopartnersModule->getPartnersHandler();
 
         $ret = $partnersHandler->setRate($partner_id, $option);
         if (is_array($ret) && count($ret) > 1) {

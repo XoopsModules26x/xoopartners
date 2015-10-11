@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 
 $category_id = $system->cleanVars($_REQUEST, 'category_id', 0, 'int');
@@ -27,7 +29,8 @@ switch ($op) {
             $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $xoops->security()->getErrors()));
         }
 
-        $xoopartners_id = $system->cleanVars($_POST, 'xoopartners_id', 0, 'int');
+//        $xoopartners_id = $system->cleanVars($_POST, 'xoopartners_id', 0, 'int');
+        $xoopartners_id =  Request::getInt('xoopartners_id', 0, 'POST');
         if (isset($xoopartners_id) && $xoopartners_id > 0) {
             $partner     = $partnersHandler->get($xoopartners_id);
             $category_id = $partner->getVar('xoopartners_category');
@@ -53,7 +56,8 @@ switch ($op) {
                 }
             }
         } else {
-            $partner->setVar('xoopartners_image', $myts->htmlSpecialChars($_POST['image_list']));
+//              $partner->setVar('xoopartners_image', $myts->htmlSpecialChars($_POST['image_list']));
+            $partner->setVar('xoopartners_image', $myts->htmlSpecialChars(Request::getString('image_list', '', 'POST')));
         }
 
         if ($xoopartners_id = $partnersHandler->insert($partner)) {
@@ -64,7 +68,7 @@ switch ($op) {
 
             // tags
             if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
-                $xootagsHandler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                $xootagsHandler = $xoops->getModuleHandler('tags', 'xootags');
                 $msg .= '<br />' . $xootagsHandler->updateByItem('tags', $xoopartners_id);
             }
 
@@ -87,14 +91,14 @@ switch ($op) {
 
     case 'add':
         $partner = $partnersHandler->create();
-        $form    = $xoopartners_module->getForm($partner, 'partners');
+        $form    = $xoopartnersModule->getForm($partner, 'partners');
         $form->display();
         break;
 
     case 'edit':
         $xoopartners_id = $system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
         $partner        = $partnersHandler->get($xoopartners_id);
-        $form           = $xoopartners_module->getForm($partner, 'partners');
+        $form           = $xoopartnersModule->getForm($partner, 'partners');
         $form->display();
         break;
 
@@ -102,14 +106,15 @@ switch ($op) {
         $xoopartners_id = $system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
         if (isset($xoopartners_id) && $xoopartners_id > 0) {
             if ($partner = $partnersHandler->get($xoopartners_id)) {
-                $delete = $system->cleanVars($_POST, 'ok', 0, 'int');
+//                $delete = $system->cleanVars($_POST, 'ok', 0, 'int');
+                $delete = XoopsRequest::getInt('ok', 0, 'POST');
                 if ($delete == 1) {
                     if (!$xoops->security()->check()) {
                         $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $xoops->security()->getErrors()));
                     }
                     // tags
                     if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
-                        $xootagsHandler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                        $xootagsHandler = $xoops->getModuleHandler('tags', 'xootags');
                         $xootagsHandler->deleteByItem($partner->getVar('xoopartners_id'));
                     }
                     $partner->setPost(false);
@@ -146,7 +151,7 @@ switch ($op) {
 
     default:
         $online = $system->cleanVars($_REQUEST, 'online', -1, 'int');
-        if ($partners_config['xoopartners_category']['use_categories']) {
+        if ($partnersConfig['xoopartners_category']['use_categories']) {
             ob_start();
             $categoriesHandler->makeSelectBox('category_id', $category_id, true, 'window.location.href="partners.php?category_id="+this.options[this.selectedIndex].value');
             $xoops->tpl()->assign('categories', ob_get_contents());
