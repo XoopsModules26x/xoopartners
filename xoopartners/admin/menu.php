@@ -21,8 +21,8 @@ require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 $module = Xoops::getInstance()->getHandlerModule()->getByDirname('xoopartners');
 
-$xoopartners_module = Xoopartners::getInstance();
-$partners_config    = $xoopartners_module->LoadConfig();
+$xoopartnersModule = Xoopartners::getInstance();
+$partnersConfig    = $xoopartnersModule->loadConfig();
 
 $i                      = 0;
 $adminmenu[$i]['title'] = _MI_XOO_PARTNERS_INDEX;
@@ -41,7 +41,7 @@ if (Xoops::getInstance()->isAdmin()) {
     $adminmenu[$i]['icon']  = 'configs.png';
 }
 
-if ($partners_config['xoopartners_category']['use_categories']) {
+if ($partnersConfig['xoopartners_category']['use_categories']) {
     ++$i;
     $adminmenu[$i]['title'] = _MI_XOO_PARTNERS_CATEGORIES;
     $adminmenu[$i]['link']  = 'admin/categories.php';

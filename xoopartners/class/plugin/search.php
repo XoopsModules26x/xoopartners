@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
 /**
  * Class XoopartnersSearchPlugin
  */
@@ -62,8 +60,8 @@ class XoopartnersSearchPlugin extends Xoops\Module\Plugin\PluginAbstract impleme
             $criteria->add(new Criteria('xoopartners_uid', $uid));
         }
 
-        $xoopartners_module = Xoopartners::getInstance();
-        $partnersHandler   = $xoopartners_module->partnersHandler();
+        $xoopartnersModule = Xoopartners::getInstance();
+        $partnersHandler   = $xoopartnersModule->getPartnersHandler();
 
         $partners = $partnersHandler->getObjects($criteria, true, false);
 

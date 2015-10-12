@@ -17,13 +17,15 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/include/functions.php';
 
-$xoopartners_module = Xoopartners::getInstance();
-$partners_config    = $xoopartners_module->LoadConfig();
-$categoriesHandler = $xoopartners_module->categoriesHandler();
-$partnersHandler   = $xoopartners_module->partnersHandler();
+$xoopartnersModule = Xoopartners::getInstance();
+$partnersConfig    = $xoopartnersModule->loadConfig();
+$categoriesHandler = $xoopartnersModule->getCategoriesHandler();
+$partnersHandler   = $xoopartnersModule->getPartnersHandler();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
@@ -31,18 +33,18 @@ $system = System::getInstance();
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
-$partner_id = $system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
+$partner_id = Request::getInt('partner_id', 0); //$system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
 $partner    = $partnersHandler->get($partner_id);
 
-$output = $system->cleanVars($_REQUEST, 'output', 'print', 'string');
+$output = Request::getString('output', 'print'); //$system->cleanVars($_REQUEST, 'output', 'print', 'string');
 
 if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted')) {
     $tpl = new XoopsTpl();
 
-    $tpl->assign('xoopartners_category', $partners_config['xoopartners_category']);
-    $tpl->assign('xoopartners_partner', $partners_config['xoopartners_partner']);
-    $tpl->assign('xoopartners_qrcode', $partners_config['xoopartners_qrcode']);
-    $tpl->assign('xoopartners_rld', $partners_config['xoopartners_rld']);
+    $tpl->assign('xoopartners_category', $partnersConfig['xoopartners_category']);
+    $tpl->assign('xoopartners_partner', $partnersConfig['xoopartners_partner']);
+    $tpl->assign('xoopartners_qrcode', $partnersConfig['xoopartners_qrcode']);
+    $tpl->assign('xoopartners_rld', $partnersConfig['xoopartners_rld']);
 
     $tpl->assign('moduletitle', $xoops->module->name());
 
@@ -53,7 +55,7 @@ if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners
     $tpl->assign('xoops_pagetitle', $partner->getVar('xoopartners_title') . ' - ' . $xoops->module->getVar('name'));
     $tpl->assign('xoops_slogan', htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES));
 
-    if ($xoops->isActiveModule('pdf') && $output === 'pdf') {
+    if ('pdf' === $output && $xoops->isActiveModule('pdf')) {
         /*
                 $content = $tpl->fetch('module:xoopartners/xoopartners_partner_pdf.html');
                 $pdf = new Pdf('P', 'A4', _LANGCODE, true, _CHARSET, array(10, 10, 10, 10));

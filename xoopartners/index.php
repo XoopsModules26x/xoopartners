@@ -17,18 +17,20 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 
-$start = $system->cleanVars($_REQUEST, 'start', 0, 'int');
+$start = Request::getInt('start', 0); //$system->cleanVars($_REQUEST, 'start', 0, 'int');
 
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('xoopartners_online', 1));
 $criteria->add(new Criteria('xoopartners_published', time(), '<='));
 
-if ($partners_config['xoopartners_category']['use_categories']) {
-    $category_id = $system->cleanVars($_REQUEST, 'category_id', 0, 'int');
+if ($partnersConfig['xoopartners_category']['use_categories']) {
+    $category_id = Request::getInt('category_id', 0); //$system->cleanVars($_REQUEST, 'category_id', 0, 'int');
     $categories  = $categoriesHandler->getCategories();
-    $partners    = $partnersHandler->getPartners($category_id, 'order', 'asc', $start, $partners_config['xoopartners_partner']['limit_main']);
+    $partners    = $partnersHandler->getPartners($category_id, 'order', 'asc', $start, $partnersConfig['xoopartners_partner']['limit_main']);
     $xoops->tpl()->assign('category_id', $category_id);
     $xoops->tpl()->assign('categories', $categories);
     $xoops->tpl()->assign('partners', $partners);
@@ -37,15 +39,15 @@ if ($partners_config['xoopartners_category']['use_categories']) {
     $partners_count = $partnersHandler->getCount($criteria);
     $extra          = 'category_id=' . $category_id;
 
-    if ($partners_config['xoopartners_category']['display_mode'] === 'select') {
+    if ($partnersConfig['xoopartners_category']['display_mode'] === 'select') {
         $xoops->tpl()->assign('category_header', '<div class="txtcenter"><select name="category_id" onchange=\'window.location.href="index.php?category_id="+this.options[this.selectedIndex].value\'>');
         $xoops->tpl()->assign('category_footer', '</select></div>');
-    } elseif ($partners_config['xoopartners_category']['display_mode'] === 'table') {
+    } elseif ($partnersConfig['xoopartners_category']['display_mode'] === 'table') {
         $xoops->tpl()->assign('category_header', '<table class="outer">');
         $xoops->tpl()->assign('category_footer', '</table>');
     }
 } else {
-    $partners = $partnersHandler->getPartners(0, 'order', 'asc', $start, $partners_config['xoopartners_partner']['limit_main']);
+    $partners = $partnersHandler->getPartners(0, 'order', 'asc', $start, $partnersConfig['xoopartners_partner']['limit_main']);
     $xoops->tpl()->assign('partners', $partners);
     $partners_count = $partnersHandler->getCount($criteria);
     $extra          = '';
@@ -65,10 +67,11 @@ foreach ($partners as $k => $partner) {
         $description .= ', ';
     }
 }
-$xoops->theme()->addMeta($type = 'meta', 'description', getMetaDescription($description));
-$xoops->theme()->addMeta($type = 'meta', 'keywords', getMetaKeywords($description));
+$utilities = new XooPartnersUtilities();
+$xoops->theme()->addMeta($type = 'meta', 'description', $utilities->getMetaDescription($description));
+$xoops->theme()->addMeta($type = 'meta', 'keywords', $utilities->getMetaKeywords($description));
 
 // Page navigation
-$paginate = new Xoopaginate($partners_count, $partners_config['xoopartners_partner']['limit_main'], $start, 'start', $extra);
+$paginate = new Xoopaginate($partners_count, $partnersConfig['xoopartners_partner']['limit_main'], $start, 'start', $extra);
 
 include __DIR__ . '/footer.php';

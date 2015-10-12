@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
 /**
  * Class XoopartnersXootagsPlugin
  */
@@ -41,7 +39,7 @@ class XoopartnersXootagsPlugin extends Xoops\Module\Plugin\PluginAbstract implem
         $criteria->add(new Criteria('xoopartners_id', '(' . implode(', ', $items) . ')', 'IN'));
 
         $xoopartnersModule = Xoopartners::getInstance();
-        $partnersHandler   = $xoopartnersModule->partnersHandler();
+        $partnersHandler   = $xoopartnersModule->getPartnersHandler();
 
         $partners = $partnersHandler->getObjects($criteria, false, false);
 

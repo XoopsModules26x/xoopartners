@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
 /**
  * Class XoopartnersCommentsPlugin
  */
@@ -96,8 +94,8 @@ class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
     {
         $ret = array();
 
-        $partners_module  = Xoopartners::getInstance();
-        $partnersHandler = $partners_module->partnersHandler();
+        $partnersModule  = Xoopartners::getInstance();
+        $partnersHandler = $partnersModule->partnersHandler();
         $page             = $page = $partnersHandler->get($xoopartners_id);
 
         $ret['text']      = $page->getVar('xoopartners_description');

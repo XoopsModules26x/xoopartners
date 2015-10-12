@@ -17,17 +17,17 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+use Xoops\Core\Request;
 
 /**
  * Class XooPartnersPreferences
  */
 class XooPartnersPreferences
 {
-    public  $config         = array();
-    public  $basicConfig    = array();
-    public  $configPath;
-    public  $configFile;
+    public $config         = array();
+    public $basicConfig    = array();
+    public $configPath;
+    public $configFile;
     private $module_dirname = 'xoopartners';
 
     /**
@@ -38,7 +38,7 @@ class XooPartnersPreferences
         $xoops            = Xoops::getInstance();
         $this->configFile = 'config.' . $this->module_dirname . '.php';
 
-        $this->configPath = XOOPS_VAR_PATH . '/configs/' . $this->module_dirname . '/';
+        $this->configPath = \XoopsBaseConfig::get('var-path') . '/configs/' . $this->module_dirname . '/';
 
         $this->basicConfig = $this->loadBasicConfig();
         $this->config      = @$this->loadConfig();
@@ -144,7 +144,7 @@ class XooPartnersPreferences
     private function createPath($pathname, $pathout = XOOPS_ROOT_PATH)
     {
         $xoops    = Xoops::getInstance();
-        $pathname = substr($pathname, strlen(XOOPS_ROOT_PATH));
+        $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path')));
         $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
 
         $dest  = $pathout;
@@ -157,7 +157,7 @@ class XooPartnersPreferences
                     if (!mkdir($dest, 0755)) {
                         return false;
                     } else {
-                        $this->writeIndex($xoops->path('uploads'), 'index.html', $dest);
+                        $this->writeIndex(\XoopsBaseConfig::get('uploads-path'), 'index.html', $dest);
                     }
                 }
             }
@@ -204,7 +204,7 @@ class XooPartnersPreferences
             if (is_array($data[$k])) {
                 $config[$k] = $this->prepare2Save($data[$k], false);
             } else {
-                if (false != strpos($k, $this->module_dirname . '_') || !$module) {
+                if (!$module || false != strpos($k, $this->module_dirname . '_')) {
                     $config[$k] = $data[$k];
                 }
             }

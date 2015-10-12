@@ -17,13 +17,20 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
 use Xoops\Core\Database\Connection;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
-class Xoopartners_category extends XoopsObject
+/**
+ * Class XoopartnersCategories
+ */
+class XoopartnersCategories extends XoopsObject
 {
     // constructor
+    /**
+     * XoopartnersCategories constructor.
+     */
     public function __construct()
     {
         $this->initVar('xoopartners_category_id', XOBJ_DTYPE_INT, 0, true, 5);
@@ -39,17 +46,23 @@ class Xoopartners_category extends XoopsObject
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
     }
 
+    /**
+     * @param null $keys
+     * @param null $format
+     * @param null $maxDepth
+     * @return array
+     */
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {
         $xoops = Xoops::getInstance();
         $myts  = MyTextSanitizer::getInstance();
 
         $ret                              = parent::getValues();
-        $ret['xoopartners_category_link'] = XOOPS_URL . '/modules/xoopartners/index.php?category_id=' . $ret['xoopartners_category_id'];
-        if ($ret['xoopartners_category_image'] != 'blank.gif') {
+        $ret['xoopartners_category_link'] = \XoopsBaseConfig::get('url')  . '/modules/xoopartners/index.php?category_id=' . $ret['xoopartners_category_id'];
+        if ($ret['xoopartners_category_image'] !== 'blank.gif') {
             $ret['xoopartners_category_image_link'] = $xoops_upload_url . '/xoopartners/categories/images/' . $ret['xoopartners_category_image'];
         } else {
-            $ret['xoopartners_category_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xoopartners/assets/images/categories.png');
+            $ret['xoopartners_category_image_link'] = \XoopsBaseConfig::get('url')  . '/' . $xoops->theme()->resourcePath('/modules/xoopartners/assets/images/categories.png');
         }
 
         return $ret;
@@ -59,18 +72,21 @@ class Xoopartners_category extends XoopsObject
     {
         $system = System::getInstance();
         foreach ($this->getValues() as $k => $v) {
-            if ($k != 'dohtml') {
+            if ($k !== 'dohtml') {
                 if ($this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
-                    $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
+                    $value0 = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
+                    //TODO should we use here getString??
+//                    $value = Request::getString('date', date('Y-m-d'), $_POST[$k]) + Request::getInt('time', date('u'), $_POST[$k]);
+                    $value = Request::getArray('date', date('Y-m-d'), 'POST')[$k] + Request::getArray('time', date('u'), 'POST')[$k];
                     $this->setVar($k, isset($_POST[$k]) ? $value : $v);
                 } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
-                    $value = $system->cleanVars($_POST, $k, $v, 'int');
+                    $value = Request::getInt($k, $v, 'POST'); //$system->cleanVars($_POST, $k, $v, 'int');
                     $this->setVar($k, $value);
                 } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_ARRAY) {
-                    $value = $system->cleanVars($_POST, $k, $v, 'array');
+                    $value =  Request::getArray($k, $v, 'POST'); // $system->cleanVars($_POST, $k, $v, 'array');
                     $this->setVar($k, $value);
                 } else {
-                    $value = $system->cleanVars($_POST, $k, $v, 'string');
+                    $value = Request::getString($k, $v, 'POST'); //$system->cleanVars($_POST, $k, $v, 'string');
                     $this->setVar($k, stripslashes($value));
                 }
             }
@@ -78,15 +94,26 @@ class Xoopartners_category extends XoopsObject
     }
 }
 
-class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHandler
+/**
+ * Class XoopartnersXoopartnersCategoriesHandler
+ */
+class XoopartnersCategoriesHandler extends XoopsPersistableObjectHandler
 {
-    private $_published;
+    private $published;
 
+    /**
+     * XoopartnersXoopartnersCategoriesHandler constructor.
+     * @param Connection|null $db
+     */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'xoopartners_categories', 'xoopartners_category', 'xoopartners_category_id', 'xoopartners_category_title');
+        parent::__construct($db, 'xoopartners_categories', 'XoopartnersCategories', 'xoopartners_category_id', 'xoopartners_category_title');
     }
 
+    /**
+     * @param int $category_parent_id
+     * @return array
+     */
     public function renderAdminList($category_parent_id = 0)
     {
         $criteria = new CriteriaCompo();
@@ -102,6 +129,13 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return $categories;
     }
 
+    /**
+     * @param int        $category_parent_id
+     * @param bool|true  $main
+     * @param bool|true  $sub
+     * @param bool|false $empty
+     * @return array
+     */
     public function getCategories($category_parent_id = 0, $main = true, $sub = true, $empty = false)
     {
         $criteria = new CriteriaCompo();
@@ -116,7 +150,7 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         $categories = $this->getObjects($criteria, true, false);
         if ($sub) {
             foreach ($categories as $k => $category) {
-                $categories[$k]['categories'] = $this->GetCategories($category['xoopartners_category_id'], false, $sub, $empty);
+                $categories[$k]['categories'] = $this->getCategories($category['xoopartners_category_id'], false, $sub, $empty);
             }
         }
 
@@ -129,13 +163,17 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
             $categories[0]['xoopartners_category_order']       = 0;
             $categories[0]['xoopartners_category_online']      = 1;
             $categories[0]['xoopartners_category_link']        = 'index.php';
-            $categories[0]['xoopartners_category_image_link']  = XOOPS_URL . '/modules/xoopartners/assets/images/default.png';;
+            $categories[0]['xoopartners_category_image_link']  = \XoopsBaseConfig::get('url')  . '/modules/xoopartners/assets/images/default.png';
             ksort($categories);
         }
 
         return $categories;
     }
 
+    /**
+     * @param $category_id
+     * @return array
+     */
     public function getParents($category_id)
     {
         $criteria = new CriteriaCompo();
@@ -151,6 +189,10 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return $ret;
     }
 
+    /**
+     * @param $category_id
+     * @return bool
+     */
     public function setOnline($category_id)
     {
         if ($category_id != 0) {
@@ -168,6 +210,10 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return false;
     }
 
+    /**
+     * @param $category_id
+     * @return bool
+     */
     public function addPartner($category_id)
     {
         if ($category_id != 0) {
@@ -178,8 +224,13 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
 
             return true;
         }
+        return null;
     }
 
+    /**
+     * @param $category_id
+     * @return bool
+     */
     public function delPartner($category_id)
     {
         if ($category_id != 0) {
@@ -190,36 +241,41 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
 
             return true;
         }
+        return null;
     }
 
+    /**
+     * @param $image_name
+     * @return array
+     */
     public function uploadImages($image_name)
     {
         $xoops              = Xoops::getInstance();
         $autoload           = XoopsLoad::loadConfig('xoopartners');
-        $xoopartners_module = Xoopartners::getInstance();
-        $partners_config    = $xoopartners_module->LoadConfig();
+        $xoopartnersModule = Xoopartners::getInstance();
+        $partnersConfig    = $xoopartnersModule->loadConfig();
 
         $uploader = new XoopsMediaUploader(
-            $xoops->path('uploads') . '/xoopartners/categories/images',
-            $autoload['mimetypes'],
-            $partners_config['xoopartners_category']['image_size'],
-            $partners_config['xoopartners_category']['image_width'],
-            $partners_config['xoopartners_category']['image_height']
+            \XoopsBaseConfig::get('uploads-path') . '/xoopartners/categories/images', $autoload['mimetypes'],
+            $partnersConfig['xoopartners_category']['image_size'],
+            $partnersConfig['xoopartners_category']['image_width'],
+            $partnersConfig['xoopartners_category']['image_height']
         );
 
         $ret = array();
-        foreach ($_POST['xoops_upload_file'] as $k => $input_image) {
-            if ($_FILES[$input_image]['tmp_name'] != '' || is_readable($_FILES[$input_image]['tmp_name'])) {
-                $path_parts = pathinfo($_FILES[$input_image]['name']);
-                $uploader->setTargetFileName($this->CleanImage(strtolower($image_name . '.' . $path_parts['extension'])));
-                if ($uploader->fetchMedia($_POST['xoops_upload_file'][$k])) {
+        $utilities = new XooPartnersUtilities();
+        foreach (Request::getArray('xoops_upload_file', array(), 'POST') as $k => $input_image) {
+            if (Request::getArray($input_image, array(), 'FILES')['tmp_name'] !== '' || is_readable(Request::getArray($input_image, array(), 'FILES'['tmp_name']))) {
+                $path_parts = pathinfo(Request::getArray($input_image, array(), 'FILES')['name']);
+                $uploader->setTargetFileName($utilities->cleanImage(strtolower($image_name . '.' . $path_parts['extension'])));
+                if ($uploader->fetchMedia(Request::getArray('xoops_upload_file', array(), 'POST')[$k])) {
                     if ($uploader->upload()) {
                         $ret[$input_image] = array('filename' => $uploader->getSavedFileName(), 'error' => false, 'message' => '');
                     } else {
-                        $ret[$input_image] = array('filename' => $_FILES[$input_image]['name'], 'error' => true, 'message' => $uploader->getErrors());
+                        $ret[$input_image] = array('filename' => Request::getArray($input_image, array(), 'FILES')['name'], 'error' => true, 'message' => $uploader->getErrors());
                     }
                 } else {
-                    $ret[$input_image] = array('filename' => $_FILES[$input_image]['name'], 'error' => true, 'message' => $uploader->getErrors());
+                    $ret[$input_image] = array('filename' => Request::getArray($input_image, array(), 'FILES')['name'], 'error' => true, 'message' => $uploader->getErrors());
                 }
             }
         }
@@ -227,6 +283,12 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         return $ret;
     }
 
+    /**
+     * @param $filename
+     * @return string
+     */
+
+    /*
     public function cleanImage($filename)
     {
         $path_parts = pathinfo($filename);
@@ -240,13 +302,19 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         $string = htmlentities($string, ENT_NOQUOTES, _CHARSET);
         $string = preg_replace("~\&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring)\;~", "$1", $string);
         $string = preg_replace("~\&([A-za-z]{2})(?:lig)\;~", "$1", $string); // pour les ligatures e.g. "&oelig;"
-        $string = preg_replace("~\&[^;]+\;~", "", $string); // supprime les autres caract�res
+        $string = preg_replace("~\&[^;]+\;~", '', $string); // supprime les autres caract�res
 
         $string = str_replace(md5('xoopartners'), '_', $string);
 
         return $string . '.' . $path_parts['extension'];
     }
-
+*/
+    /**
+     * @param           $name
+     * @param           $id
+     * @param bool|true $none
+     * @param string    $onchange
+     */
     public function makeSelectBox($name, $id, $none = true, $onchange = '')
     {
         echo "<select name='" . $name . "'";
@@ -259,9 +327,13 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
         }
         $this->makeSelectOptions($this->renderAdminList(), $id);
 
-        echo "</select>";
+        echo '</select>';
     }
 
+    /**
+     * @param $datas
+     * @param $id
+     */
     public function makeSelectOptions($datas, $id)
     {
         static $level;
@@ -273,12 +345,12 @@ class Xoopartnersxoopartners_categoriesHandler extends XoopsPersistableObjectHan
                 if ($data['xoopartners_category_id'] == $id) {
                     $selected = " selected='selected'";
                 }
-                echo "<option value='" . $data['xoopartners_category_id'] . "' " . $selected . ">" . str_repeat("-", $style) . " " . $data['xoopartners_category_title'] . "</option>\n";
+                echo "<option value='" . $data['xoopartners_category_id'] . "' " . $selected . '>' . str_repeat('-', $style) . ' ' . $data['xoopartners_category_title'] . "</option>\n";
 
                 if (count($data['categories']) != 0) {
                     $this->makeSelectOptions($data['categories'], $id);
                 }
-                $level = $level - 1;
+                --$level;
             }
         }
     }

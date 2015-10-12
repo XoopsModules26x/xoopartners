@@ -17,31 +17,33 @@
  * @version         $Id$
  */
 
-include dirname(dirname(__DIR__)) . '/mainfile.php';
-include __DIR__ . '/include/functions.php';
+use Xoops\Core\Request;
 
-$xoopartners_module = Xoopartners::getInstance();
-$partners_config    = $xoopartners_module->loadConfig();
-$categoriesHandler = $xoopartners_module->categoriesHandler();
-$partnersHandler   = $xoopartners_module->partnersHandler();
+include dirname(dirname(__DIR__)) . '/mainfile.php';
+include __DIR__ . '/class/utilities.php';
+
+$xoopartnersModule = Xoopartners::getInstance();
+$partnersConfig    = $xoopartnersModule->loadConfig();
+$categoriesHandler = $xoopartnersModule->getCategoriesHandler();
+$partnersHandler   = $xoopartnersModule->getPartnersHandler();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
 
-$script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
+$script_name = basename(Request::getString('SCRIPT_NAME', '', 'SERVER'), '.php');
 $xoops->header('xoopartners_' . $script_name . '.tpl');
 
 $xoops->theme()->addStylesheet('modules/xoopartners/assets/css/module.css');
 
 $xoops->tpl()->assign('moduletitle', $xoops->module->name());
 
-$xoops->tpl()->assign('template', $partners_config['xoopartners_main_mode']);
-$xoops->tpl()->assign('welcome', $partners_config['xoopartners_welcome']);
-$xoops->tpl()->assign('xoopartners_category', $partners_config['xoopartners_category']);
-$xoops->tpl()->assign('xoopartners_partner', $partners_config['xoopartners_partner']);
-$xoops->tpl()->assign('xoopartners_rld', $partners_config['xoopartners_rld']);
+$xoops->tpl()->assign('template', $partnersConfig['xoopartners_main_mode']);
+$xoops->tpl()->assign('welcome', $partnersConfig['xoopartners_welcome']);
+$xoops->tpl()->assign('xoopartners_category', $partnersConfig['xoopartners_category']);
+$xoops->tpl()->assign('xoopartners_partner', $partnersConfig['xoopartners_partner']);
+$xoops->tpl()->assign('xoopartners_rld', $partnersConfig['xoopartners_rld']);
 
 $xoops->tpl()->assign('qrcode', $xoops->isActiveModule('qrcode'));
 

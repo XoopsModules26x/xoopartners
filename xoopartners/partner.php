@@ -17,21 +17,23 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 $_SESSION['xoopartners_stat'] = true;
 
-$partner_id = $system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
+$partner_id = Request::getInt('partner_id', 0); //$system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
 $partner    = $partnersHandler->get($partner_id);
 
 if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted')) {
     $time = time();
     if (!isset($_SESSION['xoopartner_view' . $partner_id]) || $_SESSION['xoopartner_view' . $partner_id] < $time) {
         $_SESSION['xoopartner_view' . $partner_id] = $time + 3600;
-        $partnersHandler->SetRead($partner);
+        $partnersHandler->setRead($partner);
     }
 
     $content = $partner->getValues();
-    $content = $partner->GetRLD($content);
+    $content = $partner->getRLD($content);
     $xoops->tpl()->assign('partner', $content);
     $xoops->tpl()->assign('security', $xoops->security()->createToken());
     $xoops->tpl()->assign('xoops_pagetitle', $partner->getVar('xoopartners_title') . ' - ' . $xoops->module->getVar('name'));

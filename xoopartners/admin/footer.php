@@ -17,9 +17,9 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+use Xoops\Core\Request;
 
-if (basename($_SERVER['SCRIPT_NAME']) === 'index.php') {
+if (basename(Request::getString('SCRIPT_NAME', '', 'SERVER')) === 'index.php') {
     $admin_page->displayIndex();
 }
 

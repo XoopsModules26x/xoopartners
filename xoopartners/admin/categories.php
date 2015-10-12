@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 
 switch ($op) {
@@ -25,7 +27,8 @@ switch ($op) {
             $xoops->redirect('categories.php', 5, implode(',', $xoops->security()->getErrors()));
         }
 
-        $xoopartners_category_id = $system->cleanVars($_POST, 'xoopartners_category_id', 0, 'int');
+        //        $xoopartners_category_id = $system->cleanVars($_POST, 'xoopartners_category_id', 0, 'int');
+        $xoopartners_category_id = Request::getInt('xoopartners_category_id', 0, 'POST');
         if (isset($xoopartners_category_id) && $xoopartners_category_id > 0) {
             $category = $categoriesHandler->get($xoopartners_category_id);
         } else {
@@ -47,7 +50,8 @@ switch ($op) {
                 }
             }
         } else {
-            $category->setVar('xoopartners_category_image', $myts->htmlSpecialChars($_POST['image_list']));
+            //            $category->setVar('xoopartners_category_image', $myts->htmlSpecialChars($_POST['image_list']));
+            $category->setVar('xoopartners_category_image', $myts->htmlSpecialChars(Request::getString('image_list', '', 'POST')));
         }
 
         if ($categoriesHandler->insert($category)) {
@@ -61,20 +65,20 @@ switch ($op) {
 
     case 'add':
         $category = $categoriesHandler->create();
-        $form     = $xoopartners_module->getForm($category, 'categories');
+        $form     = $xoopartnersModule->getForm($category, 'categories');
         $form->display();
         break;
 
     case 'edit':
-        $xoopartners_category_id = $system->cleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
+        $xoopartners_category_id = Request::getInt('xoopartners_category_id', 0); //$system->cleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
         $category                = $categoriesHandler->get($xoopartners_category_id);
-        $form                    = $xoopartners_module->getForm($category, 'categories');
+        $form                    = $xoopartnersModule->getForm($category, 'categories');
         $form->display();
         break;
 
     case 'view':
     case 'hide':
-        $xoopartners_category_id = $system->cleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
+        $xoopartners_category_id = Request::getInt('xoopartners_category_id', 0); //$system->cleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
         $categoriesHandler->setOnline($xoopartners_category_id);
         $xoops->redirect('categories.php', 5, _AM_XOO_PARTNERS_CATEGORY_SAVED);
         break;

@@ -10,7 +10,9 @@
 - fixed issues with missing quotes in templates (mamba)
 - fixed issues with using | instead of / in some paths (mamba)
 - added docs files (mamba)
-
+- moved functions to Utilities class (mamba)
+- using \XoopsBaseConfig (mamba)
+- replaced $system->cleanVars with Request:: (mamba)
 
 <hr><strong>1.0 Alpha 1         (2012-11)</strong>
 - First release (Dugris)

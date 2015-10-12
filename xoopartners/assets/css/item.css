@@ -125,8 +125,7 @@
 
 .reads, .visits, .comments, .print, .pdf {
     background-size: 16px 18px;
-    background-repeat: no-repeat;
-    background-position: 0 0;
+    background: no-repeat 0 0;
     position: relative;
     height: 20px;
     display: block;

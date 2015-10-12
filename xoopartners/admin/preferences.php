@@ -32,7 +32,7 @@ switch ($op) {
         break;
 
     default:
-        $form = $xoopartners_module->getForm($partners_config, 'preferences');
+        $form = $xoopartnersModule->getForm($partnersConfig, 'preferences');
         $form->display();
 }
 include __DIR__ . '/footer.php';

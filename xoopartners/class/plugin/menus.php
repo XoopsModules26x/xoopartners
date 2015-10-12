@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
 /**
  * Class XoopartnersMenusPlugin
  */
@@ -39,13 +37,13 @@ class XoopartnersMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
     {
         $ret = array();
         if (Xoops::getInstance()->isModule() && Xoops::getInstance()->module->getVar('dirname') === 'xoopartners') {
-            $xoopartners_module = Xoopartners::getInstance();
-            $partners_config    = $xoopartners_module->LoadConfig();
+            $xoopartnersModule = Xoopartners::getInstance();
+            $partnersConfig    = $xoopartnersModule->loadConfig();
 
             $i = 0;
-            if ($partners_config['xoopartners_category']['use_categories'] && $partners_config['xoopartners_category']['main_menu']) {
-                $categoriesHandler = $xoopartners_module->categoriesHandler();
-                $categories         = $categoriesHandler->GetCategories(0, false, false);
+            if ($partnersConfig['xoopartners_category']['use_categories'] && $partnersConfig['xoopartners_category']['main_menu']) {
+                $categoriesHandler = $xoopartnersModule->getCategoriesHandler();
+                $categories         = $categoriesHandler->getCategories(0, false, false);
                 foreach ($categories as $k => $category) {
                     $ret[$i]['name'] = $category['xoopartners_category_title'];
                     $ret[$i]['url']  = 'index.php?category_id=' . $category['xoopartners_category_id'];
