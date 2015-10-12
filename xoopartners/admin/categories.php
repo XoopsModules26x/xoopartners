@@ -27,8 +27,8 @@ switch ($op) {
             $xoops->redirect('categories.php', 5, implode(',', $xoops->security()->getErrors()));
         }
 
-//        $xoopartners_category_id = $system->cleanVars($_POST, 'xoopartners_category_id', 0, 'int');
-        $xoopartners_category_id = XoopsRequest::getInt('xoopartners_category_id', 0, 'POST');
+        //        $xoopartners_category_id = $system->cleanVars($_POST, 'xoopartners_category_id', 0, 'int');
+        $xoopartners_category_id = Request::getInt('xoopartners_category_id', 0, 'POST');
         if (isset($xoopartners_category_id) && $xoopartners_category_id > 0) {
             $category = $categoriesHandler->get($xoopartners_category_id);
         } else {
@@ -50,7 +50,7 @@ switch ($op) {
                 }
             }
         } else {
-//            $category->setVar('xoopartners_category_image', $myts->htmlSpecialChars($_POST['image_list']));
+            //            $category->setVar('xoopartners_category_image', $myts->htmlSpecialChars($_POST['image_list']));
             $category->setVar('xoopartners_category_image', $myts->htmlSpecialChars(Request::getString('image_list', '', 'POST')));
         }
 
@@ -70,7 +70,7 @@ switch ($op) {
         break;
 
     case 'edit':
-        $xoopartners_category_id = $system->cleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
+        $xoopartners_category_id = Request::getInt('xoopartners_category_id', 0); //$system->cleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
         $category                = $categoriesHandler->get($xoopartners_category_id);
         $form                    = $xoopartnersModule->getForm($category, 'categories');
         $form->display();
@@ -78,7 +78,7 @@ switch ($op) {
 
     case 'view':
     case 'hide':
-        $xoopartners_category_id = $system->cleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
+        $xoopartners_category_id = Request::getInt('xoopartners_category_id', 0); //$system->cleanVars($_REQUEST, 'xoopartners_category_id', 0, 'int');
         $categoriesHandler->setOnline($xoopartners_category_id);
         $xoops->redirect('categories.php', 5, _AM_XOO_PARTNERS_CATEGORY_SAVED);
         break;

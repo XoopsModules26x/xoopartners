@@ -17,6 +17,7 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
 use Xoops\Core\Database\Connection;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
@@ -73,16 +74,19 @@ class XoopartnersCategories extends XoopsObject
         foreach ($this->getValues() as $k => $v) {
             if ($k !== 'dohtml') {
                 if ($this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
-                    $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
+                    $value0 = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
+                    //TODO should we use here getString??
+//                    $value = Request::getString('date', date('Y-m-d'), $_POST[$k]) + Request::getInt('time', date('u'), $_POST[$k]);
+                    $value = Request::getArray('date', date('Y-m-d'), 'POST')[$k] + Request::getArray('time', date('u'), 'POST')[$k];
                     $this->setVar($k, isset($_POST[$k]) ? $value : $v);
                 } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
-                    $value = $system->cleanVars($_POST, $k, $v, 'int');
+                    $value = Request::getInt($k, $v, 'POST'); //$system->cleanVars($_POST, $k, $v, 'int');
                     $this->setVar($k, $value);
                 } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_ARRAY) {
-                    $value = $system->cleanVars($_POST, $k, $v, 'array');
+                    $value =  Request::getArray($k, $v, 'POST'); // $system->cleanVars($_POST, $k, $v, 'array');
                     $this->setVar($k, $value);
                 } else {
-                    $value = $system->cleanVars($_POST, $k, $v, 'string');
+                    $value = Request::getString($k, $v, 'POST'); //$system->cleanVars($_POST, $k, $v, 'string');
                     $this->setVar($k, stripslashes($value));
                 }
             }
@@ -252,25 +256,26 @@ class XoopartnersCategoriesHandler extends XoopsPersistableObjectHandler
         $partnersConfig    = $xoopartnersModule->loadConfig();
 
         $uploader = new XoopsMediaUploader(
-            $xoops->path('uploads') . '/xoopartners/categories/images', $autoload['mimetypes'],
+            \XoopsBaseConfig::get('uploads-path') . '/xoopartners/categories/images', $autoload['mimetypes'],
             $partnersConfig['xoopartners_category']['image_size'],
             $partnersConfig['xoopartners_category']['image_width'],
             $partnersConfig['xoopartners_category']['image_height']
         );
 
         $ret = array();
-        foreach ($_POST['xoops_upload_file'] as $k => $input_image) {
-            if ($_FILES[$input_image]['tmp_name'] != '' || is_readable($_FILES[$input_image]['tmp_name'])) {
-                $path_parts = pathinfo($_FILES[$input_image]['name']);
-                $uploader->setTargetFileName($this->cleanImage(strtolower($image_name . '.' . $path_parts['extension'])));
-                if ($uploader->fetchMedia($_POST['xoops_upload_file'][$k])) {
+        $utilities = new XooPartnersUtilities();
+        foreach (Request::getArray('xoops_upload_file', array(), 'POST') as $k => $input_image) {
+            if (Request::getArray($input_image, array(), 'FILES')['tmp_name'] !== '' || is_readable(Request::getArray($input_image, array(), 'FILES'['tmp_name']))) {
+                $path_parts = pathinfo(Request::getArray($input_image, array(), 'FILES')['name']);
+                $uploader->setTargetFileName($utilities->cleanImage(strtolower($image_name . '.' . $path_parts['extension'])));
+                if ($uploader->fetchMedia(Request::getArray('xoops_upload_file', array(), 'POST')[$k])) {
                     if ($uploader->upload()) {
                         $ret[$input_image] = array('filename' => $uploader->getSavedFileName(), 'error' => false, 'message' => '');
                     } else {
-                        $ret[$input_image] = array('filename' => $_FILES[$input_image]['name'], 'error' => true, 'message' => $uploader->getErrors());
+                        $ret[$input_image] = array('filename' => Request::getArray($input_image, array(), 'FILES')['name'], 'error' => true, 'message' => $uploader->getErrors());
                     }
                 } else {
-                    $ret[$input_image] = array('filename' => $_FILES[$input_image]['name'], 'error' => true, 'message' => $uploader->getErrors());
+                    $ret[$input_image] = array('filename' => Request::getArray($input_image, array(), 'FILES')['name'], 'error' => true, 'message' => $uploader->getErrors());
                 }
             }
         }
@@ -282,6 +287,8 @@ class XoopartnersCategoriesHandler extends XoopsPersistableObjectHandler
      * @param $filename
      * @return string
      */
+
+    /*
     public function cleanImage($filename)
     {
         $path_parts = pathinfo($filename);
@@ -301,7 +308,7 @@ class XoopartnersCategoriesHandler extends XoopsPersistableObjectHandler
 
         return $string . '.' . $path_parts['extension'];
     }
-
+*/
     /**
      * @param           $name
      * @param           $id

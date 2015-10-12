@@ -17,7 +17,9 @@
  * @version         $Id$
  */
 
-if (basename($_SERVER['SCRIPT_NAME']) === 'index.php') {
+use Xoops\Core\Request;
+
+if (basename(Request::getString('SCRIPT_NAME', '', 'SERVER')) === 'index.php') {
     $admin_page->displayIndex();
 }
 

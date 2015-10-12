@@ -17,10 +17,12 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 $_SESSION['xoopartners_stat'] = true;
 
-$partner_id = $system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
+$partner_id = Request::getInt('partner_id', 0); //$system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
 $partner    = $partnersHandler->get($partner_id);
 
 if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted')) {

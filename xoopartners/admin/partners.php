@@ -21,7 +21,7 @@ use Xoops\Core\Request;
 
 include __DIR__ . '/header.php';
 
-$category_id = $system->cleanVars($_REQUEST, 'category_id', 0, 'int');
+$category_id = Request::getInt('category_id', 0); //$system->cleanVars($_REQUEST, 'category_id', 0, 'int');
 
 switch ($op) {
     case 'save':
@@ -29,8 +29,8 @@ switch ($op) {
             $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $xoops->security()->getErrors()));
         }
 
-//        $xoopartners_id = $system->cleanVars($_POST, 'xoopartners_id', 0, 'int');
-        $xoopartners_id =  Request::getInt('xoopartners_id', 0, 'POST');
+        //        $xoopartners_id = $system->cleanVars($_POST, 'xoopartners_id', 0, 'int');
+        $xoopartners_id = Request::getInt('xoopartners_id', 0, 'POST');
         if (isset($xoopartners_id) && $xoopartners_id > 0) {
             $partner     = $partnersHandler->get($xoopartners_id);
             $category_id = $partner->getVar('xoopartners_category');
@@ -56,7 +56,7 @@ switch ($op) {
                 }
             }
         } else {
-//              $partner->setVar('xoopartners_image', $myts->htmlSpecialChars($_POST['image_list']));
+            //              $partner->setVar('xoopartners_image', $myts->htmlSpecialChars($_POST['image_list']));
             $partner->setVar('xoopartners_image', $myts->htmlSpecialChars(Request::getString('image_list', '', 'POST')));
         }
 
@@ -96,18 +96,18 @@ switch ($op) {
         break;
 
     case 'edit':
-        $xoopartners_id = $system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
+        $xoopartners_id = Request::getInt('xoopartners_id', 0); //$system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
         $partner        = $partnersHandler->get($xoopartners_id);
         $form           = $xoopartnersModule->getForm($partner, 'partners');
         $form->display();
         break;
 
     case 'del':
-        $xoopartners_id = $system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
+        $xoopartners_id = Request::getInt('xoopartners_id', 0); //$system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
         if (isset($xoopartners_id) && $xoopartners_id > 0) {
             if ($partner = $partnersHandler->get($xoopartners_id)) {
-//                $delete = $system->cleanVars($_POST, 'ok', 0, 'int');
-                $delete = XoopsRequest::getInt('ok', 0, 'POST');
+                //                $delete = $system->cleanVars($_POST, 'ok', 0, 'int');
+                $delete = Request::getInt('ok', 0, 'POST');
                 if ($delete == 1) {
                     if (!$xoops->security()->check()) {
                         $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $xoops->security()->getErrors()));
@@ -122,10 +122,11 @@ switch ($op) {
                     $partnersHandler->delete($partner);
                     $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_DELETED);
                 } else {
-                    $xoops->confirm(array('ok'             => 1,
-                                          'xoopartners_id' => $xoopartners_id,
-                                          'category_id'    => $category_id,
-                                          'op'             => 'del'), $_SERVER['REQUEST_URI'], sprintf(_AM_XOO_PARTNERS_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $partner->getVar('xoopartners_title')));
+                    $xoops->confirm(array(
+                                        'ok'             => 1,
+                                        'xoopartners_id' => $xoopartners_id,
+                                        'category_id'    => $category_id,
+                                        'op'             => 'del'), $_SERVER['REQUEST_URI'], sprintf(_AM_XOO_PARTNERS_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $partner->getVar('xoopartners_title')));
                 }
             } else {
                 $xoops->redirect('partners.php?category_id=' . $category_id, 5);
@@ -137,20 +138,20 @@ switch ($op) {
 
     case 'view':
     case 'hide':
-        $xoopartners_id = $system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
+        $xoopartners_id = Request::getInt('start', 0, 'POST'); //$system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
         $partnersHandler->setOnline($xoopartners_id);
         $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
         break;
 
     case 'accept':
     case 'naccept':
-        $xoopartners_id = $system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
+        $xoopartners_id = Request::getInt('xoopartners_id', 0); //$system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
         $partnersHandler->setAccept($xoopartners_id);
         $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
         break;
 
     default:
-        $online = $system->cleanVars($_REQUEST, 'online', -1, 'int');
+        $online = Request::getInt('online', -1); //$system->cleanVars($_REQUEST, 'online', -1, 'int');
         if ($partnersConfig['xoopartners_category']['use_categories']) {
             ob_start();
             $categoriesHandler->makeSelectBox('category_id', $category_id, true, 'window.location.href="partners.php?category_id="+this.options[this.selectedIndex].value');

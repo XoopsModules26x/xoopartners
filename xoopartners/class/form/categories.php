@@ -72,7 +72,7 @@ class XoopartnersCategoriesForm extends Xoops\Form\ThemeForm
         $image_tray->addElement($image_box);
         $image_tray->addElement($warning_tray);
 
-        $image_array  = XoopsLists:: getImgListAsArray($xoops->path('uploads') . '/xoopartners/categories/images');
+        $image_array  = XoopsLists:: getImgListAsArray(\XoopsBaseConfig::get('uploads-path') . '/xoopartners/categories/images');
         $image_select = new Xoops\Form\Select('<br />', 'image_list', $this->xoopsObject->getVar('xoopartners_category_image'));
         $image_select->addOptionArray($image_array);
         $image_select->setExtra("onchange='showImgSelected(\"select_image\", \"image_list\", \"" . '/xoopartners/categories/images/' . "\", \"\", \"" . $xoops->url('uploads') . "\")'");

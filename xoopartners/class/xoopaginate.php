@@ -17,6 +17,9 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
+
+use Xoops\Core\Request;
+
 class XooPaginate
 {
     private $prev  = false;
@@ -42,7 +45,7 @@ class XooPaginate
         if ($extra_arg != '' && (substr($extra_arg, -5) !== '&amp;' || substr($extra_arg, -1) !== '&')) {
             $this->extra = '&amp;' . $extra_arg;
         }
-        $this->url    = $_SERVER['PHP_SELF'] . '?' . trim($start_name) . '=';
+        $this->url    = Request::getString('PHP_SELF', '', 'SERVER') . '?' . trim($start_name) . '=';
         $this->offset = (int)($offset);
 
         $this->render();

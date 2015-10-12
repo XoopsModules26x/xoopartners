@@ -24,8 +24,8 @@ function xoops_module_install_xoopartners()
 {
     $xoops     = Xoops::getInstance();
     $folders   = array();
-    $folders[] = $xoops->path('uploads') . '/xoopartners/categories/images';
-    $folders[] = $xoops->path('uploads') . '/xoopartners/partners/images';
+    $folders[] = \XoopsBaseConfig::get('uploads-path') . '/xoopartners/categories/images';
+    $folders[] = \XoopsBaseConfig::get('uploads-path') . '/xoopartners/partners/images';
     $images    = array('index.html', 'blank.gif');
 
     foreach ($folders as $folder) {
@@ -33,7 +33,7 @@ function xoops_module_install_xoopartners()
             return false;
         } else {
             foreach ($images as $image) {
-                if (!xoopartners_copyfile($xoops->path('uploads'), $image, $folder)) {
+                if (!xoopartners_copyfile(\XoopsBaseConfig::get('uploads-path'), $image, $folder)) {
                     return false;
                 }
             }
@@ -64,7 +64,7 @@ function xoopartners_mkdirs($pathname, $pathout = XOOPS_ROOT_PATH)
                 if (!mkdir($dest, 0755)) {
                     return false;
                 } else {
-                    xoopartners_copyfile($xoops->path('uploads'), 'index.html', $dest);
+                    xoopartners_copyfile(\XoopsBaseConfig::get('uploads-path'), 'index.html', $dest);
                 }
             }
         }

@@ -17,14 +17,14 @@
  * @version         $Id$
  */
 
-include __DIR__ .  '/header.php';
+include __DIR__ . '/header.php';
 $xoops = Xoops::getInstance();
 $xoops->header();
-$url = $system->cleanVars($_REQUEST, 'url', '', 'string');
+$url = Request::getString('url', ''); //$system->cleanVars($_REQUEST, 'url', '', 'string');
 
 if ($url != '') {
-//    $qrcode = new Xoops_qrcode();
-//    $qrcode->render($url);
+    //    $qrcode = new Xoops_qrcode();
+    //    $qrcode->render($url);
     $xoops->service('qrcode')->getImgTag($url, array('alt' => 'QR code', 'title' => 'Xoops.org'))->getValue();
 
 } else {

@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/class/utilities.php';
 
@@ -30,7 +32,7 @@ $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
 
-$script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
+$script_name = basename(Request::getString('SCRIPT_NAME', '', 'SERVER'), '.php');
 $xoops->header('xoopartners_' . $script_name . '.tpl');
 
 $xoops->theme()->addStylesheet('modules/xoopartners/assets/css/module.css');

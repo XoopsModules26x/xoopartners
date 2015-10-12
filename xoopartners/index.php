@@ -17,16 +17,18 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 
-$start = $system->cleanVars($_REQUEST, 'start', 0, 'int');
+$start = Request::getInt('start', 0); //$system->cleanVars($_REQUEST, 'start', 0, 'int');
 
 $criteria = new CriteriaCompo();
 $criteria->add(new Criteria('xoopartners_online', 1));
 $criteria->add(new Criteria('xoopartners_published', time(), '<='));
 
 if ($partnersConfig['xoopartners_category']['use_categories']) {
-    $category_id = $system->cleanVars($_REQUEST, 'category_id', 0, 'int');
+    $category_id = Request::getInt('category_id', 0); //$system->cleanVars($_REQUEST, 'category_id', 0, 'int');
     $categories  = $categoriesHandler->getCategories();
     $partners    = $partnersHandler->getPartners($category_id, 'order', 'asc', $start, $partnersConfig['xoopartners_partner']['limit_main']);
     $xoops->tpl()->assign('category_id', $category_id);

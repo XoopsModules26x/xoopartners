@@ -17,6 +17,11 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
+/**
+ * Class XoopartnersPartnersForm
+ */
 class XoopartnersPartnersForm extends Xoops\Form\ThemeForm
 {
     /**
@@ -25,7 +30,7 @@ class XoopartnersPartnersForm extends Xoops\Form\ThemeForm
     public function __construct(XoopartnersPartners $obj = null)
     {
         $system      = System::getInstance();
-        $category_id = $system->cleanVars($_REQUEST, 'category_id', 0, 'int');
+        $category_id = Request::getInt('category_id', 0); //$system->cleanVars($_REQUEST, 'category_id', 0, 'int');
 
         $this->xoopsObject = $obj;
 
@@ -105,7 +110,7 @@ class XoopartnersPartnersForm extends Xoops\Form\ThemeForm
         $image_tray->addElement($image_box);
         $image_tray->addElement($warning_tray);
 
-        $image_array  = XoopsLists:: getImgListAsArray($xoops->path('uploads') . '/xoopartners/partners/images');
+        $image_array  = XoopsLists:: getImgListAsArray(\XoopsBaseConfig::get('uploads-path') . '/xoopartners/partners/images');
         $image_select = new Xoops\Form\Select('<br />', 'image_list', $this->xoopsObject->getVar('xoopartners_image'));
         $image_select->addOptionArray($image_array);
         $image_select->setExtra("onchange='showImgSelected(\"select_image\", \"image_list\", \"" . '/xoopartners/partners/images/' . "\", \"\", \"" . $xoops->url('uploads') . "\")'");

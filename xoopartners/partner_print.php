@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/include/functions.php';
 
@@ -31,10 +33,10 @@ $system = System::getInstance();
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
-$partner_id = $system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
+$partner_id = Request::getInt('partner_id', 0); //$system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
 $partner    = $partnersHandler->get($partner_id);
 
-$output = $system->cleanVars($_REQUEST, 'output', 'print', 'string');
+$output = Request::getString('output', 'print'); //$system->cleanVars($_REQUEST, 'output', 'print', 'string');
 
 if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted')) {
     $tpl = new XoopsTpl();

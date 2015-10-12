@@ -62,4 +62,28 @@ class XooPartnersUtilities
 
         return implode(', ', $keywords);
     }
+
+    /**
+     * @param $filename
+     * @return string
+     */
+    public function cleanImage($filename)
+    {
+        $path_parts = pathinfo($filename);
+        $string     = $path_parts['filename'];
+
+        $string = str_replace('_', md5('xoopartners'), $string);
+        $string = str_replace('-', md5('xoopartners'), $string);
+        $string = str_replace(' ', md5('xoopartners'), $string);
+
+        $string = preg_replace('~\p{P}~', '', $string);
+        $string = htmlentities($string, ENT_NOQUOTES, _CHARSET);
+        $string = preg_replace("~\&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring)\;~", "$1", $string);
+        $string = preg_replace("~\&([A-za-z]{2})(?:lig)\;~", "$1", $string); // pour les ligatures e.g. "&oelig;"
+        $string = preg_replace("~\&[^;]+\;~", '', $string); // supprime les autres caract�res
+
+        $string = str_replace(md5('xoopartners'), '_', $string);
+
+        return $string . '.' . $path_parts['extension'];
+    }
 }

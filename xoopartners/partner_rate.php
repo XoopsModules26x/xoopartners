@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 
 $xoops->disableErrorReporting();
@@ -24,8 +26,8 @@ $xoops->disableErrorReporting();
 $ret['error'] = 1;
 
 if ($xoops->security()->check()) {
-    $partner_id = $system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
-    $option     = $system->cleanVars($_REQUEST, 'option', 2, 'int');
+    $partner_id = Request::getInt('partner_id', 0); //$system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
+    $option     = Request::getInt('option', 2); //$system->cleanVars($_REQUEST, 'option', 2, 'int');
 
     $time = time();
     if (!isset($_SESSION['xoopartners_rates' . $partner_id]) || $_SESSION['xoopartners_rates' . $partner_id] < $time) {
