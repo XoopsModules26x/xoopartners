@@ -17,7 +17,6 @@
  * @package         core
  * @since           2.6.0
  * @author          Laurent JEN (aka DuGris)
- * @version         $Id$
  */
 
 if (file_exists('mainfile.php')) {

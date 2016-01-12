@@ -14,7 +14,6 @@
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
  */
 
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';

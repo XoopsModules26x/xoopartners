@@ -14,7 +14,6 @@
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
  */
 
 define('_MB_XOO_PARTNERS_MODE', 'Display mode of the main page');

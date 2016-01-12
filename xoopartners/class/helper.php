@@ -15,7 +15,6 @@
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id: helper.php 1395 2012-12-30 07:36:16Z DuGris $
  */
 class Xoopartners extends Xoops\Module\Helper\HelperAbstract
 {

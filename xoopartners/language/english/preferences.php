@@ -14,7 +14,6 @@
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
  */
 
 if (!defined('_XOO_CONFIG_SAVED')) {

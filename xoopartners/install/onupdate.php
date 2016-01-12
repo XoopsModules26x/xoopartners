@@ -14,7 +14,6 @@
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id: update.php 1388 2012-12-29 00:23:08Z DuGris $
  */
 
 include_once __DIR__ . '/oninstall.php';
