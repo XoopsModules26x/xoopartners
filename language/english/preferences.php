@@ -9,13 +9,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- */
 
+ */
 if (!defined('_XOO_CONFIG_SAVED')) {
     define('_XOO_CONFIG_SAVED', 'Configuration was saved');
 }
@@ -34,7 +34,7 @@ define('_XOO_CONFIG_MODE_SELECT', 'Select');
 define('_XOO_CONFIG_MODE_IMAGES', 'Images');
 
 define('_XOO_CONFIG_PARTNER_MODE', 'Display mode of the main page');
-define('_XOO_CONFIG_LIMIT_MAIN', 'Number Partners on the main page<br />(0 = no limit)');
+define('_XOO_CONFIG_LIMIT_MAIN', 'Number Partners on the main page<br>(0 = no limit)');
 define('_XOO_CONFIG_USE_CATEGORIES', 'Use categories');
 define('_XOO_CONFIG_MAIN_MENU', 'Display categories in main menu');
 

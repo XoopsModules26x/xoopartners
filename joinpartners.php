@@ -9,13 +9,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- */
 
+ */
 use Xoops\Core\Request;
 
 include __DIR__ . '/header.php';
@@ -38,7 +38,7 @@ switch ($op) {
             $xoops->redirect('index.php', 5, implode(',', $xoops->security()->getErrors()));
         }
 
-//        $xoopartners_id = $system->cleanVars($_POST, 'xoopartners_id', 0, 'int'); //mb
+        //        $xoopartners_id = $system->cleanVars($_POST, 'xoopartners_id', 0, 'int'); //mb
         $xoopartners_id = Request::getInt('xoopartners_id', 0, 'POST');
         if (isset($xoopartners_id) && $xoopartners_id > 0) {
             $partner = $partnersHandler->get($xoopartners_id);
@@ -49,34 +49,33 @@ switch ($op) {
         $partner->cleanVarsForDB();
 
         // uploads images
-        $myts          = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $uploadImages = $partnersHandler->uploadImages($partner->getVar('xoopartners_title'));
 
-        if (is_array($uploadImages) && count($uploadImages) != 0) {
+        if (is_array($uploadImages) && 0 != count($uploadImages)) {
             foreach ($uploadImages as $k => $response) {
-                if ($response['error'] == true) {
+                if (true === $response['error']) {
                     $errors[] = $response['message'];
                 } else {
                     $partner->setVar($k, $response['filename']);
                 }
             }
         } else {
-//            $partner->setVar('xoopartners_image', $myts->htmlSpecialChars($_POST['image_list']));
+            //            $partner->setVar('xoopartners_image', $myts->htmlSpecialChars($_POST['image_list']));
             $partner->setVar('xoopartners_image', $myts->htmlSpecialChars(Request::getString('image_list', '', 'POST')));
         }
 
         if ($partner_id = $partnersHandler->insert($partner)) {
             $msg = _XOO_PARTNERS_SAVED;
-            if (isset($errors) && count($errors) != 0) {
-                $msg .= '<br />' . implode('<br />', $errors);
+            if (isset($errors) && 0 != count($errors)) {
+                $msg .= '<br>' . implode('<br>', $errors);
             }
             $xoops->redirect('index.php', 5, $msg);
         }
         break;
-
     default:
         $partner = $partnersHandler->create();
-        $form    = $xoopartnersModule->getForm($partner, 'partners');
+        $form = $helper->getForm($partner, 'partners');
         $form->display();
         break;
 }

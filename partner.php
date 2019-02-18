@@ -9,22 +9,21 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 
 include __DIR__ . '/header.php';
 $_SESSION['xoopartners_stat'] = true;
 
 $partner_id = Request::getInt('partner_id', 0); //$system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
-$partner    = $partnersHandler->get($partner_id);
+$partner = $partnersHandler->get($partner_id);
 
-if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted')) {
+if (is_object($partner) && 0 != count($partner) && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted')) {
     $time = time();
     if (!isset($_SESSION['xoopartner_view' . $partner_id]) || $_SESSION['xoopartner_view' . $partner_id] < $time) {
         $_SESSION['xoopartner_view' . $partner_id] = $time + 3600;

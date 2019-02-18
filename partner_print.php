@@ -9,36 +9,36 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- */
 
+ */
 use Xoops\Core\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/include/functions.php';
 
-$xoopartnersModule = Xoopartners::getInstance();
-$partnersConfig    = $xoopartnersModule->loadConfig();
-$categoriesHandler = $xoopartnersModule->getCategoriesHandler();
-$partnersHandler   = $xoopartnersModule->getPartnersHandler();
+$helper = \XoopsModules\Xoopartners\Helper::getInstance();
+$partnersConfig = $helper->loadConfig();
+$categoriesHandler = $helper->getHandler('Categories');
+$partnersHandler = $helper->getHandler('Partners');
 
-XoopsLoad::load('system', 'system');
-$system = System::getInstance();
+\XoopsLoad::load('system', 'system');
+$system = \System::getInstance();
 
-$xoops = Xoops::getInstance();
+$xoops = \Xoops::getInstance();
 $xoops->disableErrorReporting();
 
 $partner_id = Request::getInt('partner_id', 0); //$system->cleanVars($_REQUEST, 'partner_id', 0, 'int');
-$partner    = $partnersHandler->get($partner_id);
+$partner = $partnersHandler->get($partner_id);
 
 $output = Request::getString('output', 'print'); //$system->cleanVars($_REQUEST, 'output', 'print', 'string');
 
-if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted')) {
-    $tpl = new XoopsTpl();
+if (is_object($partner) && 0 != count($partner) && $partner->getVar('xoopartners_online') && $partner->getVar('xoopartners_accepted')) {
+    $tpl = new \XoopsTpl();
 
     $tpl->assign('xoopartners_category', $partnersConfig['xoopartners_category']);
     $tpl->assign('xoopartners_partner', $partnersConfig['xoopartners_partner']);
@@ -66,7 +66,7 @@ if (is_object($partner) && count($partner) != 0 && $partner->getVar('xoopartners
         $tpl->display('module:xoopartners/xoopartners_partner_print.tpl');
     }
 } else {
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('xoops_sitename', $xoops->getConfig('sitename'));
     $tpl->assign('xoops_slogan', htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES));
     $tpl->assign('not_found', true);

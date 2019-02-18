@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xoopartners\Plugin;
+
 /**
  * Xoopartners module
  *
@@ -9,17 +12,18 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+
  */
 
 /**
- * Class XoopartnersMenusPlugin
+ * Class MenusPlugin
  */
-class XoopartnersMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements MenusPluginInterface
+class MenusPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \MenusPluginInterface
 {
     /**
      * expects an array of array containing:
@@ -34,24 +38,23 @@ class XoopartnersMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
      */
     public function subMenus()
     {
-        $ret = array();
-        if (Xoops::getInstance()->isModule() && Xoops::getInstance()->module->getVar('dirname') === 'xoopartners') {
-            $xoopartnersModule = Xoopartners::getInstance();
-            $partnersConfig    = $xoopartnersModule->loadConfig();
+        $ret = [];
+        if (\Xoops::getInstance()->isModule() && 'xoopartners' === \Xoops::getInstance()->module->getVar('dirname')) {
+            $helper = \XoopsModules\Xoopartners\Helper::getInstance();
+            $partnersConfig = $helper->loadConfig();
 
             $i = 0;
             if ($partnersConfig['xoopartners_category']['use_categories'] && $partnersConfig['xoopartners_category']['main_menu']) {
-                $categoriesHandler = $xoopartnersModule->getCategoriesHandler();
-                $categories         = $categoriesHandler->getCategories(0, false, false);
+                $categoriesHandler = $helper->getHandler('Categories');
+                $categories = $categoriesHandler->getCategories(0, false, false);
                 foreach ($categories as $k => $category) {
                     $ret[$i]['name'] = $category['xoopartners_category_title'];
-                    $ret[$i]['url']  = 'index.php?category_id=' . $category['xoopartners_category_id'];
+                    $ret[$i]['url'] = 'index.php?category_id=' . $category['xoopartners_category_id'];
                     ++$i;
                 }
             }
             $ret[$i]['name'] = _XOO_PARTNERS_JOIN;
-            $ret[$i]['url']  = 'joinpartners.php';
-
+            $ret[$i]['url'] = 'joinpartners.php';
         }
 
         return $ret;
