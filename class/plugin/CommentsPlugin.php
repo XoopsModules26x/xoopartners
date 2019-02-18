@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xoopartners\Plugin;
+
 /**
  * Xoopartners module
  *
@@ -9,17 +12,18 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+
  */
 
 /**
- * Class XoopartnersCommentsPlugin
+ * Class CommentsPlugin
  */
-class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements CommentsPluginInterface
+class CommentsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \CommentsPluginInterface
 {
     /**
      * @return string
@@ -42,7 +46,7 @@ class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
      */
     public function extraParams()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -51,11 +55,9 @@ class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
      * An CommentsComment object that has been approved will be passed as the first and only parameter.
      * This should be useful for example notifying the item submitter of a comment post.
      *
-     * @param CommentsComment $comment
-     *
-     * @return void
+     * @param \CommentsComment $comment
      */
-    public function approve(CommentsComment $comment)
+    public function approve(\CommentsComment $comment)
     {
         //Where are you looking at?
     }
@@ -70,7 +72,7 @@ class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
      */
     public function update($xoopartners_id, $total_num)
     {
-        $db  = Xoops::getInstance()->db();
+        $db = \Xoops::getInstance()->db();
         $sql = 'UPDATE ' . $db->prefix('xoopartners') . ' SET xoopartners_comments = ' . (int)($total_num) . ' WHERE xoopartners_id = ' . (int)($xoopartners_id);
         $db->query($sql);
     }
@@ -87,19 +89,18 @@ class XoopartnersCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract imple
      * @param int $xoopartners_id
      * @return array
      * @internal param int $item_id The unique ID of an item
-     *
      */
     public function itemInfo($xoopartners_id)
     {
-        $ret = array();
+        $ret = [];
 
-        $partnersModule  = Xoopartners::getInstance();
-        $partnersHandler = $partnersModule->partnersHandler();
-        $page             = $page = $partnersHandler->get($xoopartners_id);
+        $helper = \XoopsModules\Xoopartners\Helper::getInstance();
+        $partnersHandler = $helper->partnersHandler();
+        $page = $page = $partnersHandler->get($xoopartners_id);
 
-        $ret['text']      = $page->getVar('xoopartners_description');
-        $ret['title']     = $page->getVar('xoopartners_title');
-        $ret['uid']       = $page->getVar('xoopartners_uid');
+        $ret['text'] = $page->getVar('xoopartners_description');
+        $ret['title'] = $page->getVar('xoopartners_title');
+        $ret['uid'] = $page->getVar('xoopartners_uid');
         $ret['timestamp'] = $page->getVar('xoopartners_published');
 
         return $ret;

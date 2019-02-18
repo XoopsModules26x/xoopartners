@@ -9,27 +9,26 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- */
 
+ */
 use Xoops\Core\Request;
 
-include dirname(dirname(__DIR__)) . '/mainfile.php';
-include __DIR__ . '/class/utilities.php';
+include dirname(dirname(__DIR__)) .  '/mainfile.php';
 
-$xoopartnersModule = Xoopartners::getInstance();
-$partnersConfig    = $xoopartnersModule->loadConfig();
-$categoriesHandler = $xoopartnersModule->getCategoriesHandler();
-$partnersHandler   = $xoopartnersModule->getPartnersHandler();
+$helper = \XoopsModules\Xoopartners\Helper::getInstance();
+$partnersConfig = $helper->loadConfig();
+$categoriesHandler = $helper->getHandler('Categories');
+$partnersHandler = $helper->getHandler('Partners');
 
-XoopsLoad::load('system', 'system');
-$system = System::getInstance();
+\XoopsLoad::load('system', 'system');
+$system = \System::getInstance();
 
-$xoops = Xoops::getInstance();
+$xoops = \Xoops::getInstance();
 
 $script_name = basename(Request::getString('SCRIPT_NAME', '', 'SERVER'), '.php');
 $xoops->header('xoopartners_' . $script_name . '.tpl');

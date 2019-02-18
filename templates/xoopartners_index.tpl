@@ -1,7 +1,7 @@
 <{if $moduletitle != ''}>
     <fieldset>
         <legend><{$moduletitle}>
-            <a href="<{xoAppUrl 'modules/xoopartners/backend.php'}>" title="<{$smarty.const._XOO_PARTNERS_RSS_FEED}>"><img src="<{xoImgUrl 'modules/xoopartners/assets/icons/32/rss.png'}>"/></a></legend>
+            <a href="<{xoAppUrl 'modules/xoopartners/backend.php'}>" title="<{$smarty.const._XOO_PARTNERS_RSS_FEED}>"><img src="<{xoImgUrl 'modules/xoopartners/assets/icons/32/rss.png'}>"></a></legend>
     </fieldset>
 <{/if}>
 

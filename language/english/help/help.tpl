@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'modules/xoopartners/assets/css/help.css'}>"/>
+<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'modules/xoopartners/assets/css/help.css'}>">
 
 <div class="help span12 txtcenter">
     <div class="help-submenu floatright txtleft">
@@ -14,7 +14,7 @@
     </div>
 
     <div class="floatleft">
-        <img src="<{$xoops_url}>/modules/<{$module->getVar('dirname')}>/<{$module->getInfo('image')}>" alt="<{$module->getVar('name')}>" title="<{$module->getVar('name')}>"/>
+        <img src="<{$xoops_url}>/modules/<{$module->getVar('dirname')}>/<{$module->getInfo('image')}>" alt="<{$module->getVar('name')}>" title="<{$module->getVar('name')}>">
     </div>
 
     <div class="help-title floatcenter0 span8">
@@ -29,7 +29,7 @@
             <input type="hidden" name="<{$key}>" value="<{$value}>">
             <{/if}>
             <{/foreach}>
-            <img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" onclick="$('#paypal-form').submit()" alt="PayPal - The safer, easier way to pay online!"/>
+                <img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" onclick="$('#paypal-form').submit()" alt="PayPal - The safer, easier way to pay online!">
         </form>
         <{/if}>
     </div>
@@ -44,7 +44,7 @@
     </div>
     <div>
         <{$module->getInfo('description')}>
-        <br/>
+        <br>
         Version : <{$module->getInfo('version')}>&nbsp;<{$module->getInfo('module_status')}>&nbsp;(<{$module->getInfo('release_date')}>)
     </div>
 </div>
@@ -98,7 +98,7 @@
 
 <h4>Description</h4>
 <p>
-    Xlanguage allows you to use multiple languages in your XOOPS powered site.
+    Xoopartners allows you to define partners in your XOOPS powered site.
 <h5>Setup</h5>
 <p>setup details...
 

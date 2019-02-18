@@ -9,11 +9,12 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+
  */
 
 use Xoops\Core\Request;
@@ -43,12 +44,12 @@ switch ($op) {
         $partner->cleanVarsForDB();
 
         // uploads images
-        $myts          = MyTextSanitizer::getInstance();
+        $myts          = \MyTextSanitizer::getInstance();
         $upload_images = $partnersHandler->uploadImages($partner->getVar('xoopartners_title'));
 
-        if (is_array($upload_images) && count($upload_images) != 0) {
+        if (is_array($upload_images) && 0 != count($upload_images)) {
             foreach ($upload_images as $k => $reponse) {
-                if ($reponse['error'] == true) {
+                if (true === $reponse['error']) {
                     $errors[] = $reponse['message'];
                 } else {
                     $partner->setVar($k, $reponse['filename']);
@@ -61,14 +62,14 @@ switch ($op) {
 
         if ($xoopartners_id = $partnersHandler->insert($partner)) {
             $msg = _AM_XOO_PARTNERS_SAVED;
-            if (isset($errors) && count($errors) != 0) {
-                $msg .= '<br />' . implode('<br />', $errors);
+            if (isset($errors) && 0 != count($errors)) {
+                $msg .= '<br>' . implode('<br>', $errors);
             }
 
             // tags
             if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
-                $xootagsHandler = $xoops->getModuleHandler('tags', 'xootags');
-                $msg .= '<br />' . $xootagsHandler->updateByItem('tags', $xoopartners_id);
+                $xootagsHandler = \XoopsModules\Xootags\Helper::getInstance()->getHandler('Tags'); //$xoops->getModuleHandler('tags', 'xootags');
+                $msg            .= '<br>' . $xootagsHandler->updateByItem('tags', $xoopartners_id);
             }
 
             if ($partner->getVar('xoopartners_accepted')) {
@@ -87,33 +88,31 @@ switch ($op) {
             $xoops->redirect('partners.php?category_id=' . $partner->getVar('xoopartners_category'), 5, $msg);
         }
         break;
-
     case 'add':
         $partner = $partnersHandler->create();
-        $form    = $xoopartnersModule->getForm($partner, 'partners');
+//        $form    = $helper->getForm($partner, 'partners');
+        $form = new \XoopsModules\Xoopartners\Form\PartnersForm($partner);
         $form->display();
         break;
-
     case 'edit':
         $xoopartners_id = Request::getInt('xoopartners_id', 0); //$system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
         $partner        = $partnersHandler->get($xoopartners_id);
-        $form           = $xoopartnersModule->getForm($partner, 'partners');
+        $form           = $helper->getForm($partner, 'partners');
         $form->display();
         break;
-
     case 'del':
         $xoopartners_id = Request::getInt('xoopartners_id', 0); //$system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
         if (isset($xoopartners_id) && $xoopartners_id > 0) {
             if ($partner = $partnersHandler->get($xoopartners_id)) {
                 //                $delete = $system->cleanVars($_POST, 'ok', 0, 'int');
                 $delete = Request::getInt('ok', 0, 'POST');
-                if ($delete == 1) {
+                if (1 == $delete) {
                     if (!$xoops->security()->check()) {
                         $xoops->redirect('partners.php?category_id=' . $category_id, 5, implode(',', $xoops->security()->getErrors()));
                     }
                     // tags
                     if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
-                        $xootagsHandler = $xoops->getModuleHandler('tags', 'xootags');
+                        $xootagsHandler = \XoopsModules\Xootags\Helper::getInstance()->getHandler('Tags'); //$xoops->getModuleHandler('tags', 'xootags');
                         $xootagsHandler->deleteByItem($partner->getVar('xoopartners_id'));
                     }
                     $partner->setPost(false);
@@ -121,11 +120,12 @@ switch ($op) {
                     $partnersHandler->delete($partner);
                     $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_DELETED);
                 } else {
-                    $xoops->confirm(array(
+                    $xoops->confirm([
                                         'ok'             => 1,
                                         'xoopartners_id' => $xoopartners_id,
                                         'category_id'    => $category_id,
-                                        'op'             => 'del'), $_SERVER['REQUEST_URI'], sprintf(_AM_XOO_PARTNERS_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $partner->getVar('xoopartners_title')));
+                                        'op'             => 'del',
+                                    ], $_SERVER['REQUEST_URI'], sprintf(_AM_XOO_PARTNERS_DELETE_CFM . "<br><b><span style='color : #ff0000'> %s </span></b><br><br>", $partner->getVar('xoopartners_title')));
                 }
             } else {
                 $xoops->redirect('partners.php?category_id=' . $category_id, 5);
@@ -134,21 +134,18 @@ switch ($op) {
             $xoops->redirect('partners.php?category_id=' . $category_id, 5);
         }
         break;
-
     case 'view':
     case 'hide':
         $xoopartners_id = Request::getInt('start', 0, 'POST'); //$system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
         $partnersHandler->setOnline($xoopartners_id);
         $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
         break;
-
     case 'accept':
     case 'naccept':
         $xoopartners_id = Request::getInt('xoopartners_id', 0); //$system->cleanVars($_REQUEST, 'xoopartners_id', 0, 'int');
         $partnersHandler->setAccept($xoopartners_id);
         $xoops->redirect('partners.php?category_id=' . $category_id, 5, _AM_XOO_PARTNERS_SAVED);
         break;
-
     default:
         $online = Request::getInt('online', -1); //$system->cleanVars($_REQUEST, 'online', -1, 'int');
         if ($partnersConfig['xoopartners_category']['use_categories']) {
@@ -159,7 +156,7 @@ switch ($op) {
         }
 
         $admin_page->addItemButton(_AM_XOO_PARTNERS_ADD, 'partners.php?op=add', 'add');
-        $admin_page->renderButton();
+        $admin_page->displayButton();
 
         $xoops->tpl()->assign('partners', $partnersHandler->renderAdminList($category_id, $online));
         $xoops->tpl()->assign('category_id', $category_id);

@@ -9,18 +9,20 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- */
 
-$modversion                = array();
-$modversion['dirname']     = basename(__DIR__);
-$modversion['name']        = _MI_XOO_PARTNERS_NAME;
-$modversion['description'] = _MI_XOO_PARTNERS_DESC;
+ */
+$modversion = [];
 $modversion['version']     = 1.01;
+$modversion['module_status'] = 'Alpha 1';
+$modversion['release_date']  = '2019/02/15';
+$modversion['dirname'] = basename(__DIR__);
+$modversion['name'] = _MI_XOO_PARTNERS_NAME;
+$modversion['description'] = _MI_XOO_PARTNERS_DESC;
 $modversion['author']      = 'XooFoo - Laurent JEN';
 $modversion['nickname']    = 'aka DuGris';
 $modversion['credits']     = 'DuGris.XooFoo Project';
@@ -31,18 +33,15 @@ $modversion['help']        = 'page=help';
 $modversion['image']       = 'assets/images/logo.png';
 
 // about
-$modversion['release_date']        = '2015/10/01';
 $modversion['module_website_url']  = 'xoops.org';
 $modversion['module_website_name'] = 'XOOPS Project';
-$modversion['module_status']       = 'Alpha 1';
-$modversion['min_php']             = '5.5.0';
+$modversion['min_php']             = '7.1.0';
 $modversion['min_xoops']           = '2.6.0';
-$modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
-
+$modversion['min_db']              = ['mysql' => '5.0.7', 'mysqli' => '5.0.7'];
 // paypal
-$modversion['paypal']                  = array();
+$modversion['paypal']                  = [];
 $modversion['paypal']['business']      = 'dugris93@gmail.com';
-$modversion['paypal']['item_name']     = _MI_XOO_PARTNERS_DESC;
+$modversion['paypal']['item_name'] = _MI_XOO_PARTNERS_DESC;
 $modversion['paypal']['amount']        = 0;
 $modversion['paypal']['currency_code'] = 'EUR';
 
@@ -59,8 +58,8 @@ $modversion['extension']          = 0;
 $modversion['extension_module'][] = '';
 
 // Scripts to run upon installation or update
-$modversion['onInstall']   = 'install/oninstall.php';
-$modversion['onUpdate']    = 'install/onupdate.php';
+$modversion['onInstall']   = 'include/oninstall.php';
+$modversion['onUpdate']    = 'include/onupdate.php';
 $modversion['onUninstall'] = '';
 
 // JQuery
@@ -76,14 +75,14 @@ $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 $modversion['schema'] = 'sql/schema.yml';
 
 // blocks
-$i                                       = 0;
-$modversion['blocks'][$i]['file']        = 'xoopartners_blocks.php';
-$modversion['blocks'][$i]['name']        = _MI_XOO_XOOPARTNERS_BLOCK_NAME;
+$i = 0;
+$modversion['blocks'][$i]['file'] = 'xoopartners_blocks.php';
+$modversion['blocks'][$i]['name'] = _MI_XOO_XOOPARTNERS_BLOCK_NAME;
 $modversion['blocks'][$i]['description'] = '';
-$modversion['blocks'][$i]['show_func']   = 'xoopartners_show';
-$modversion['blocks'][$i]['edit_func']   = 'xoopartners_edit';
-$modversion['blocks'][$i]['options']     = 'list|published|desc|10';
-$modversion['blocks'][$i]['template']    = 'xoopartners_block.tpl';
+$modversion['blocks'][$i]['show_func'] = 'xoopartners_show';
+$modversion['blocks'][$i]['edit_func'] = 'xoopartners_edit';
+$modversion['blocks'][$i]['options'] = 'list|published|desc|10';
+$modversion['blocks'][$i]['template'] = 'xoopartners_block.tpl';
 
 // Menu
 $modversion['hasMain'] = 1;

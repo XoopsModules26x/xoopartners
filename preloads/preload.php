@@ -9,26 +9,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\PreloadItem;
-
-/**
- * Class XoopartnersPreload
- */
-
-/**
- * Class XoopartnersPreload
- */
-
-/**
- * Class XoopartnersPreload
- */
 
 /**
  * Class XoopartnersPreload
@@ -38,22 +25,8 @@ class XoopartnersPreload extends PreloadItem
     /**
      * @param $args
      */
-    /**
-     * @param $args
-     */
-    /**
-     * @param $args
-     */
-    /**
-     * @param $args
-     */
     public static function eventCoreIncludeCommonEnd($args)
     {
-        $path = dirname(__DIR__);
-        XoopsLoad::addMap(
-            array(
-                'xoopartners' => $path . '/class/helper.php'
-            )
-        );
+        require_once __DIR__ . '/autoloader.php';
     }
 }

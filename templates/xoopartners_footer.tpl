@@ -1,5 +1,5 @@
 <script type="text/javascript" src="<{xoImgUrl 'media/jquery/ui/jquery.ui.js'}>"></script>
-<link rel="stylesheet" href="<{xoImgUrl 'media/jquery/ui/base/ui.all.css'}>" type="text/css" media="screen"/>
+<link rel="stylesheet" href="<{xoImgUrl 'media/jquery/ui/base/ui.all.css'}>" type="text/css" media="screen">
 
 <{if $xoopartners_com || $xoopartners_not}>
     <script type="text/javascript">

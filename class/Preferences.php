@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xoopartners;
+
 /**
  * Xoopreferences : Preferences Manager
  *
@@ -9,35 +12,34 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoopartners
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- */
 
-use Xoops\Core\Request;
+ */
 
 /**
- * Class XooPartnersPreferences
+ * Class Preferences
  */
-class XooPartnersPreferences
+class Preferences
 {
-    public $config         = array();
-    public $basicConfig    = array();
+    public $config = [];
+    public $basicConfig = [];
     public $configPath;
     public $configFile;
-    private $module_dirname = 'xoopartners';
+    private $moduleDirName = 'xoopartners';
 
     /**
-     * XooPartnersPreferences constructor.
+     * Xoopartners\Preferences constructor.
      */
     public function __construct()
     {
-        $xoops            = Xoops::getInstance();
-        $this->configFile = 'config.' . $this->module_dirname . '.php';
+        $xoops = \Xoops::getInstance();
+        $this->configFile = 'config.' . $this->moduleDirName . '.php';
 
-        $this->configPath = \XoopsBaseConfig::get('var-path') . '/configs/' . $this->module_dirname . '/';
+        $this->configPath = \XoopsBaseConfig::get('var-path') . '/configs/' . $this->moduleDirName . '/';
 
         $this->basicConfig = $this->loadBasicConfig();
         $this->config      = @$this->loadConfig();
@@ -48,11 +50,9 @@ class XooPartnersPreferences
         }
     }
 
-    //    public function XooPartnersPreferences()
-    //    {
-    //        $this->__construct();
-    //    }
-
+    /**
+     * @return mixed
+     */
     public static function getInstance()
     {
         static $instance;
@@ -73,7 +73,7 @@ class XooPartnersPreferences
     }
 
     /**
-     * XooPartnersPreferences::loadConfig()
+     * Xoopartners\Preferences::loadConfig()
      *
      * @return array
      */
@@ -88,7 +88,7 @@ class XooPartnersPreferences
     }
 
     /**
-     * XooPartnersPreferences::loadBasicConfig()
+     * Xoopartners\Preferences::loadBasicConfig()
      *
      * @return array
      */
@@ -102,32 +102,32 @@ class XooPartnersPreferences
     }
 
     /**
-     * XooPartnersPreferences::readConfig()
+     * Xoopartners\Preferences::readConfig()
      *
      * @return array
      */
     public function readConfig()
     {
         $file_path = $this->configPath . $this->configFile;
-        XoopsLoad::load('XoopsFile');
-        $file = XoopsFile::getHandler('file', $file_path);
+        \XoopsLoad::load('XoopsFile');
+        $file = \XoopsFile::getHandler('file', $file_path);
 
         return eval(@$file->read());
     }
 
     /**
-     * XooPartnersPreferences::writeConfig()
+     * Xoopartners\Preferences::writeConfig()
      *
      * @param  array $config
-     * @return array
+     * @return bool|null
      * @internal param string $filename
      */
     public function writeConfig($config)
     {
         if ($this->createPath($this->configPath)) {
             $file_path = $this->configPath . $this->configFile;
-            XoopsLoad::load('XoopsFile');
-            $file = XoopsFile::getHandler('file', $file_path);
+            \XoopsLoad::load('XoopsFile');
+            $file = \XoopsFile::getHandler('file', $file_path);
 
             return $file->write('return ' . var_export($config, true) . ';');
         }
@@ -142,8 +142,8 @@ class XooPartnersPreferences
      */
     private function createPath($pathname, $pathout = XOOPS_ROOT_PATH)
     {
-        $xoops    = Xoops::getInstance();
-        $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path')));
+        $xoops = \Xoops::getInstance();
+        $pathname = mb_substr($pathname, mb_strlen(\XoopsBaseConfig::get('root-path')));
         $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
 
         $dest  = $pathout;
@@ -153,11 +153,10 @@ class XooPartnersPreferences
             if (!empty($path)) {
                 $dest = $dest . '/' . $path;
                 if (!is_dir($dest)) {
-                    if (!mkdir($dest, 0755)) {
+                    if (!mkdir($dest, 0755) && !is_dir($dest)) {
                         return false;
-                    } else {
-                        $this->writeIndex(\XoopsBaseConfig::get('uploads-path'), 'index.html', $dest);
                     }
+                    $this->writeIndex(\XoopsBaseConfig::get('uploads-path'), 'index.html', $dest);
                 }
             }
         }
@@ -188,7 +187,7 @@ class XooPartnersPreferences
     }
 
     /**
-     * @param null      $data
+     * @param null $data
      * @param bool|true $module
      * @return array
      */
@@ -198,12 +197,12 @@ class XooPartnersPreferences
             $data = $_POST;
         }
 
-        $config = array();
+        $config = [];
         foreach (array_keys($data) as $k) {
             if (is_array($data[$k])) {
                 $config[$k] = $this->prepare2Save($data[$k], false);
             } else {
-                if (!$module || false != strpos($k, $this->module_dirname . '_')) {
+                if (!$module || false !== mb_strpos($k, $this->moduleDirName . '_')) {
                     $config[$k] = $data[$k];
                 }
             }

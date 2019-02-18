@@ -20,9 +20,8 @@
 
     <td class="txtcenter">
         <a href="categories.php?op=edit&amp;xoopartners_category_id=<{$category.xoopartners_category_id}>" title="<{$smarty.const._EDIT}>"><img src="<{xoImgUrl 'media/xoops/images/icons/16/edit.png'}>" alt="{$smarty.const._EDIT}>"></a>
-        <!--
-            <a href="categories.php?op=del&amp;xoopartners_category_id=<{$category.xoopartners_category_id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoImgUrl 'media/xoops/images/icons/16/delete.png'}>" alt="<{$smarty.const._DELETE}>"></a>
--->
+        <a href="categories.php?op=del&amp;xoopartners_category_id=<{$category.xoopartners_category_id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoImgUrl 'media/xoops/images/icons/16/delete.png'}>" alt="<{$smarty.const._DELETE}>"></a>
+
     </td>
 </tr>
 
